@@ -9,69 +9,142 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+            GeometryReader { proxy in
+                let width = proxy.size.width
+                let height = proxy.size.height
+                VStack(alignment: .center) {
+                    Text("Youtine")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .shadow(color: Color.yellow, radius: 1, x: 2, y: 2)
+                        .underline(true, pattern: .solid)
+                    
+                    // card start
+                    VStack {
+                        Spacer()
+                        HStack() {
+                            Text("Morning Routine")
+                            Spacer()
+                            Text("8:00 am")
+                        }
+                        Spacer()
+                        Divider()
+                        Spacer()
+                        HStack {
+                            Text("Tasks completed")
+                            Spacer()
+                            Text("2/3")
+                        }
+                        Spacer()
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    .padding(50)
+                    .frame(height: height / 4)
+                    .overlay( /// apply a rounded border
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(.red, lineWidth: 2)
+                    )
+                    // card end
+                    
+
+                    Spacer()
+                    
+                    // card start
+                    VStack {
+                        Spacer()
+                        HStack() {
+                            Text("Morning Routine")
+                            Spacer()
+                            Text("8:00 am")
+                        }
+                        Spacer()
+                        Divider()
+                        Spacer()
+                        HStack {
+                            Text("Tasks completed")
+                            Spacer()
+                            Text("2/3")
+                        }
+                        Spacer()
                     }
+                    .padding(50)
+                    .frame(height: height / 4)
+                    .overlay( /// apply a rounded border
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(.red, lineWidth: 2)
+                    )
+                    // card end
+
+                    Spacer()
+                    
+                    // card start
+                    VStack {
+                        Spacer()
+                        HStack() {
+                            Text("Morning Routine")
+                            Spacer()
+                            Text("8:00 am")
+                        }
+                        Spacer()
+                        Divider()
+                        Spacer()
+                        HStack {
+                            Text("Tasks completed")
+                            Spacer()
+                            Text("2/3")
+                        }
+                        Spacer()
+                    }
+                    .padding(50)
+                    .frame(height: height / 4)
+                    .overlay( /// apply a rounded border
+                        RoundedRectangle(cornerRadius: 20)
+                            .stroke(.red, lineWidth: 2)
+                    )
+                    // card end
+                    
+                    
+                    Spacer()
                 }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                .frame(width: width, height: height)
+                
             }
         }
+        .preferredColorScheme(.dark)
     }
 
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
+//    private func addItem() {
+//        withAnimation {
+//            let newItem = Routine(context: viewContext)
+//            newItem.timestamp = Date()
+//
+//            do {
+//                try viewContext.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nsError = error as NSError
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//            }
+//        }
+//    }
+//
+//    private func deleteItems(offsets: IndexSet) {
+//        withAnimation {
+//            offsets.map { routines[$0] }.forEach(viewContext.delete)
+//
+//            do {
+//                try viewContext.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nsError = error as NSError
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//            }
+//        }
+//    }
 }
 
 private let itemFormatter: DateFormatter = {
@@ -82,5 +155,5 @@ private let itemFormatter: DateFormatter = {
 }()
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
 }
