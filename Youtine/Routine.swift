@@ -6,30 +6,41 @@
 //
 
 import SwiftData
-import Foundation
+import SwiftUI
 
 @Model
-class Youtine {
+class Youtine: Identifiable {
     var id: UUID
-    var start: Date
+    var start: String
+    var title: String
     var todos: [Todo]
-
-    init(start: Date, todos: [Todo]) {
+    var borderColor: String
+    
+    init(
+        start: String,
+        title: String,
+        todos: [Todo],
+        borderColor: Color
+    ) {
         self.id = UUID()
         self.start = start
+        self.title = title
         self.todos = todos
+        self.borderColor = borderColor.description
     }
 }
 
 @Model
-class Todo {
+class Todo: Identifiable {
     var id: UUID
     var label: String
     var desc: String
+    var completed: Bool
     
-    init(label: String, desc: String) {
+    init(label: String, desc: String, completed: Bool = false) {
         self.id = UUID()
         self.label = label
         self.desc = desc
+        self.completed = completed
     }
 }
