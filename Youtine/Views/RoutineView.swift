@@ -7,51 +7,34 @@
 
 import SwiftUI
 
-struct RoutineView: View {
-    var index: Int
+struct RoutinesView: View {
     @Binding var selectedCellIndex: Int?
-    var routine: Youtine
+    var routines: [Youtine]
     var height: CGFloat
     
     var body: some View {
-        ZStack {
+        ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
+            CardView(
+                index: index,
+                selectedCellIndex: $selectedCellIndex,
+                routine: routine,
+                height: height
+            )
+            
             if selectedCellIndex == nil {
-                ShortenedView(
-                    index: index,
-                    selectedCellIndex: $selectedCellIndex,
-                    routine: routine,
-                    height: height
-                )
-                .transition(
-                    .asymmetric(
-                        insertion: .scale.combined(with: .opacity),
-                        removal: .scale.combined(with: .opacity)
-                    )
-                )
-            } else if (selectedCellIndex != nil) && selectedCellIndex == index {
-                ExpandedView(
-                    index: index,
-                    selectedCellIndex: $selectedCellIndex,
-                    routine: routine,
-                    height: height
-                )
-                .transition(
-                    .asymmetric(
-                        insertion: .scale.combined(with: .opacity),
-                        removal: .scale.combined(with: .opacity)
-                    )
-                )
+                Spacer()
+            } else if (selectedCellIndex != nil) &&
+                        selectedCellIndex == index {
+                Spacer()
             }
         }
-        .animation(.easeInOut, value: selectedCellIndex)
     }
 }
 
 #Preview {
-    RoutineView(
-        index: 1,
+    RoutinesView(
         selectedCellIndex: .constant(1),
-        routine: testRoutines[0],
+        routines: testRoutines,
         height: 687.6666666666667
     )
 }
