@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct ExpandedDetailView: View {
     var start: String
     
     var body: some View {
@@ -48,5 +48,5 @@ struct DetailView: View {
 }
 
 #Preview {
-    DetailView(start: "8:00 a.m.")
+    ExpandedDetailView(start: "8:00 a.m.")
 }

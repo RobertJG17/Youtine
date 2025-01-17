@@ -12,6 +12,7 @@ struct CardView: View {
     @Binding var selectedCellIndex: Int?
     var routine: Youtine
     var height: CGFloat
+    var width: CGFloat
     
     var body: some View {
         ZStack {
@@ -20,7 +21,8 @@ struct CardView: View {
                     index: index,
                     selectedCellIndex: $selectedCellIndex,
                     routine: routine,
-                    height: height
+                    height: height,
+                    width: width
                 )
                 .transition(
                     .asymmetric(
@@ -43,6 +45,7 @@ struct CardView: View {
                 )
             }
         }
+        .animation(.easeInOut, value: selectedCellIndex)
     }
 }
 
@@ -51,6 +54,7 @@ struct CardView: View {
         index: 1,
         selectedCellIndex: .constant(1),
         routine: testRoutines[0],
-        height: 687.6666666666667
+        height: 687.6666666666667,
+        width: 402.0
     )
 }

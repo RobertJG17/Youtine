@@ -11,6 +11,7 @@ struct RoutinesView: View {
     @Binding var selectedCellIndex: Int?
     var routines: [Youtine]
     var height: CGFloat
+    var width: CGFloat
     
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
@@ -18,7 +19,8 @@ struct RoutinesView: View {
                 index: index,
                 selectedCellIndex: $selectedCellIndex,
                 routine: routine,
-                height: height
+                height: height,
+                width: width
             )
             
             if selectedCellIndex == nil {
@@ -35,6 +37,7 @@ struct RoutinesView: View {
     RoutinesView(
         selectedCellIndex: .constant(1),
         routines: testRoutines,
-        height: 687.6666666666667
+        height: 687.6666666666667,
+        width: 402.0
     )
 }

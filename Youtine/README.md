@@ -65,3 +65,6 @@ is still widely used, however Swift Data reduces overhead with its @Model declar
 integrates nicely with SwiftUI. I am using this [article](https://www.hackingwithswift.com/articles/263/build-your-first-app-with-swiftui-and-swiftdata) currently as reference.
 
                                                           
+### Todos
+- [ ] Build out display for empty container view (no local data persisted/previous routines saved)
+- [ ] Explore Swift Data integration and begin creating tests with Swift Data

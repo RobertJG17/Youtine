@@ -54,7 +54,7 @@ struct ExpandedView: View {
             )
             
             VStack(spacing: 0) {
-                DetailView(
+                ExpandedDetailView(
                     start: start
                 )
                 
@@ -87,6 +87,7 @@ struct ExpandedView: View {
             .frame(height: height*0.85)
             .padding(.bottom, 100)
             .preferredColorScheme(.dark)
+            
         }
     }
     

@@ -35,7 +35,8 @@ struct ContentView: View {
                     RoutinesView(
                         selectedCellIndex: $selectedCellIndex,
                         routines: routines,
-                        height: height
+                        height: height,
+                        width: width
                     )
                 }
                 .frame(
