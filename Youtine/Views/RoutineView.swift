@@ -8,61 +8,45 @@
 import SwiftUI
 
 struct RoutineView: View {
+    var index: Int
+    @Binding var selectedCellIndex: Int?
     var title: String
     var start: String
+    var todos: [Todo]
     var height: CGFloat
-    var borderColor: Color
-    
-    init(
-        title: String,
-        start: String,
-        height: CGFloat,
-        borderColor: String
-    ) {
-        self.title = title
-        self.start = start
-        self.height = height
-        self.borderColor = Color.from(description: borderColor)
-    }
+    var borderColor: String
     
     var body: some View {
-        // card start
-        VStack {
-            Spacer()
-            HStack() {
-                Text(title)
-                Spacer()
-                Text(start)
+        Button {
+            if selectedCellIndex != nil {
+                selectedCellIndex = nil
+            } else {
+                selectedCellIndex = index
             }
-            Spacer()
-            Divider()
-            Spacer()
-            HStack {
-                // This text is static
-                Text("Tasks completed")
-                Spacer()
-                
-                // We will get this from summing our completed property
-                // per todo within a single routine
-                Text("2/3")
-            }
-            Spacer()
+        } label: {
+            CardView(
+                index: index,
+                selectedCellIndex: selectedCellIndex,
+                title: title,
+                start: start,
+                todos: todos,
+                height: height,
+                borderColor: borderColor
+            )
         }
-        .padding(50)
-        .frame(height: height / 4)
-        .overlay( /// apply a rounded border
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(borderColor, lineWidth: 2)
-        )
-        .preferredColorScheme(.dark)
-        // card end
+        .foregroundStyle(Color.white)
+
+        
     }
 }
 
 #Preview {
     RoutineView(
+        index: 1,
+        selectedCellIndex: .constant(1),
         title: "Morning Routine",
         start: "8:00 am",
+        todos: testRoutines[0].todos,
         height: 600,
         borderColor: "red"
     )

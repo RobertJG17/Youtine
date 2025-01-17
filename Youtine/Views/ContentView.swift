@@ -10,6 +10,7 @@ import CoreData
 
 struct ContentView: View {
     var routines: [Youtine]
+    @State var selectedCellIndex: Int? = nil
     
     var body: some View {
         NavigationView {
@@ -20,24 +21,51 @@ struct ContentView: View {
                     Text("Youtine")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .shadow(color: Color.yellow, radius: 1, x: 2, y: 2)
-                        .underline(true, pattern: .solid)
+                        .frame(width: width)
+                        .padding(.bottom, 10)
+                        .background(Color.indigo)
+                        .shadow(
+                            color: Color.yellow,
+                            radius: 1,
+                            x: 2,
+                            y: 2
+                        )
+                        .underline(
+                            true,
+                            pattern: .solid
+                        )
                     
                     // Use For Each
+                    Spacer()
                     
-                    ForEach(routines) { routine in
+                    ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
+                        
                         RoutineView(
+                            index: index,
+                            selectedCellIndex: $selectedCellIndex,
                             title: routine.title,
                             start: routine.start,
+                            todos: routine.todos,
                             height: height,
                             borderColor: routine.borderColor
                         )
                         
-                        Spacer()
+                        
+                        if selectedCellIndex == nil {
+                            Spacer()
+                        } else if (selectedCellIndex != nil) &&
+                                    selectedCellIndex == index {
+                            Spacer()
+                        } else {
+                            Spacer()
+                        }
                     }
                 }
-                .frame(width: width, height: height)
-                
+                .frame(
+                    width: width,
+                    height: height
+                )
+                .background()
             }
         }
         .preferredColorScheme(.dark)
@@ -45,38 +73,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(routines:
-        [
-            Youtine(
-                start: "8:00 am",
-                title: "Morning Routine",
-                todos: [
-                    Todo(label: "Wash Face", desc: "Use cetaphil cleanser"),
-                    Todo(label: "Shave", desc: "Slow manual shave"),
-                    Todo(label: "Moisture", desc: "Use moisturizer with SPF 50 minimum")
-                ],
-                borderColor: .yellow
-            ),
-            Youtine(
-                start: "12:00 pm",
-                title: "Afternoon Routine",
-                todos: [
-                    Todo(label: "Wash Face", desc: "Use cetaphil cleanser"),
-                    Todo(label: "Shave", desc: "Slow manual shave"),
-                    Todo(label: "Moisture", desc: "Use moisturizer with SPF 50 minimum")
-                ],
-                borderColor: .blue
-            ),
-            Youtine(
-                start: "8:00 pm",
-                title: "Night Routine",
-                todos: [
-                    Todo(label: "Wash Face", desc: "Use cetaphil cleanser"),
-                    Todo(label: "Shave", desc: "Slow manual shave"),
-                    Todo(label: "Moisture", desc: "Use moisturizer with SPF 50 minimum")
-                ],
-                borderColor: .red
-            )
-        ]
+    ContentView(
+        routines: testRoutines
     )
 }
