@@ -14,12 +14,36 @@ struct RoutineView: View {
     var height: CGFloat
     
     var body: some View {
-        CardView(
-            index: index,
-            selectedCellIndex: $selectedCellIndex,
-            routine: routine,
-            height: height
-        )
+        ZStack {
+            if selectedCellIndex == nil {
+                ShortenedView(
+                    index: index,
+                    selectedCellIndex: $selectedCellIndex,
+                    routine: routine,
+                    height: height
+                )
+                .transition(
+                    .asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)
+                    )
+                )
+            } else if (selectedCellIndex != nil) && selectedCellIndex == index {
+                ExpandedView(
+                    index: index,
+                    selectedCellIndex: $selectedCellIndex,
+                    routine: routine,
+                    height: height
+                )
+                .transition(
+                    .asymmetric(
+                        insertion: .scale.combined(with: .opacity),
+                        removal: .scale.combined(with: .opacity)
+                    )
+                )
+            }
+        }
+        .animation(.easeInOut, value: selectedCellIndex)
     }
 }
 

@@ -32,8 +32,8 @@ struct ShortenedView: View {
         self.title = routine.title
         self.start = routine.start
         self.todos = routine.todos
-        self.height = height
         self.borderColor = Color.from(description: routine.borderColor)
+        self.height = height
     }
     
     var body: some View {
