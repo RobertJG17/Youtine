@@ -12,18 +12,21 @@ import SwiftUI
 class Youtine: Identifiable {
     var id: UUID
     var start: String
+    var days: [String]
     var title: String
     var todos: [Todo]
     var borderColor: String
     
     init(
         start: String,
+        days: [String],
         title: String,
         todos: [Todo],
         borderColor: Color
     ) {
         self.id = UUID()
         self.start = start
+        self.days = days
         self.title = title
         self.todos = todos
         self.borderColor = borderColor.description

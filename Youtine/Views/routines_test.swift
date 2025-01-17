@@ -11,6 +11,7 @@ var testRoutines: [Youtine] =
     [
         Youtine(
             start: "8:00 am",
+            days: ["M", "W", "F"],
             title: "Morning Routine",
             todos: [
                 Todo(
@@ -22,14 +23,31 @@ var testRoutines: [Youtine] =
                     desc: "Slow manual shave"
                 ),
                 Todo(
-                    label: "Moisture",
+                    label: "Moisturize",
                     desc: "Use moisturizer with SPF 50 minimum"
+                ),
+                Todo(
+                    label: "Code",
+                    desc: "Learn iOS for at least 20 mins a day"
+                ),
+                Todo(
+                    label: "Code",
+                    desc: "Learn iOS for at least 20 mins a day"
+                ),
+                Todo(
+                    label: "Code",
+                    desc: "Learn iOS for at least 20 mins a day"
+                ),
+                Todo(
+                    label: "Code",
+                    desc: "Learn iOS for at least 20 mins a day"
                 )
             ],
             borderColor: .yellow
         ),
         Youtine(
             start: "12:00 pm",
+            days: ["M", "W", "F"],
             title: "Afternoon Routine",
             todos: [
                 Todo(
@@ -49,6 +67,7 @@ var testRoutines: [Youtine] =
         ),
         Youtine(
             start: "8:00 pm",
+            days: ["M", "W", "F"],
             title: "Night Routine",
             todos: [
                 Todo(

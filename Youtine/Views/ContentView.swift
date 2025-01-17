@@ -17,46 +17,28 @@ struct ContentView: View {
             GeometryReader { proxy in
                 let width = proxy.size.width
                 let height = proxy.size.height
+                
                 VStack(alignment: .center) {
-                    Text("Youtine")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .frame(width: width)
-                        .padding(.bottom, 10)
-                        .background(Color.indigo)
-                        .shadow(
-                            color: Color.yellow,
-                            radius: 1,
-                            x: 2,
-                            y: 2
-                        )
-                        .underline(
-                            true,
-                            pattern: .solid
-                        )
+                    HeaderView(
+                        width: width,
+                        selectedCellIndex: selectedCellIndex
+                    )
+                    .animation(.easeInOut, value: selectedCellIndex)
                     
-                    // Use For Each
                     Spacer()
                     
                     ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
-                        
                         RoutineView(
                             index: index,
                             selectedCellIndex: $selectedCellIndex,
-                            title: routine.title,
-                            start: routine.start,
-                            todos: routine.todos,
-                            height: height,
-                            borderColor: routine.borderColor
+                            routine: routine,
+                            height: height
                         )
-                        
                         
                         if selectedCellIndex == nil {
                             Spacer()
                         } else if (selectedCellIndex != nil) &&
                                     selectedCellIndex == index {
-                            Spacer()
-                        } else {
                             Spacer()
                         }
                     }

@@ -9,26 +9,31 @@ import SwiftUI
 
 struct ShortenedView: View {
     var index: Int
+    @Binding var selectedCellIndex: Int?
     var title: String
     var start: String
     var todos: [Todo]
     var height: CGFloat
     var borderColor: Color
+    var tasksCompleted: Int {
+        return todos.reduce(0) { partialResult, todo in
+            partialResult + (todo.completed ? 1 : 0)
+        }
+    }
     
     init(
         index: Int,
-        title: String,
-        start: String,
-        todos: [Todo],
-        height: CGFloat,
-        borderColor: String
+        selectedCellIndex: Binding<Int?>,
+        routine: Youtine,
+        height: CGFloat
     ) {
         self.index = index
-        self.title = title
-        self.start = start
-        self.todos = todos
+        self._selectedCellIndex = selectedCellIndex
+        self.title = routine.title
+        self.start = routine.start
+        self.todos = routine.todos
         self.height = height
-        self.borderColor = Color.from(description: borderColor)
+        self.borderColor = Color.from(description: routine.borderColor)
     }
     
     var body: some View {
@@ -37,27 +42,44 @@ struct ShortenedView: View {
             Spacer()
             HStack() {
                 Text(title)
+                    .font(
+                        .system(
+                            size: 25,
+                            weight: .light
+                        )
+                    )
                 Spacer()
-                Text(start)
+                Image(systemName: "chevron.down")
             }
             Spacer()
             Divider()
-                .background(borderColor)
-                .fontWeight(.bold)
             Spacer()
             HStack {
-                // This text is static
-                Text("Tasks completed")
+                Text("Start Time: ")
+                    .fontWeight(.thin)
                 Spacer()
-                
-                // We will get this from summing our completed property
-                // per todo within a single routine
-                Text("2/3")
+                Text(start)
+                    .fontWeight(.thin)
+            }
+            HStack {
+                Text("Tasks Completed: ")
+                    .fontWeight(.thin)
+                Spacer()
+                Text("\(tasksCompleted)/\(todos.count)")
+                    .fontWeight(.thin)
             }
             Spacer()
         }
         .padding(50)
         .frame(height: height / 4)
+        .frame(maxWidth: .infinity)
+        .background(Color.clear) // Give the Spacer a tappable area
+        .contentShape(Rectangle()) // Ensure the entire area is tappable
+        .onTapGesture {
+            if selectedCellIndex == nil {
+                selectedCellIndex = index
+            }
+        }
         .overlay( /// apply a rounded border
             RoundedRectangle(cornerRadius: 20)
                 .strokeBorder(
@@ -75,10 +97,8 @@ struct ShortenedView: View {
 #Preview {
     ShortenedView(
         index: 0,
-        title: "Morning Routine",
-        start: "8:00 a.m.",
-        todos: testRoutines[0].todos,
-        height: 500,
-        borderColor: "red"
+        selectedCellIndex: .constant(0),
+        routine: testRoutines[0],
+        height: 687.6666666666667
     )
 }
