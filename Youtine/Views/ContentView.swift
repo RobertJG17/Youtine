@@ -9,11 +9,7 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-    // I have to include code to query these routines
-    // If no routine exists, I can create 3 plus buttons instead of Routine
-    // views
     var routines: [Youtine]
-    let MAX_ROUTINE_COUNT: Int = 3
     
     @State var selectedCellIndex: Int? = nil
     
@@ -41,7 +37,7 @@ struct ContentView: View {
                 }
                 .frame(
                     width: width,
-                    height: height
+                    height: selectedCellIndex != nil ? height*0.85 : height
                 )
                 .background()
             }

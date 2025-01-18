@@ -10,35 +10,35 @@ import Foundation
 var testRoutines: [Youtine] =
     [
         Youtine(
-            start: "8:00 am",
+            start: "8:00 AM",
             days: ["M", "W", "F"],
             title: "Morning Routine",
-            todos: [
-                Todo(
+            habits: [
+                Habit(
                     label: "Wash Face",
                     desc: "Use cetaphil cleanser"
                 ),
-                Todo(
+                Habit(
                     label: "Shave",
                     desc: "Slow manual shave"
                 ),
-                Todo(
+                Habit(
                     label: "Moisturize",
                     desc: "Use moisturizer with SPF 50 minimum"
                 ),
-                Todo(
+                Habit(
                     label: "Code",
                     desc: "Learn iOS for at least 20 mins a day"
                 ),
-                Todo(
+                Habit(
                     label: "Code",
                     desc: "Learn iOS for at least 20 mins a day"
                 ),
-                Todo(
+                Habit(
                     label: "Code",
                     desc: "Learn iOS for at least 20 mins a day"
                 ),
-                Todo(
+                Habit(
                     label: "Code",
                     desc: "Learn iOS for at least 20 mins a day"
                 )
@@ -46,19 +46,19 @@ var testRoutines: [Youtine] =
             borderColor: .yellow
         ),
         Youtine(
-            start: "12:00 pm",
+            start: "12:00 PM",
             days: ["M", "W", "F"],
             title: "Afternoon Routine",
-            todos: [
-                Todo(
+            habits: [
+                Habit(
                     label: "Wash Face",
                     desc: "Use cetaphil cleanser"
                 ),
-                Todo(
+                Habit(
                     label: "Shave",
                     desc: "Slow manual shave"
                 ),
-                Todo(
+                Habit(
                     label: "Moisture",
                     desc: "Use moisturizer with SPF 50 minimum"
                 )
@@ -66,19 +66,19 @@ var testRoutines: [Youtine] =
             borderColor: .blue
         ),
         Youtine(
-            start: "8:00 pm",
+            start: "8:00 PM",
             days: ["M", "W", "F"],
             title: "Night Routine",
-            todos: [
-                Todo(
+            habits: [
+                Habit(
                     label: "Wash Face",
                     desc: "Use cetaphil cleanser"
                 ),
-                Todo(
+                Habit(
                     label: "Shave",
                     desc: "Slow manual shave"
                 ),
-                Todo(
+                Habit(
                     label: "Moisture",
                     desc: "Use moisturizer with SPF 50 minimum"
                 )

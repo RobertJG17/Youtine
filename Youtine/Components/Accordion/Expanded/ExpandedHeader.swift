@@ -25,6 +25,7 @@ struct ExpandedHeader: View {
                 Spacer()
                 Image(systemName: "chevron.up")
             }
+            
         }
             .frame(maxWidth: .infinity)
             .background(Color.clear) // Give the Spacer a tappable area

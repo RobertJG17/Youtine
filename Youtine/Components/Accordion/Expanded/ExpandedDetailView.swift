@@ -23,7 +23,8 @@ struct ExpandedDetailView: View {
                     )
                 Spacer()
             }
-            
+            .padding(.bottom, 10)
+                        
             // Start time strip
             HStack {
                 Text("Start Time")
@@ -32,7 +33,7 @@ struct ExpandedDetailView: View {
                 Text(start)
             }
             .padding(.leading, 20)
-            
+            Divider()
             // Start time strip
             HStack {
                 Text("Days Assigned")
@@ -44,9 +45,10 @@ struct ExpandedDetailView: View {
         }
         .padding(25)
         .padding(.top, 0)
+        .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
-    ExpandedDetailView(start: "8:00 a.m.")
+    ExpandedDetailView(start: "8:00 AM")
 }

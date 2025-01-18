@@ -13,22 +13,9 @@ struct ExpandedView: View {
     var title: String
     var days: [String]
     var start: String
-    var todos: [Todo]
+    var habits: [Habit]
     var height: CGFloat
     var borderColor: Color
-    var backgroundImage: String {
-        switch(index) {
-        case 0:
-            return "morning"
-        case 1:
-            return "noon"
-        case 2:
-            return "night"
-        default:
-            return "morning"
-        }
-    }
-    
 
     init(
         index: Int,
@@ -41,7 +28,7 @@ struct ExpandedView: View {
         self.title = routine.title
         self.days = routine.days
         self.start = routine.start
-        self.todos = routine.todos
+        self.habits = routine.habits
         self.borderColor = Color.from(description: routine.borderColor)
         self.height = height
     }
@@ -52,7 +39,7 @@ struct ExpandedView: View {
                 title: title,
                 selectedCellIndex: $selectedCellIndex
             )
-            
+                
             VStack(spacing: 0) {
                 ExpandedDetailView(
                     start: start
@@ -60,8 +47,8 @@ struct ExpandedView: View {
                 
                 Spacer()
                 
-                TodoView(
-                    todos: todos,
+                HabitView(
+                    habits: habits,
                     height: height
                 )
             }
@@ -72,6 +59,7 @@ struct ExpandedView: View {
                     .opacity(0.2)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea(edges: .horizontal)
+                    .frame(height: height*0.85)
             )
             .overlay(
                 VStack {
@@ -83,9 +71,9 @@ struct ExpandedView: View {
                         .fill(borderColor)
                         .frame(height: 1)
                 }
+                    .frame(height: height*0.85)
             )
             .frame(height: height*0.85)
-            .padding(.bottom, 100)
             .preferredColorScheme(.dark)
             
         }

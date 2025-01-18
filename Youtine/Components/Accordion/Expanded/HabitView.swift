@@ -7,14 +7,21 @@
 
 import SwiftUI
 
-struct TodoView: View {
+struct HabitView: View {
+    // !!!: START
+    
+    // MARK: Instance Variables
+    var habits: [Habit]
+    var height: CGFloat
+    
+    // MARK: Initialized local state
     @State var showScrollIndicator: Bool = true
     @State var animatedOpacity: CGFloat = 1
-    var todos: [Todo]
-    var height: CGFloat
-    var tasksCompleted: Int {
-        return todos.reduce(0) { partialResult, todo in
-            partialResult + (todo.completed ? 1 : 0)
+    
+    // MARK: Computed Properties
+    var habitsCompleted: Int {
+        return habits.reduce(0) { partialResult, habit in
+            partialResult + (habit.completed ? 1 : 0)
         }
     }
     
@@ -33,15 +40,15 @@ struct TodoView: View {
             }
             .padding(.leading, 25)
             
-            List(todos, id: \.id) { todo in
-                let completed = todo.completed
-                let desc = todo.desc
-                let label = todo.label
+            List(habits, id: \.id) { habit in
+                let completed = habit.completed
+                let desc = habit.desc
+                let label = habit.label
                 let labelImage = completed ? "checkmark.circle.fill" : "circle"
                 
                 
                 Button {
-                    todo.completed.toggle()
+                    habit.completed.toggle()
                 } label: {
                     HStack {
                         Image(systemName: labelImage)
@@ -54,18 +61,19 @@ struct TodoView: View {
                         }
                     }
                     .foregroundStyle(Color.white)
+                    .padding(.leading, 20)
                     .onAppear{
-                        guard let lastTodo: Todo = todos.last else { return }
+                        guard let lastHabit: Habit = habits.last else { return }
                         
-                        if todo.id == lastTodo.id {
+                        if habit.id == lastHabit.id {
                             showScrollIndicator = false
                         }
                         
                     }
                     .onDisappear {
-                        guard let lastTodo: Todo = todos.last else { return }
+                        guard let lastHabit: Habit = habits.last else { return }
                         
-                        if todo.id == lastTodo.id {
+                        if habit.id == lastHabit.id {
                             showScrollIndicator = true
                         }
                     }
@@ -107,7 +115,7 @@ struct TodoView: View {
                         )
                         .opacity(0.7)
                     Spacer()
-                    Text("\(tasksCompleted)/\(todos.count)")
+                    Text("\(habitsCompleted)/\(habits.count)")
                         .font(
                             .system(
                                 size: 30,
@@ -124,8 +132,8 @@ struct TodoView: View {
 }
 
 #Preview {
-    TodoView(
-        todos: testRoutines[0].todos,
+    HabitView(
+        habits: testRoutines[0].habits,
         height: 687.6666666667
     )
 }

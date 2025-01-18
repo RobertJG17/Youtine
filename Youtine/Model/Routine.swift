@@ -14,36 +14,36 @@ class Youtine: Identifiable {
     var start: String
     var days: [String]
     var title: String
-    var todos: [Todo]
+    var habits: [Habit]
     var borderColor: String
     
     init(
         start: String,
         days: [String],
         title: String,
-        todos: [Todo],
+        habits: [Habit],
         borderColor: Color
     ) {
         self.id = UUID()
         self.start = start
         self.days = days
         self.title = title
-        self.todos = todos
+        self.habits = habits
         self.borderColor = borderColor.description
     }
 }
 
 @Model
-class Todo: Identifiable {
+class Habit: Identifiable {
     var id: UUID
     var label: String
     var desc: String
     var completed: Bool
     
-    init(label: String, desc: String, completed: Bool = false) {
+    init(label: String, desc: String) {
         self.id = UUID()
         self.label = label
         self.desc = desc
-        self.completed = completed
+        self.completed = false
     }
 }

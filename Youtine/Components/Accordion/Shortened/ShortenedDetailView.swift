@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ShortenedDetailView: View {
     var start: String
-    var tasksCompleted: Int
-    var todos: [Todo]
+    var habitsCompleted: Int
+    var habits: [Habit]
     
     var body: some View {
         HStack {
@@ -24,7 +24,7 @@ struct ShortenedDetailView: View {
             Text("Tasks Completed: ")
                 .fontWeight(.thin)
             Spacer()
-            Text("\(tasksCompleted)/\(todos.count)")
+            Text("\(habitsCompleted)/\(habits.count)")
                 .fontWeight(.thin)
         }
         Spacer()
@@ -33,8 +33,8 @@ struct ShortenedDetailView: View {
 
 #Preview {
     ShortenedDetailView(
-        start: "8:00 a.m.",
-        tasksCompleted: 3,
-        todos: testRoutines[0].todos
+        start: "8:00 AM",
+        habitsCompleted: 3,
+        habits: testRoutines[0].habits
     )
 }
