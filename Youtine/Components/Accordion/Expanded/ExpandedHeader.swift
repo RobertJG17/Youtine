@@ -27,7 +27,6 @@ struct ExpandedHeader: View {
                 Spacer()
                 Image(systemName: "chevron.up")
             }
-            
         }
         .frame(height: height / 7)
         .background(Color.clear)
@@ -35,8 +34,8 @@ struct ExpandedHeader: View {
         .onTapGesture {
             selectedCellIndex = nil
         }
-        .padding(.leading, 25)
-        .padding(.trailing, 25)
+        .padding(.vertical, 25)
+        .padding(.horizontal, 20)
         .preferredColorScheme(.dark)
     }
 }
