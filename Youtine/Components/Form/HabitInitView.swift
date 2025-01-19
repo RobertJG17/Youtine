@@ -20,6 +20,13 @@ struct HabitInitView: View {
         NavigationStack {
             VStack {
                 HStack {
+                    Button {
+                        showingRoutineInit = false
+                    } label: {
+                        Image(systemName: "xmark")
+                    }
+                    .foregroundStyle(.white)
+                    
                     Spacer()
                     
                     Button {
@@ -36,6 +43,8 @@ struct HabitInitView: View {
                     } label: {
                         Text("Done")
                     }
+                    .disabled(label == "" || desc == "")
+                    
                 }
                 
                 Spacer()
@@ -46,16 +55,15 @@ struct HabitInitView: View {
                     
                     Spacer()
                     
-                    VStack(alignment: .center, spacing: 1) {
+                    VStack(alignment: .center, spacing: 2.5) {
                         TextField(text: $label) {}
-                            .frame(width: 197, alignment: .center)
+                            .frame(width: 230, alignment: .center)
                         Rectangle()
                             .foregroundStyle(.white)
-                            .frame(width: 197, height: 1)
-                            .padding(.leading, 15)
+                            .frame(width: 217, height: 1)
                             .padding(.trailing, 15)
                     }
-                    .font(.system(size: 35, weight: .thin))
+                    .font(.system(size: 28, weight: .thin))
                 }
                 
                 HStack(alignment: .top) {

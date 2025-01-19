@@ -7,7 +7,7 @@
 
 import Foundation
 
-var testRoutines: [Youtine] =
+var testRoutines: [Youtine?] =
     [
         Youtine(
             start: "8:00 AM",
@@ -65,24 +65,25 @@ var testRoutines: [Youtine] =
             ],
             borderColor: .blue
         ),
-        Youtine(
-            start: "8:00 PM",
-            days: ["M", "W", "F"],
-            title: "Night Routine",
-            habits: [
-                Habit(
-                    label: "Wash Face",
-                    desc: "Use cetaphil cleanser"
-                ),
-                Habit(
-                    label: "Shave",
-                    desc: "Slow manual shave"
-                ),
-                Habit(
-                    label: "Moisture",
-                    desc: "Use moisturizer with SPF 50 minimum"
-                )
-            ],
-            borderColor: .red
-        )
+        nil
+//        Youtine(
+//            start: "8:00 PM",
+//            days: ["M", "W", "F"],
+//            title: "Night Routine",
+//            habits: [
+//                Habit(
+//                    label: "Wash Face",
+//                    desc: "Use cetaphil cleanser"
+//                ),
+//                Habit(
+//                    label: "Shave",
+//                    desc: "Slow manual shave"
+//                ),
+//                Habit(
+//                    label: "Moisture",
+//                    desc: "Use moisturizer with SPF 50 minimum"
+//                )
+//            ],
+//            borderColor: .red
+//        )
     ]

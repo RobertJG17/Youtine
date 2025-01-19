@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ShortenedView: View {
-    @State var createRoutine: Bool = false
-    
     var index: Int
     @Binding var selectedCellIndex: Int?
+    @Binding var createRoutine: Bool
     var title: String
     var start: String
     var habits: [Habit]
@@ -32,12 +31,14 @@ struct ShortenedView: View {
     init(
         index: Int,
         selectedCellIndex: Binding<Int?>,
+        createRoutine: Binding<Bool>,
         routine: Youtine?,
         height: CGFloat,
         width: CGFloat
     ) {
         self.index = index
         self._selectedCellIndex = selectedCellIndex
+        self._createRoutine = createRoutine
         self.title = routine?.title ?? ""
         self.start = routine?.start ?? ""
         self.habits = routine?.habits ?? []
@@ -53,20 +54,7 @@ struct ShortenedView: View {
     var body: some View {
         // card start
         ZStack {
-            if createRoutine {
-                CreateRoutineView(
-                    index: index,
-                    width: width,
-                    height: height,
-                    createRoutine: $createRoutine
-                )
-                .transition(
-                    .asymmetric(
-                        insertion: .scale,
-                        removal: .scale
-                    )
-                )
-            } else if routineCreated {
+            if routineCreated {
                 ZStack {
                     Rectangle()
                         .frame(width: width*0.90, height: height / 4)
@@ -103,31 +91,32 @@ struct ShortenedView: View {
                 .background(Color.black)
                 
             } else {
-                
-                Rectangle()
+                ZStack {
+                    Rectangle()
+                        .frame(width: width*0.90, height: height / 4)
+                        .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
+                        .foregroundStyle(Color.black)
+                    
+                    HStack(alignment: .center) {
+                        Image(systemName: "plus")
+                            .font(.system(size: 40))
+                    }
                     .frame(width: width*0.90, height: height / 4)
-                    .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
-                
-                HStack(alignment: .center) {
-                    Image(systemName: "plus")
-                        .font(.system(size: 40))
-                }
-                .frame(width: width*0.90, height: height / 4)
-                .background(Color.clear) // Give the Spacer a tappable area
-                .contentShape(Rectangle()) // Ensure the entire area is tappable
-                .onTapGesture {
-                    // MARK: Close create routine view
-                    createRoutine.toggle()
-                    selectedCellIndex = index
-                }
-                .transition(
-                    .asymmetric(
-                        insertion: .scale,
-                        removal: .scale
+                    .background(Color.clear) // Give the Spacer a tappable area
+                    .contentShape(Rectangle()) // Ensure the entire area is tappable
+                    .onTapGesture {
+                        // MARK: Close create routine view
+                        createRoutine.toggle()
+                        selectedCellIndex = index
+                    }
+                    .transition(
+                        .asymmetric(
+                            insertion: .scale,
+                            removal: .scale
+                        )
                     )
-                )
-                .contentShape(Rectangle())
-                
+                    .contentShape(Rectangle())
+                }
             }
         }
         .animation(.easeInOut, value: createRoutine)
@@ -140,7 +129,8 @@ struct ShortenedView: View {
     ShortenedView(
         index: 0,
         selectedCellIndex: .constant(0),
-        routine: testRoutines[0],
+        createRoutine: .constant(false),
+        routine: nil, // testRoutines[0],
         height: 687.6666666666667,
         width: 402.0
     )

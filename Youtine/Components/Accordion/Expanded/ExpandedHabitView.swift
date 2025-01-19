@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HabitView: View {
+struct ExpandedHabitView: View {
     // !!!: START
     
     // MARK: Instance Variables
@@ -52,7 +52,7 @@ struct HabitView: View {
                 } label: {
                     HStack {
                         Image(systemName: labelImage)
-                            .animation(.bouncy)
+                            .animation(.easeInOut)
                         VStack(alignment: .leading) {
                             Text(label)
                             Text(desc)
@@ -62,6 +62,10 @@ struct HabitView: View {
                     }
                     .foregroundStyle(Color.white)
                     .padding(.leading, 20)
+                    .symbolEffect(
+                        .bounce,
+                        value: habit.completed
+                    )
                     .onAppear{
                         guard let lastHabit: Habit = habits.last else { return }
                         
@@ -82,6 +86,7 @@ struct HabitView: View {
             .listStyle(PlainListStyle())
             .frame(height: height/2.3)
             .padding(.leading, 5)
+            .padding(.trailing, 20)
             
             VStack {
                 HStack{
@@ -92,19 +97,22 @@ struct HabitView: View {
                             1 : 0
                         )
                         .opacity(animatedOpacity)
+                        .padding(.trailing, 20)
                         .animation(
-                            .easeInOut(duration: 0.65)
+                            .easeInOut(duration: 0.95)
                             .repeatForever(
                                 autoreverses: true
                             ),
                             value: animatedOpacity
                         ) // Animate the scale
+                        
                         .onAppear {
-                            animatedOpacity = 0.5 // Trigger the animation
+                            animatedOpacity = 0.75 // Trigger the animation
                         }
 
                 }
                 .padding(.bottom, 20)
+                
                 HStack {
                     Text("Completed:")
                         .font(
@@ -124,16 +132,18 @@ struct HabitView: View {
                         )
                         .opacity(0.7)
                 }
+                .padding(.leading, 30)
+                .padding(.trailing, 30)
+                .padding(.bottom, 30)
             }
-            .padding(25)
         }
         .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
-    HabitView(
-        habits: testRoutines[0].habits,
+    ExpandedHabitView(
+        habits: testRoutines[0]!.habits,
         height: 687.6666666667
     )
 }

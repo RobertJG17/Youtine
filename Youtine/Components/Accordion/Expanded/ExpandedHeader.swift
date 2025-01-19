@@ -9,12 +9,14 @@ import SwiftUI
 
 struct ExpandedHeader: View {
     var title: String
+    var height: CGFloat
     @Binding var selectedCellIndex: Int?
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .center, spacing: 0) {
             // Routine title
-            HStack(spacing: 0) {
+            Spacer()
+            HStack(alignment: .center, spacing: 0) {
                 Text(title)
                     .font(
                         .system(
@@ -27,21 +29,22 @@ struct ExpandedHeader: View {
             }
             
         }
-            .frame(maxWidth: .infinity)
-            .background(Color.clear) // Give the Spacer a tappable area
-            .contentShape(Rectangle()) // Ensure the entire area is tappable
-            .onTapGesture {
-                selectedCellIndex = nil
-            }
-            .padding(.leading, 25)
-            .padding(.trailing, 25)
-            .preferredColorScheme(.dark)
+        .frame(height: height / 7)
+        .background(Color.clear)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            selectedCellIndex = nil
+        }
+        .padding(.leading, 25)
+        .padding(.trailing, 25)
+        .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
     ExpandedHeader(
         title: "Morning Routine",
+        height: 687.666666667,
         selectedCellIndex: .constant(1)
     )
 }

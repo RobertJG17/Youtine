@@ -20,16 +20,16 @@ struct ExpandedView: View {
     init(
         index: Int,
         selectedCellIndex: Binding<Int?>,
-        routine: Youtine,
+        routine: Youtine?,
         height: CGFloat
     ) {
         self.index = index
         self._selectedCellIndex = selectedCellIndex
-        self.title = routine.title
-        self.days = routine.days
-        self.start = routine.start
-        self.habits = routine.habits
-        self.borderColor = Color.from(description: routine.borderColor)
+        self.title = routine?.title ?? ""
+        self.days = routine?.days ?? []
+        self.start = routine?.start ?? ""
+        self.habits = routine?.habits ?? []
+        self.borderColor = Color.from(description: routine?.borderColor ?? "white")
         self.height = height
     }
     
@@ -37,17 +37,16 @@ struct ExpandedView: View {
         VStack {
             ExpandedHeader(
                 title: title,
+                height: height,
                 selectedCellIndex: $selectedCellIndex
             )
-                
+                            
             VStack(spacing: 0) {
                 ExpandedDetailView(
                     start: start
                 )
                 
-                Spacer()
-                
-                HabitView(
+                ExpandedHabitView(
                     habits: habits,
                     height: height
                 )
@@ -59,7 +58,7 @@ struct ExpandedView: View {
                     .opacity(0.2)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea(edges: .horizontal)
-                    .frame(height: height*0.85)
+                    .frame(height: height*0.8)
             )
             .overlay(
                 VStack {
@@ -71,9 +70,10 @@ struct ExpandedView: View {
                         .fill(borderColor)
                         .frame(height: 1)
                 }
-                    .frame(height: height*0.85)
+                    .frame(height: height*0.8)
             )
-            .frame(height: height*0.85)
+            .frame(height: height*0.8)
+            .padding(.bottom, 30)
             .preferredColorScheme(.dark)
             
         }

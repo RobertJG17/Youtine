@@ -32,7 +32,7 @@ struct TimePickerView: View {
                 Text("Done")
             }
         }
-        .padding()
+        .preferredColorScheme(.dark)
     }
 
     private var formattedTime: String {

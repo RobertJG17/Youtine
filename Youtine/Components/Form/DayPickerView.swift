@@ -129,7 +129,7 @@ struct DayPickerView: View {
         }
         .frame(width: width / 1.5)
         .transition(.asymmetric(insertion: .scale, removal: .opacity))
-        .animation(.easeInOut, value: selectedDays)
+        .symbolEffect(.bounce, value: selectedDays)
         .frame(width: width*0.78)
         .padding(.leading, 6)
         .onChange(of: selectedDays) { prevDays, newDays in

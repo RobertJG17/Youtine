@@ -9,16 +9,17 @@ import SwiftUI
 
 struct FormView: View {
     var index: Int
+    @Binding var selectedCellIndex: Int?
     var width: CGFloat
     var height: CGFloat
     @Binding var createRoutine: Bool
     @Binding var showingRoutineInit: Bool
+    @Binding var showingTimePicker: Bool
 
     @State private var name: String = ""
     @State var start: String = "8:00 AM"
     @State private var selectedDays: [Int: String] = [:]
     @State private var habits: [Habit] = []
-    @State private var showingTimePicker: Bool = false
     
     var body: some View {
         Form {
@@ -29,6 +30,7 @@ struct FormView: View {
                     Spacer()
                     Button {
                         createRoutine.toggle()
+                        selectedCellIndex = nil
                     } label: {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 24))
@@ -43,12 +45,6 @@ struct FormView: View {
                 } label: {
                     Text(start)
                 }
-                .sheet(isPresented: $showingTimePicker, content: {
-                    TimePickerView(
-                        showingTimePicker: $showingTimePicker,
-                        start: $start
-                    )
-                })
             }
 
             Section(header: Text("Days")) {
@@ -77,9 +73,11 @@ struct FormView: View {
 #Preview {
     FormView(
         index: 0,
+        selectedCellIndex: .constant(0),
         width: 402.0,
         height: 687.666667,
         createRoutine: .constant(true),
-        showingRoutineInit: .constant(true)
+        showingRoutineInit: .constant(true),
+        showingTimePicker: .constant(false)
     )
 }

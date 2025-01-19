@@ -13,21 +13,24 @@ struct ShortenedDetailView: View {
     var habits: [Habit]
     
     var body: some View {
-        HStack {
-            Text("Start Time: ")
-                .fontWeight(.thin)
+        VStack {
+            HStack {
+                Text("Start Time: ")
+                    .fontWeight(.thin)
+                Spacer()
+                Text(start)
+                    .fontWeight(.thin)
+            }
+            HStack {
+                Text("Tasks Completed: ")
+                    .fontWeight(.thin)
+                Spacer()
+                Text("\(habitsCompleted)/\(habits.count)")
+                    .fontWeight(.thin)
+            }
             Spacer()
-            Text(start)
-                .fontWeight(.thin)
         }
-        HStack {
-            Text("Tasks Completed: ")
-                .fontWeight(.thin)
-            Spacer()
-            Text("\(habitsCompleted)/\(habits.count)")
-                .fontWeight(.thin)
-        }
-        Spacer()
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -35,6 +38,6 @@ struct ShortenedDetailView: View {
     ShortenedDetailView(
         start: "8:00 AM",
         habitsCompleted: 3,
-        habits: testRoutines[0].habits
+        habits: testRoutines[0]!.habits
     )
 }

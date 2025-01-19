@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RoutinesView: View {
     @Binding var selectedCellIndex: Int?
-    var routines: [Youtine]
+    @Binding var createRoutine: Bool
+    var routines: [Youtine?]
     var height: CGFloat
     var width: CGFloat
     
@@ -17,20 +18,17 @@ struct RoutinesView: View {
     
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
+            
             CardView(
                 index: index,
                 selectedCellIndex: $selectedCellIndex,
+                createRoutine: $createRoutine,
                 routine: routine,
                 height: height,
                 width: width
             )
             
-            if selectedCellIndex == nil {
-                Spacer()
-            } else if (selectedCellIndex != nil) &&
-                        selectedCellIndex == index {
-                Spacer()
-            }
+            Spacer()
         }
     }
 }
@@ -38,6 +36,7 @@ struct RoutinesView: View {
 #Preview {
     RoutinesView(
         selectedCellIndex: .constant(1),
+        createRoutine: .constant(false),
         routines: testRoutines,
         height: 687.6666666666667,
         width: 402.0

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HeaderView: View {
     var width: CGFloat
+    var height: CGFloat
     var selectedCellIndex: Int?
     
     var body: some View {
@@ -20,8 +21,7 @@ struct HeaderView: View {
                     design: .rounded
                 )
             )
-            .frame(width: width)
-            .padding(.bottom, 10)
+            .frame(maxWidth: .infinity, maxHeight: height / 8)
             .underline(
                 true,
                 pattern: .solid
@@ -30,15 +30,14 @@ struct HeaderView: View {
             .opacity(
                 selectedCellIndex == nil ? 1 : 0
             )
-            .transition(
-                .asymmetric(
-                    insertion: .slide,
-                    removal: .scale.combined(with: .opacity)
-                )
-            )
+            .transition(.move(edge: .top))
     }
 }
 
 #Preview {
-    HeaderView(width: 400, selectedCellIndex: nil)
+    HeaderView(
+        width: 400,
+        height: 687.6666666667,
+        selectedCellIndex: nil
+    )
 }

@@ -27,5 +27,5 @@ struct HabitListView: View {
 }
 
 #Preview {
-    HabitListView(habits: .constant(testRoutines[0].habits))
+    HabitListView(habits: .constant(testRoutines[0]!.habits))
 }
