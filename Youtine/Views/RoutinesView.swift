@@ -13,9 +13,7 @@ struct RoutinesView: View {
     var routines: [Youtine?]
     var height: CGFloat
     var width: CGFloat
-    
-    let MAX_ROUTINE_COUNT: Int = 3
-    
+
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.element) { index, routine in
             

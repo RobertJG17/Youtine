@@ -21,7 +21,7 @@ struct HeaderView: View {
                     design: .rounded
                 )
             )
-            .frame(maxWidth: .infinity, maxHeight: height / 8)
+            .frame(maxWidth: .infinity, maxHeight: height / 7)
             .underline(
                 true,
                 pattern: .solid
