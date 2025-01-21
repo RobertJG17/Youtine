@@ -9,35 +9,8 @@ import SwiftUI
 
 struct DayPickerView: View {
     var width: CGFloat
+    var routineColor: Color
     @Binding var selectedDays: [Int: String]
-    
-    func isIndDictionary(currKey: Int) -> Dictionary<Int,String>.Element? {
-        return selectedDays.first(
-            where: {
-                (key: Int, value: String) in
-            currKey == key
-        })
-    }
-    
-    func handleDayClicked(currKey: Int, day: String) {
-        let inDictionary = isIndDictionary(currKey: currKey)
-        
-        if inDictionary != nil {
-            selectedDays.removeValue(forKey: currKey)
-        } else {
-            selectedDays[currKey] = day
-        }
-    }
-    
-    func isFilled(currKey: Int) -> Bool {
-        let inDictionary = isIndDictionary(currKey: currKey)
-        
-        if inDictionary != nil {
-            return true
-        } else {
-            return false
-        }
-    }
     
     var body: some View {
         HStack(spacing: 0) {
@@ -128,20 +101,17 @@ struct DayPickerView: View {
             }
         }
         .frame(width: width / 1.5)
-        .transition(.asymmetric(insertion: .scale, removal: .opacity))
-        .symbolEffect(.bounce, value: selectedDays)
+        .foregroundStyle(routineColor)
+        .transition(.asymmetric(insertion: .opacity, removal: .opacity))
+        .animation(.easeIn, value: selectedDays)
         .frame(width: width*0.78)
         .padding(.leading, 6)
-        .onChange(of: selectedDays) { prevDays, newDays in
-            print("Old days: ", prevDays)
-            print("New days: ", newDays)
-        }
     }
 }
 
 #Preview {
     DayPickerView(
-        width: 402.0,
+        width: 402.0, routineColor: Color.yellow,
         selectedDays: .constant(
             [
                 0: "M",

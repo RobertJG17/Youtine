@@ -12,7 +12,7 @@ import SwiftData
 struct YoutineApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(routines: testRoutines)
+            ContentView()
         }
         .modelContainer(for: [Youtine.self, Habit.self])
     }

@@ -9,18 +9,19 @@ import SwiftUI
 
 struct CreateRoutineView: View {
     // MARK: Instance Variables
-    var index: Int
-    @Binding var selectedCellIndex: Int?
     var width: CGFloat
     var height: CGFloat
-    @Binding var createRoutine: Bool
-
-    // MARK:
-    @State private var name: String = ""
+    @Binding var selectedCellIndex: Int?
+    @Binding var routines: [Youtine?]
+    
+    // MARK: Initial form state variables
     @State private var start: String = "8:00 AM"
+    @State private var selectedDays: [Int: String] = [:]
     @State private var habits: [Habit] = []
     @State private var showingRoutineInit: Bool = false
     @State private var showingTimePicker: Bool = false
+    
+    @Environment(\.currentPage) var currentPage
 
     var body: some View {
         ZStack {
@@ -40,6 +41,8 @@ struct CreateRoutineView: View {
                 
             } else if showingTimePicker == true {
                 TimePickerView(
+                    width: width,
+                    height: height,
                     showingTimePicker: $showingTimePicker,
                     start: $start
                 )
@@ -51,11 +54,13 @@ struct CreateRoutineView: View {
                 )
             } else {
                 FormView(
-                    index: index,
-                    selectedCellIndex: $selectedCellIndex,
                     width: width,
                     height: height,
-                    createRoutine: $createRoutine,
+                    selectedCellIndex: $selectedCellIndex,
+                    routines: $routines,
+                    start: $start,
+                    selectedDays: $selectedDays,
+                    habits: $habits,
                     showingRoutineInit: $showingRoutineInit,
                     showingTimePicker: $showingTimePicker
                 )
@@ -68,6 +73,7 @@ struct CreateRoutineView: View {
                 )
             }
         }
+        .animation(.easeInOut, value: currentPage.wrappedValue)
         .animation(.easeInOut, value: showingRoutineInit)
         .animation(.easeInOut, value: showingTimePicker)
     }
@@ -75,10 +81,9 @@ struct CreateRoutineView: View {
 
 #Preview {
     CreateRoutineView(
-        index: 0,
-        selectedCellIndex: .constant(0),
         width: 402.0,
         height: 687.6666666,
-        createRoutine: .constant(true)
+        selectedCellIndex: .constant(0),
+        routines: .constant(testRoutines)
     )
 }

@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct TimePickerView: View {
-    @State private var selectedTime = Date()
+    var width: CGFloat
+    var height: CGFloat
     @Binding var showingTimePicker: Bool
     @Binding var start: String
+    
+    @State private var selectedTime = Date()
 
     var body: some View {
         VStack {
@@ -32,6 +35,7 @@ struct TimePickerView: View {
                 Text("Done")
             }
         }
+        .frame(width: width, height: height)
         .preferredColorScheme(.dark)
     }
 
@@ -47,6 +51,8 @@ struct TimePickerView: View {
 
 #Preview {
     TimePickerView(
+        width: 402.0,
+        height: 687.6666666667,
         showingTimePicker: .constant(true),
         start: .constant("8:00 AM")
     )

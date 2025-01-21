@@ -5,14 +5,16 @@
 //  Created by Bobby Guerra on 1/16/25.
 //
 
-import Foundation
+import SwiftUI
 
 var testRoutines: [Youtine?] =
     [
         Youtine(
+            index: 0,
             start: "8:00 AM",
-            days: ["M", "W", "F"],
+            days: [0: "M", 1: "W", 2: "F"],
             title: "Morning Routine",
+            borderColor: .red,
             habits: [
                 Habit(
                     label: "Wash Face",
@@ -42,13 +44,14 @@ var testRoutines: [Youtine?] =
                     label: "Code",
                     desc: "Learn iOS for at least 20 mins a day"
                 )
-            ],
-            borderColor: .yellow
+            ]
         ),
         Youtine(
+            index: 1,
             start: "12:00 PM",
-            days: ["M", "W", "F"],
+            days: [0: "M", 1: "W", 2: "F"],
             title: "Afternoon Routine",
+            borderColor: .blue,
             habits: [
                 Habit(
                     label: "Wash Face",
@@ -62,8 +65,7 @@ var testRoutines: [Youtine?] =
                     label: "Moisture",
                     desc: "Use moisturizer with SPF 50 minimum"
                 )
-            ],
-            borderColor: .blue
+            ]
         ),
         nil
 //        Youtine(

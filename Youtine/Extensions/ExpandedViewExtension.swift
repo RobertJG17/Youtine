@@ -10,7 +10,7 @@ import Foundation
 
 extension ExpandedView {
     var backgroundImage: String {
-        switch(index) {
+        switch(selectedCellIndex) {
         case 0:
             return "morning"
         case 1:

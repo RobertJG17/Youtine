@@ -10,7 +10,6 @@ import SwiftUI
 struct HeaderView: View {
     var width: CGFloat
     var height: CGFloat
-    var selectedCellIndex: Int?
     
     var body: some View {
         Text("Youtine")
@@ -27,17 +26,12 @@ struct HeaderView: View {
                 pattern: .solid
             )
             .preferredColorScheme(.dark)
-            .opacity(
-                selectedCellIndex == nil ? 1 : 0
-            )
-            .transition(.move(edge: .top))
     }
 }
 
 #Preview {
     HeaderView(
         width: 400,
-        height: 687.6666666667,
-        selectedCellIndex: nil
+        height: 687.6666666667
     )
 }

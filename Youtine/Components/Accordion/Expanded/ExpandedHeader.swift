@@ -8,9 +8,21 @@
 import SwiftUI
 
 struct ExpandedHeader: View {
-    var title: String
     var height: CGFloat
+    var title: String
     @Binding var selectedCellIndex: Int?
+    
+    @Environment(\.currentPage) var currentPage
+    
+    init(
+        height: CGFloat,
+        routine: Youtine?,
+        selectedCellIndex: Binding<Int?>
+    ) {
+        self.height = height
+        self.title = routine?.title ?? "Routine"
+        self._selectedCellIndex = selectedCellIndex
+    }
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -28,13 +40,17 @@ struct ExpandedHeader: View {
                 Image(systemName: "chevron.up")
             }
         }
-        .frame(height: height / 7)
+        .frame(height: height*0.1)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
+            // MARK: selectedCellIndex set to nil
             selectedCellIndex = nil
+            
+            // MARK: Navigation
+            currentPage.wrappedValue = .home
         }
-        .padding(.vertical, 25)
+        .padding(.top, 100)
         .padding(.horizontal, 20)
         .preferredColorScheme(.dark)
     }
@@ -42,8 +58,8 @@ struct ExpandedHeader: View {
 
 #Preview {
     ExpandedHeader(
-        title: "Morning Routine",
         height: 687.666666667,
+        routine: testRoutines[0]!,
         selectedCellIndex: .constant(1)
     )
 }
