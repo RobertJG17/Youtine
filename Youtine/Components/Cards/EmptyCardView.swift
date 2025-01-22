@@ -45,11 +45,11 @@ struct EmptyCardView: View {
             .background(Color.clear) // Give the Spacer a tappable area
             .contentShape(Rectangle()) // Ensure the entire area is tappable
             .onTapGesture {
-                // !!!: selectedCellIndex set
-                selectedCellIndex = index
-
-                // !!!: Navigate to createRoutine
+                /// MARK: NAVIGATE TO .createRoutine
                 currentPage.wrappedValue = .createRoutine
+                
+                /// MARK: SET selectedCellIndex index
+                selectedCellIndex = index
             }
             .transition(
                 .asymmetric(

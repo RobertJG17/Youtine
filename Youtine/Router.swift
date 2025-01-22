@@ -29,16 +29,17 @@ struct Router: View {
                 ExpandedRoutineView(
                     width: width,
                     height: height,
-                    routines: routines,
-                    selectedRoutine: selectedRoutine,
+                    routine: selectedRoutine,
+                    routines: $routines,
                     selectedCellIndex: $selectedCellIndex
                 )
-            } else if currentPage == .createRoutine {
-                CreateRoutineView(
+            } else if currentPage == .createRoutine || currentPage == .editRoutine {
+                ManageRoutineView(
                     width: width,
                     height: height,
-                    selectedCellIndex: $selectedCellIndex,
-                    routines: $routines
+                    routine: $selectedRoutine,
+                    routines: $routines,
+                    selectedCellIndex: $selectedCellIndex
                 )
                 .transition(.scale)
             }

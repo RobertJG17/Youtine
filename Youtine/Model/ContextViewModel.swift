@@ -7,6 +7,11 @@
 
 import SwiftData
 import SwiftUI
+import Observation
+
+enum ContextErrors: Error {
+    case UninitializedError(message: String)
+}
 
 @Observable
 final class ContextViewModel {  // MARK: Acts as invocation/error handling layer for Data Manager
@@ -19,29 +24,27 @@ final class ContextViewModel {  // MARK: Acts as invocation/error handling layer
     }
 
     /// Method used invoke data manager write
-    /// - Parameter routines: [Youtine?] Should be an array with up to 3 nil values or 3 Youtine instances
-    func saveRoutines(routines: [Youtine?]) {
+    /// - Parameter routines: Youtine instance
+    func saveRoutine(routine: Youtine) {
         do {
-            try dataManager.saveRoutines(
-                routines: routines
+            try dataManager.saveRoutine(
+                routine: routine
             )
         } catch {
-            print("Error encountered in view model saveRoutine: ", error)
+            print(error)
         }
     }
 
     /// Method used to invoke data manager delete.
     /// - Parameters:
-    ///   - routines: [Youtine?] Should be an array with at least 1 non nil entry
-    ///   - index: The selected index used to delete the desired routine
-    func deleteRoutine(routines: [Youtine], index: Int) {
+    /// - Parameter routines: Youtine instance
+    func deleteRoutine(routine: Youtine) {
         do {
             try dataManager.deleteRoutine(
-                routines: routines,
-                index: index
+                routine: routine
             )
         } catch {
-            print("Error encountered in view model deleteRoutine: ", error)
+            print(error)
         }
         
     }

@@ -6,10 +6,12 @@
 //
 
 import SwiftData
-import SwiftUICore
+import SwiftUI
+import Observation
 
 enum DataManagerErrors: Error {
     case InvalidContext(message: String)
+    case UpdateError(message: String)
     case SaveError(message: String)
     case DeleteError(message: String)
 }
@@ -22,47 +24,113 @@ final class DataManager  {
         self.context = context
     }
     
-    /// Method used to save routines upon form submission
-    /// - Parameter routines: [Youtine?] Should be an array with up to 3 nil values or 3 Youtine instances
-    func saveRoutines(routines: [Youtine?]) throws {
-        guard let context = context else { return }
-        for routine in routines {
-            if let newRoutine = routine {
-                context.insert(newRoutine)
+    /// Method used to save routine upon form submission
+    /// - Parameter entry: Existing instance found with descriptor from context
+    /// - Parameter routine: Youtine  instance
+    /// - Parameter definedContext: Context used to perform Swift Data object management operations
+    func update(entry: Youtine, routine: Youtine, definedContext: ModelContext) throws -> Void {
+        // Update the existing routine's properties
+        entry.index = routine.index
+        entry.start = routine.start
+        entry.daysJSON = routine.daysJSON
+        entry.borderColor = routine.borderColor
+
+        // Save changes
+        if definedContext.hasChanges {
+            do {
+                try definedContext.save()
+                print("Routine updated successfully!")
+            } catch {
+                throw DataManagerErrors.UpdateError(
+                    message: """
+                        Entity: DataManager \n
+                        Line: 41\n
+                        Function Invocation: update()\n
+                        Error: \(error.localizedDescription)
+                    """
+                )
             }
+        } else {
+            print("No changes to save.")
         }
         
+    }
+    
+    /// Method used to save routine upon form submission
+    /// - Parameter routine: Youtine  instance
+    /// - Parameter definedContext: Context used to perform Swift Data object management operations
+    func save(routine: Youtine, definedContext: ModelContext) throws {
         do {
-            if context.hasChanges {
-                try context.save() // Save changes to persist all objects
+            definedContext.insert(routine)
+            if definedContext.hasChanges {
+                try definedContext.save()
+                print("Routine saved successfully!")
             }
         } catch {
             throw DataManagerErrors.SaveError(
-                message: "Error saving routines: \(error.localizedDescription)"
+                message: """
+                    Entity: DataManager \n
+                    Line: 66\n
+                    Function Invocation: save()\n
+                    Error: \(error.localizedDescription)
+                """
             )
         }
     }
-
     
-    /// Method used to set routine at specified index to nil
-    /// - Parameters:
-    ///   - routines: [Youtine?] Should be an array with at least 1 non nil entry
-    ///   - index: The selected index used to delete the desired routine
-    func deleteRoutine(routines: [Youtine?], index: Int) throws {
+    /// Method used to save routine upon form submission
+    /// - Parameter routine: Youtine  instance
+    func saveRoutine(routine: Youtine) throws {
+        guard let context = context else {
+            throw ContextErrors.UninitializedError(
+                message: """
+                    Entity: DataManager \n
+                    Line: 84\n
+                    Function Invocation: saveRoutine()\n
+                    Error: Nil context
+                """
+            )
+        }
+        
+        let fetchDescriptor = FetchDescriptor<Youtine>(
+            predicate: #Predicate { $0.id == routine.id },
+            sortBy: [SortDescriptor(\Youtine.id)]
+        )
+        
         do {
-            guard let context = context else { return }
-            let routine = routines[index]
+            let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
+            let validEntry = existingEntry.first
             
-            if let routineToDelete = routine {
-                context.delete(routineToDelete)
+            if let entry = validEntry {
+                try update(
+                    entry: entry,
+                    routine: routine,
+                    definedContext: context
+                )
             } else {
-                throw DataManagerErrors.DeleteError(message: "Invalid index to delete \nRoutines: \(routines)\nIndex: \(index)")
+                try save(routine: routine, definedContext: context)
             }
             
         } catch {
-            throw DataManagerErrors.DeleteError(
-                message: "Error deleting routine: \(error)"
+            throw error
+        }
+    }
+    
+    /// Method used to set routine at specified index to nil
+    /// - Parameters:
+    ///   - routine: Youtine instance
+    func deleteRoutine(routine: Youtine) throws {
+        guard let context = context else {
+            throw ContextErrors.UninitializedError(
+                message: """
+                    Entity: DataManager \n
+                    Line: 123\n
+                    Function Invocation: deleteRoutine()\n
+                    Error: Nil context
+                """
             )
         }
+        
+        context.delete(routine)
     }
 }

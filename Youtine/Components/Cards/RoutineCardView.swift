@@ -11,6 +11,7 @@ struct RoutineCardView: View {
     var width: CGFloat
     var height: CGFloat
     var index: Int
+    @Binding var selectedCellIndex: Int?
     
     // ???: Properties from routine
     var title: String
@@ -18,12 +19,9 @@ struct RoutineCardView: View {
     var habits: [Habit]
     var borderColor: Color
     var routineCreated: Bool
-    
-    @Binding var selectedCellIndex: Int?
 
     @Environment(\.currentPage) var currentPage
-    
-    // MARK: Computed Properties
+
     var habitsCompleted: Int {
         return habits.reduce(0) { partialResult, todo in
             partialResult + (todo.completed ? 1 : 0)
@@ -41,7 +39,7 @@ struct RoutineCardView: View {
         self.height = height
         self.index = index
         
-        self.title = routine?.title ?? ""
+        self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue!)
         self.start = routine?.start ?? ""
         self.habits = routine?.habits ?? []
         self.borderColor = Color.from(
@@ -87,11 +85,11 @@ struct RoutineCardView: View {
         .contentShape(Rectangle()) // Ensure the entire area is tappable
         // MARK: [END]
         .onTapGesture {
-            // MARK: selectedCellIndex set
-            selectedCellIndex = index
-            
-            // MARK: Navigate to routine
+            /// MARK: NAVIGATE TO .routine
             currentPage.wrappedValue = .routine
+            
+            /// MARK: SET selectedCellIndex index
+            selectedCellIndex = index
         }
         .background(Color.black)
     }

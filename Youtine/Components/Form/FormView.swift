@@ -22,10 +22,7 @@ struct FormView: View {
     // MARK: Set in onAppear
     @State var routineColor: Color = Color.white
     @State var routineTitle: String = ""
-    @State var contextViewModel: ContextViewModel?
     
-    // MARK: Context used to initialize view model
-    @Environment(\.modelContext) var context
     
     init(
         width: CGFloat,
@@ -50,31 +47,10 @@ struct FormView: View {
         self._showingTimePicker = showingTimePicker
     }
     
-    // MARK: FORM FUNCTIONALITY
-    func submit() {
-        guard let cvm = contextViewModel else { return }
-        
-        if let validIndex = selectedCellIndex {
-            print("VALID INDEX: ", validIndex)
-            let newRoutine = Youtine(
-                index: validIndex,
-                start: start,
-                days: selectedDays,
-                title: routineTitle,
-                borderColor: routineColor,
-                habits: habits
-            )
-            
-            routines[validIndex] = newRoutine
-            cvm.saveRoutines(routines: routines)
-        }
-    }
-    
     var body: some View {
         Form {
             Section(
                 header: FormHeaderView(
-                    submit: submit,
                     routineTitle: routineTitle,
                     selectedCellIndex: $selectedCellIndex
                 )
@@ -129,15 +105,7 @@ struct FormView: View {
                 )
             }
         }
-        .onAppear {
-            if let index = selectedCellIndex {
-                routineColor = getRoutineColor(index: index)
-                routineTitle = getRoutineTitle(index: index)
-            }
-            
-            // MARK: For creating state object with Swift Data Context
-            contextViewModel = ContextViewModel(context: context)
-        }
+        
         .scrollContentBackground(.hidden)
         .background(Color.black.ignoresSafeArea())
         .preferredColorScheme(.dark)

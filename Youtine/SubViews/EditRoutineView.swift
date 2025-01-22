@@ -1,25 +1,23 @@
 //
-//  CreateRoutineView.swift
+//  ManageRoutine.swift
 //  Youtine
 //
-//  Created by Bobby Guerra on 1/17/25.
+//  Created by Bobby Guerra on 1/21/25.
 //
 
 import SwiftUI
 
-struct CreateRoutineView: View {
+struct EditRoutineView: View {
     // MARK: Instance Variables
     var width: CGFloat
     var height: CGFloat
     @Binding var selectedCellIndex: Int?
     @Binding var routines: [Youtine?]
-    
-    // MARK: Initial form state variables
-    @State private var start: String = "8:00 AM"
-    @State private var selectedDays: [Int: String] = [:]
-    @State private var habits: [Habit] = []
-    @State private var showingRoutineInit: Bool = false
-    @State private var showingTimePicker: Bool = false
+    @Binding var start: String
+    @Binding var selectedDays: [Int: String]
+    @Binding var habits: [Habit]
+    @Binding var showingRoutineInit: Bool
+    @Binding var showingTimePicker: Bool
     
     @Environment(\.currentPage) var currentPage
 
@@ -32,13 +30,7 @@ struct CreateRoutineView: View {
                     habits: $habits,
                     showingRoutineInit: $showingRoutineInit
                 )
-                .transition(
-                    .asymmetric(
-                        insertion: .move(edge: .bottom),
-                        removal: .move(edge: .bottom)
-                    )
-                )
-                
+                .transition(.move(edge: .bottom))
             } else if showingTimePicker == true {
                 TimePickerView(
                     width: width,
@@ -65,12 +57,7 @@ struct CreateRoutineView: View {
                     showingTimePicker: $showingTimePicker
                 )
                 .padding(.bottom, 20)
-                .transition(
-                    .asymmetric(
-                        insertion: .scale,
-                        removal: .scale
-                    )
-                )
+                .transition(.scale)
             }
         }
         .animation(.easeInOut, value: currentPage.wrappedValue)
@@ -80,10 +67,14 @@ struct CreateRoutineView: View {
 }
 
 #Preview {
-    CreateRoutineView(
+    EditRoutineView(
         width: 402.0,
-        height: 687.6666666,
+        height: 687.666666666667,
         selectedCellIndex: .constant(0),
-        routines: .constant(testRoutines)
-    )
+        routines: .constant(testRoutines),
+        start: .constant(testRoutines[0]!.start),
+        selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),
+        habits: .constant(testRoutines[0]!.habits),
+        showingRoutineInit: .constant(false),
+        showingTimePicker: .constant(false))
 }

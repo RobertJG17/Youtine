@@ -20,7 +20,9 @@ struct ExpandedHeader: View {
         selectedCellIndex: Binding<Int?>
     ) {
         self.height = height
-        self.title = routine?.title ?? "Routine"
+        self.title = ManageRoutineView.getRoutineTitle(
+            index: selectedCellIndex.wrappedValue!
+        )
         self._selectedCellIndex = selectedCellIndex
     }
     
@@ -44,11 +46,11 @@ struct ExpandedHeader: View {
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
-            // MARK: selectedCellIndex set to nil
-            selectedCellIndex = nil
-            
-            // MARK: Navigation
+            /// MARK: NAVIGATE TO .home
             currentPage.wrappedValue = .home
+            
+            /// MARK: SET selectedCellIndex nil
+            selectedCellIndex = nil
         }
         .padding(.top, 100)
         .padding(.horizontal, 20)

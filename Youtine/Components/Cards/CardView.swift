@@ -32,10 +32,6 @@ struct CardView: View {
         self._selectedCellIndex = selectedCellIndex
     }
     
-    
-    // RoutineCardView
-    // EmptyCardView
-    
     var body: some View {
         // card start
         ZStack {

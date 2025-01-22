@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FormHeaderView: View {
-    var submit: () -> Void
     var routineTitle: String?
     @Binding var selectedCellIndex: Int?
     
@@ -17,6 +16,7 @@ struct FormHeaderView: View {
     @State private var showConfirmConfirmation = false
     
     @Environment(\.currentPage) var currentPage
+    @Environment(\.handleFormSubmit) var handleFormSubmit
     
     var body: some View {
         VStack {
@@ -35,7 +35,11 @@ struct FormHeaderView: View {
                 ) {
                     Button("Delete", role: .destructive) {
                         showDeleteConfirmation = false
+                        
+                        /// MARK: NAVIGATE TO .home
                         currentPage.wrappedValue = .home
+                        
+                        /// MARK: SET selecteCellIndex nil
                         selectedCellIndex = nil
                     }
                 } message: {
@@ -54,10 +58,12 @@ struct FormHeaderView: View {
                     isPresented: $showConfirmConfirmation
                 ) {
                     Button("Create Routine") {
-                        // TODO: implement saveRoutine
+                        handleFormSubmit()
                         showConfirmConfirmation = false
+                        /// MARK: NAVIGATE TO .home
                         currentPage.wrappedValue = .home
-                        submit()
+                        
+                        /// MARK: SET selecteCellIndex nil
                         selectedCellIndex = nil
                         
                     }

@@ -14,7 +14,6 @@ class Youtine: Identifiable {
     var index: Int
     var start: String
     var daysJSON: String // Store days as JSON string
-    var title: String
     var borderColor: String
     @Relationship(deleteRule: .cascade) var habits: [Habit] // Proper relationship
 
@@ -22,7 +21,6 @@ class Youtine: Identifiable {
         index: Int,
         start: String,
         days: [Int: String],
-        title: String,
         borderColor: Color,
         habits: [Habit]
     ) {
@@ -30,7 +28,6 @@ class Youtine: Identifiable {
         self.index = index
         self.start = start
         self.daysJSON = Youtine.encodeDays(days)
-        self.title = title
         self.borderColor = borderColor.description
         self.habits = habits
     }

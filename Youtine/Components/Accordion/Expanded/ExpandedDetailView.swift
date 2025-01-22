@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExpandedDetailView: View {
     var start: String
+    @Binding var selectedCellIndex: Int?
     
     var body: some View {
         VStack {
@@ -22,6 +23,9 @@ struct ExpandedDetailView: View {
                         )
                     )
                 Spacer()
+                ExpandedDetailToolbarView(
+                    selectedCellIndex: $selectedCellIndex
+                )
             }
             .padding(.bottom, 10)
                         
@@ -50,5 +54,8 @@ struct ExpandedDetailView: View {
 }
 
 #Preview {
-    ExpandedDetailView(start: "8:00 AM")
+    ExpandedDetailView(
+        start: "8:00 AM",
+        selectedCellIndex: .constant(0)
+    )
 }
