@@ -10,6 +10,7 @@ import SwiftUI
 struct FormView: View {
     var width: CGFloat
     var height: CGFloat
+    @Binding var routineColor: Color
     @Binding var selectedCellIndex: Int?
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
@@ -19,13 +20,13 @@ struct FormView: View {
     @Binding var showingTimePicker: Bool
     
     // MARK: Set in onAppear
-    @State var routineColor: Color = Color.white
-    @State var routineTitle: String = ""
     
+    @State var routineTitle: String = ""
     
     init(
         width: CGFloat,
         height: CGFloat,
+        routineColor: Binding<Color>,
         selectedCellIndex: Binding<Int?>,
         start: Binding<String>,
         selectedDays: Binding<Dictionary<Int, String>>,
@@ -36,6 +37,7 @@ struct FormView: View {
     ) {
         self.width = width
         self.height = height
+        self._routineColor = routineColor
         self._selectedCellIndex = selectedCellIndex
         self._start = start
         self._selectedDays = selectedDays

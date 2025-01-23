@@ -11,6 +11,7 @@ struct EditRoutineView: View {
     // MARK: Instance Variables
     var width: CGFloat
     var height: CGFloat
+    @Binding var routineColor: Color
     @Binding var selectedCellIndex: Int?
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
@@ -47,6 +48,7 @@ struct EditRoutineView: View {
                 FormView(
                     width: width,
                     height: height,
+                    routineColor: $routineColor,
                     selectedCellIndex: $selectedCellIndex,
                     start: $start,
                     selectedDays: $selectedDays,
@@ -68,6 +70,7 @@ struct EditRoutineView: View {
     EditRoutineView(
         width: 402.0,
         height: 687.666666666667,
+        routineColor: .constant(Color.white),
         selectedCellIndex: .constant(0),
         start: .constant(testRoutines[0]!.start),
         selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),

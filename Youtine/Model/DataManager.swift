@@ -29,11 +29,12 @@ final class DataManager {
     /// - Parameter routine: Youtine  instance
     /// - Parameter definedContext: Context used to perform Swift Data object management operations
     func update(entry: Youtine, routine: Youtine, definedContext: ModelContext) throws -> Void {
-        // Update the existing routine's properties
+        // !!!: MAKE SURE TO MAP THRU ALL PROPERTIES
         entry.index = routine.index
         entry.start = routine.start
         entry.daysJSON = routine.daysJSON
         entry.borderColor = routine.borderColor
+        entry.habits = routine.habits
 
         // Save changes
         if definedContext.hasChanges {

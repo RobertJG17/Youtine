@@ -50,6 +50,10 @@ class Youtine: Identifiable {
         }
         return decoded
     }
+    
+    func setID(id: UUID) {
+        self.id = id
+    }
 }
 
 @Model

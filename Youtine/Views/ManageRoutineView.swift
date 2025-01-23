@@ -14,6 +14,7 @@ struct ManageRoutineView: View {
     @Binding var selectedCellIndex: Int?
     
     // MARK: Initial form state variables
+    @State private var id: UUID
     @State private var routineTitle: String
     @State private var routineColor: Color
     @State private var start: String
@@ -47,7 +48,13 @@ struct ManageRoutineView: View {
             borderColor: routineColor,
             habits: habits
         )
-    
+        
+        routine.habits.forEach({ habit in
+            print("HABIT: ", habit.label)
+        })
+        
+        // MARK: Set id for existing routines so fetchDescriptor in Data Manager save will capture saved instances
+        routine.setID(id: id)
         return routine
     }
 
@@ -63,11 +70,14 @@ struct ManageRoutineView: View {
 
         // MARK: If routine == nil, the form will render with default values
         if let unwrappedRoutine = routine.wrappedValue {
+            self.id = unwrappedRoutine.id
             self.routineColor = Color.from(description: unwrappedRoutine.borderColor)
             self.start = unwrappedRoutine.start
             self.selectedDays = Youtine.decodeDays(unwrappedRoutine.daysJSON)
             self.habits = unwrappedRoutine.habits
         } else {
+            print("In else")
+            self.id = UUID()
             self.routineColor = ManageRoutineView.getRoutineColor(index: selectedCellIndex.wrappedValue!)
             self.start = "8:00 AM"
             self.selectedDays = [:]
@@ -81,6 +91,7 @@ struct ManageRoutineView: View {
         EditRoutineView(
             width: width,
             height: height,
+            routineColor: $routineColor,
             selectedCellIndex: $selectedCellIndex,
             start: $start,
             selectedDays: $selectedDays,
@@ -88,6 +99,9 @@ struct ManageRoutineView: View {
             showingRoutineInit: $showingRoutineInit,
             showingTimePicker: $showingTimePicker
         )
+        .onAppear {
+            print("ROUTINE: ", routineTitle)
+        }
         .environment(\.handleFormSubmit, handleFormSubmit)
     }
 }
