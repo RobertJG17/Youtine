@@ -57,14 +57,14 @@ struct FormToolbarView: View {
                 isPresented: $showConfirmConfirmation
             ) {
                 Button("Create Routine") {
+                    /// MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
+                    handleFormSubmit()
+                    
                     /// MARK: NAVIGATE TO .home
                     currentPage.wrappedValue = .home
                     
                     /// MARK: STOP SHOWING CONFIRMATION DIALOG
                     showConfirmConfirmation = false
-                    
-                    /// MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
-                    handleFormSubmit()
                     
                     /// MARK: SET selecteCellIndex nil
                     selectedCellIndex = nil

@@ -33,7 +33,6 @@ struct CardsView: View {
                 )
             }
             
-            
             Spacer()
         }
     }

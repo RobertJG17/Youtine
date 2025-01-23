@@ -83,8 +83,6 @@ struct ContentView: View {
                     repeating: nil,
                     count: MAX_ROUTINES - newRoutines.count
                 )
-            
-            print("Local Routines: ", localRoutines)
         })
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)

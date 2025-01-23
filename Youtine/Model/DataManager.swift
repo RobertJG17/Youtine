@@ -106,6 +106,9 @@ final class DataManager {
             let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
             let validEntry = existingEntry.first
             
+            print("Existing: ", existingEntry)
+            print("Valid entry: ", validEntry)
+            
             if let entry = validEntry {
                 try update(
                     entry: entry,
@@ -137,29 +140,27 @@ final class DataManager {
                 """
             )
         }
+
+        context.delete(routine)
         
-         try withTransaction(Transaction()) {
-            context.delete(routine)
-            
-            do {
-                try context.save()
-                print("""
+        do {
+//            try context.save()
+            print("""
+                Entity: DataManager \n
+                Line: 141\n
+                Function Invocation: deleteRoutine()\n
+                Output: Success, context successfully deleted.
+            """)
+        } catch {
+            // MARK: Calling save error since error was thrown on .save()
+            throw DataManagerErrors.SaveError(
+                message: """
                     Entity: DataManager \n
                     Line: 141\n
                     Function Invocation: deleteRoutine()\n
-                    Output: Success, context successfully deleted.
-                """)
-            } catch {
-                // MARK: Calling save error since error was thrown on .save()
-                throw DataManagerErrors.SaveError(
-                    message: """
-                        Entity: DataManager \n
-                        Line: 141\n
-                        Function Invocation: deleteRoutine()\n
-                        Error: \(error.localizedDescription)
-                    """
-                )
-            }
+                    Error: \(error.localizedDescription)
+                """
+            )
         }
     }
 }
