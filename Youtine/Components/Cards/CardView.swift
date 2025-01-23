@@ -49,9 +49,7 @@ struct CardView: View {
                     width: width,
                     height: height,
                     index: index,
-                    borderColor: Color.from(
-                        description: routine?.borderColor ?? "white"
-                    ),
+                    borderColor: Color.white,
                     selectedCellIndex: $selectedCellIndex
                 )
             }

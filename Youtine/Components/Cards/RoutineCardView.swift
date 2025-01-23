@@ -18,7 +18,6 @@ struct RoutineCardView: View {
     var start: String
     var habits: [Habit]
     var borderColor: Color
-    var routineCreated: Bool
 
     @Environment(\.currentPage) var currentPage
 
@@ -35,21 +34,23 @@ struct RoutineCardView: View {
         routine: Youtine?,
         selectedCellIndex: Binding<Int?>
     ) {
+        if let validRoutine = routine {
+            self.start = validRoutine.start
+            self.habits = validRoutine.habits
+            self.borderColor = Color.from(description: validRoutine.borderColor)
+        } else {
+            self.start = ""
+            self.habits = []
+            self.borderColor = .white
+        }
+        
         self.width = width
         self.height = height
         self.index = index
-        
-        self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue!)
-        self.start = routine?.start ?? ""
-        self.habits = routine?.habits ?? []
-        self.borderColor = Color.from(
-            description: routine?.borderColor ?? "white"
-        )
-        self.routineCreated = routine != nil
-        
+        self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue)
+                
         self._selectedCellIndex = selectedCellIndex
     }
-    
     
     var body: some View {
         ZStack {

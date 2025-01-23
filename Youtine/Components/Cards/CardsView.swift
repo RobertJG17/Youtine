@@ -15,13 +15,24 @@ struct CardsView: View {
 
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.offset) { index, routine in
-            CardView(
-                width: width,
-                height: height,
-                index: index,
-                routine: routine,
-                selectedCellIndex: $selectedCellIndex
-            )
+            if let newRoutine = routine {
+                CardView(
+                    width: width,
+                    height: height,
+                    index: index,
+                    routine: newRoutine,
+                    selectedCellIndex: $selectedCellIndex
+                )
+            } else {
+                EmptyCardView(
+                    width: width,
+                    height: height,
+                    index: index,
+                    borderColor: Color.white,
+                    selectedCellIndex: $selectedCellIndex
+                )
+            }
+            
             
             Spacer()
         }

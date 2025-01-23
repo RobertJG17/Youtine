@@ -10,7 +10,7 @@ import SwiftUI
 struct Router: View {
     var width: CGFloat
     var height: CGFloat
-    @Binding var routines: [Youtine?]
+    var routines: [Youtine?]
     
     @State private var currentPage: Page = .home
     @State var selectedCellIndex: Int? = nil
@@ -29,8 +29,7 @@ struct Router: View {
                 ExpandedRoutineView(
                     width: width,
                     height: height,
-                    routine: selectedRoutine,
-                    routines: $routines,
+                    routine: $selectedRoutine,
                     selectedCellIndex: $selectedCellIndex
                 )
             } else if currentPage == .createRoutine || currentPage == .editRoutine {
@@ -38,7 +37,6 @@ struct Router: View {
                     width: width,
                     height: height,
                     routine: $selectedRoutine,
-                    routines: $routines,
                     selectedCellIndex: $selectedCellIndex
                 )
                 .transition(.scale)
@@ -59,6 +57,6 @@ struct Router: View {
     Router(
         width: 402.0,
         height: 687.66666667,
-        routines: .constant(testRoutines)
+        routines: testRoutines
     )
 }

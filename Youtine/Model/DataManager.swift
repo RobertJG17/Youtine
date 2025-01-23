@@ -17,7 +17,7 @@ enum DataManagerErrors: Error {
 }
 
 @Observable
-final class DataManager  {
+final class DataManager {
     private var context: ModelContext?
     
     init(context: ModelContext?) {
@@ -53,7 +53,6 @@ final class DataManager  {
         } else {
             print("No changes to save.")
         }
-        
     }
     
     /// Method used to save routine upon form submission
@@ -70,7 +69,7 @@ final class DataManager  {
             throw DataManagerErrors.SaveError(
                 message: """
                     Entity: DataManager \n
-                    Line: 66\n
+                    Line: 65\n
                     Function Invocation: save()\n
                     Error: \(error.localizedDescription)
                 """
@@ -85,15 +84,21 @@ final class DataManager  {
             throw ContextErrors.UninitializedError(
                 message: """
                     Entity: DataManager \n
-                    Line: 84\n
+                    Line: 83\n
                     Function Invocation: saveRoutine()\n
                     Error: Nil context
                 """
             )
         }
         
+        // ???: targetId dereferences property outside of predicate declaration scope
+        let targetId = routine.id
+        
+        // MARK: Check if existing Youtine object w/ id exists
         let fetchDescriptor = FetchDescriptor<Youtine>(
-            predicate: #Predicate { $0.id == routine.id },
+            predicate: #Predicate { currRoutine in
+                currRoutine.id == targetId // ???: Predicate won't bark now
+            },
             sortBy: [SortDescriptor(\Youtine.id)]
         )
         
@@ -108,9 +113,11 @@ final class DataManager  {
                     definedContext: context
                 )
             } else {
-                try save(routine: routine, definedContext: context)
+                try save(
+                    routine: routine,
+                    definedContext: context
+                )
             }
-            
         } catch {
             throw error
         }
@@ -124,13 +131,35 @@ final class DataManager  {
             throw ContextErrors.UninitializedError(
                 message: """
                     Entity: DataManager \n
-                    Line: 123\n
+                    Line: 127\n
                     Function Invocation: deleteRoutine()\n
                     Error: Nil context
                 """
             )
         }
         
-        context.delete(routine)
+         try withTransaction(Transaction()) {
+            context.delete(routine)
+            
+            do {
+                try context.save()
+                print("""
+                    Entity: DataManager \n
+                    Line: 141\n
+                    Function Invocation: deleteRoutine()\n
+                    Output: Success, context successfully deleted.
+                """)
+            } catch {
+                // MARK: Calling save error since error was thrown on .save()
+                throw DataManagerErrors.SaveError(
+                    message: """
+                        Entity: DataManager \n
+                        Line: 141\n
+                        Function Invocation: deleteRoutine()\n
+                        Error: \(error.localizedDescription)
+                    """
+                )
+            }
+        }
     }
 }

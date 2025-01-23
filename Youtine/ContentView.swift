@@ -9,20 +9,17 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    static private let MAX_ROUTINE_COUNT = 3
+    // MARK: Routines - MORNING | AFTERNOON | EVENING
+    private let MAX_ROUTINES = 3
 
     @Query var savedRoutines: [Youtine]
     
-    @State var localRoutines: [Youtine?] = Array(repeating: nil, count: MAX_ROUTINE_COUNT)
+    @State var localRoutines: [Youtine?] = []
     
     @State var contextViewModel: ContextViewModel? = nil
-    
-    // MARK: Routines - MORNING | AFTERNOON | EVENING
-    let MAX_ROUTINES: Int = 3
-    
+        
     // MARK: Context used to initialize view model
     @Environment(\.modelContext) var context
-    
     
     // MARK: Define context view model operations in Content View and pass them via context
     func writeRoutineToDisk(
@@ -32,7 +29,7 @@ struct ContentView: View {
         guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 32\n
+                    Line: 29\n
                     Function Invocation: writeRoutineToDisk()\n
                     Error: Context View Model not defined
                 """
@@ -48,15 +45,14 @@ struct ContentView: View {
         guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 48\n
+                    Line: 45\n
                     Function Invocation: deleteRoutineFromDisk()\n
                     Error: Context View Model not defined
                 """
             )
         }
-        cvm.deleteRoutine(routine: routine)
+        cvm.deleteRoutine(byID: routine.id)
     }
-    
     
     var body: some View {
         NavigationView {
@@ -67,7 +63,7 @@ struct ContentView: View {
                 Router(
                     width: width,
                     height: height,
-                    routines: $localRoutines
+                    routines: localRoutines
                 )
             }
         }
@@ -81,9 +77,14 @@ struct ContentView: View {
             
             contextViewModel = ContextViewModel(context: context)
         }
-        .onChange(of: savedRoutines, { oldValue, newValue in
-            print("OLD ROUTINES: ", oldValue)
-            print("NEW ROUTINES: ", newValue)
+        .onChange(of: savedRoutines, { _, newRoutines in
+            localRoutines = newRoutines +
+                Array.init(
+                    repeating: nil,
+                    count: MAX_ROUTINES - newRoutines.count
+                )
+            
+            print("Local Routines: ", localRoutines)
         })
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)

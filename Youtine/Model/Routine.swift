@@ -15,7 +15,7 @@ class Youtine: Identifiable {
     var start: String
     var daysJSON: String // Store days as JSON string
     var borderColor: String
-    @Relationship(deleteRule: .cascade) var habits: [Habit] // Proper relationship
+    @Relationship(deleteRule: .cascade) var habits: [Habit] = [] // Proper relationship
 
     init(
         index: Int,
@@ -51,7 +51,6 @@ class Youtine: Identifiable {
         return decoded
     }
 }
-
 
 @Model
 class Habit: Identifiable {

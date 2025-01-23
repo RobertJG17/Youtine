@@ -11,7 +11,6 @@ struct FormView: View {
     var width: CGFloat
     var height: CGFloat
     @Binding var selectedCellIndex: Int?
-    @Binding var routines: [Youtine?]
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
     @Binding var habits: [Habit]
@@ -28,7 +27,6 @@ struct FormView: View {
         width: CGFloat,
         height: CGFloat,
         selectedCellIndex: Binding<Int?>,
-        routines: Binding<Array<Youtine?>>,
         start: Binding<String>,
         selectedDays: Binding<Dictionary<Int, String>>,
         habits: Binding<Array<Habit>>,
@@ -39,7 +37,6 @@ struct FormView: View {
         self.width = width
         self.height = height
         self._selectedCellIndex = selectedCellIndex
-        self._routines = routines
         self._start = start
         self._selectedDays = selectedDays
         self._habits = habits
@@ -105,7 +102,9 @@ struct FormView: View {
                 )
             }
         }
-        
+        .onAppear {
+            routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex)
+        }
         .scrollContentBackground(.hidden)
         .background(Color.black.ignoresSafeArea())
         .preferredColorScheme(.dark)

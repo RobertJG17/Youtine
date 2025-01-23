@@ -11,7 +11,6 @@ struct ManageRoutineView: View {
     // MARK: Instance Variables
     var width: CGFloat
     var height: CGFloat
-    @Binding var routines: [Youtine?]
     @Binding var selectedCellIndex: Int?
     
     // MARK: Initial form state variables
@@ -30,10 +29,8 @@ struct ManageRoutineView: View {
     // MARK: FORM FUNCTIONALITY
     func handleFormSubmit() -> Void {
         do {
-            
             if let validIndex = selectedCellIndex {
-                let newRoutine = handleSaveRoutine(index: validIndex)
-                routines[validIndex] = newRoutine
+                let newRoutine = buildRoutine(index: validIndex)
                 try writeRoutineToDisk(newRoutine, contextViewModel)
             }
         } catch {
@@ -42,8 +39,8 @@ struct ManageRoutineView: View {
         
     }
     
-    func handleSaveRoutine(index: Int) -> Youtine {
-        let newRoutine = Youtine(
+    func buildRoutine(index: Int) -> Youtine {
+        let routine = Youtine(
             index: index,
             start: start,
             days: selectedDays,
@@ -51,21 +48,17 @@ struct ManageRoutineView: View {
             habits: habits
         )
     
-        routines[index] = newRoutine
-        return newRoutine
+        return routine
     }
 
-    
     init(
         width: CGFloat,
         height: CGFloat,
         routine: Binding<Youtine?>,
-        routines: Binding<[Youtine?]>,
         selectedCellIndex: Binding<Int?>
     ) {
         self.width = width
         self.height = height
-        self._routines = routines
         self._selectedCellIndex = selectedCellIndex
 
         // MARK: If routine == nil, the form will render with default values
@@ -75,15 +68,13 @@ struct ManageRoutineView: View {
             self.selectedDays = Youtine.decodeDays(unwrappedRoutine.daysJSON)
             self.habits = unwrappedRoutine.habits
         } else {
-            self.routineColor = ManageRoutineView.getRoutineColor(
-                index: selectedCellIndex.wrappedValue!
-            )
+            self.routineColor = ManageRoutineView.getRoutineColor(index: selectedCellIndex.wrappedValue!)
             self.start = "8:00 AM"
             self.selectedDays = [:]
             self.habits = []
         }
         
-        self.routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue!)
+        self.routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue)
     }
     
     var body: some View {
@@ -91,7 +82,6 @@ struct ManageRoutineView: View {
             width: width,
             height: height,
             selectedCellIndex: $selectedCellIndex,
-            routines: $routines,
             start: $start,
             selectedDays: $selectedDays,
             habits: $habits,
@@ -107,7 +97,6 @@ struct ManageRoutineView: View {
         width: 402.0,
         height: 687.6666666,
         routine: .constant(testRoutines[0]),
-        routines: .constant(testRoutines),
         selectedCellIndex: .constant(0)
     )
 }

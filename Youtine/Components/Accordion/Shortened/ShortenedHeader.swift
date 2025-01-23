@@ -28,5 +28,5 @@ struct ShortenedHeader: View {
 }
 
 #Preview {
-    ShortenedHeader(title: testRoutines[0]!.title)
+    ShortenedHeader(title: "Morning Routine")
 }

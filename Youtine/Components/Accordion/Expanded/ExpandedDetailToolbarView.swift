@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ExpandedDetailToolbarView: View {
+    @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
     
     @State var showDeleteConfirmation: Bool = false
@@ -28,13 +29,19 @@ struct ExpandedDetailToolbarView: View {
                 isPresented: $showDeleteConfirmation
             ) {
                 Button("Delete", role: .destructive) {
+                    /// MARK: RUN DELETE FUNCTION TO UPDATE SAVED ROUTINES
                     handleDeleteRoutine()
-                    showDeleteConfirmation = false
+                    
                     /// MARK: NAVIGATE TO .home
                     currentPage.wrappedValue = .home
                     
+                    /// MARK: STOP SHOWING DELETE DIALOG
+                    showDeleteConfirmation = false
+                    
                     /// MARK: SET SELECTED CELL INDEX
                     selectedCellIndex = nil
+                    
+                    routine = nil
                 }
             } message: {
                 Text("Delete Routine")
@@ -51,5 +58,5 @@ struct ExpandedDetailToolbarView: View {
 }
 
 #Preview {
-    ExpandedDetailToolbarView(selectedCellIndex: .constant(0))
+    ExpandedDetailToolbarView(routine: .constant(testRoutines[0]), selectedCellIndex: .constant(0))
 }

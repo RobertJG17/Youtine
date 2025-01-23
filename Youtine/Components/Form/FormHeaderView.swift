@@ -11,67 +11,12 @@ struct FormHeaderView: View {
     var routineTitle: String?
     @Binding var selectedCellIndex: Int?
     
-    // ???: State var to control confirmation dialog for delete/confirm operation
-    @State private var showDeleteConfirmation = false
-    @State private var showConfirmConfirmation = false
-    
     @Environment(\.currentPage) var currentPage
     @Environment(\.handleFormSubmit) var handleFormSubmit
     
     var body: some View {
         VStack {
-            HStack {
-                
-                Button {
-                    showDeleteConfirmation = true
-                } label: {
-                    Text("Cancel")
-                        .fontWeight(.light)
-                        .foregroundStyle(Color.red)
-                }
-                .confirmationDialog(
-                    "delete-dialog",
-                    isPresented: $showDeleteConfirmation
-                ) {
-                    Button("Delete", role: .destructive) {
-                        showDeleteConfirmation = false
-                        
-                        /// MARK: NAVIGATE TO .home
-                        currentPage.wrappedValue = .home
-                        
-                        /// MARK: SET selecteCellIndex nil
-                        selectedCellIndex = nil
-                    }
-                } message: {
-                    Text("Confirm")
-                }
-                
-                Spacer()
-                
-                Button {
-                    showConfirmConfirmation = true
-                } label: {
-                    Text("Done")
-                }
-                .confirmationDialog(
-                    "confirm-dialog",
-                    isPresented: $showConfirmConfirmation
-                ) {
-                    Button("Create Routine") {
-                        handleFormSubmit()
-                        showConfirmConfirmation = false
-                        /// MARK: NAVIGATE TO .home
-                        currentPage.wrappedValue = .home
-                        
-                        /// MARK: SET selecteCellIndex nil
-                        selectedCellIndex = nil
-                        
-                    }
-                } message: {
-                    Text("Confirm")
-                }
-            }
-            .padding(.bottom, 20)
+            FormToolbarView(selectedCellIndex: $selectedCellIndex)
             
             Spacer()
             

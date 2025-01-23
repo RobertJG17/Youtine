@@ -13,7 +13,6 @@ var testRoutines: [Youtine?] =
             index: 0,
             start: "8:00 AM",
             days: [0: "M", 1: "W", 2: "F"],
-            title: "Morning Routine",
             borderColor: .red,
             habits: [
                 Habit(
@@ -50,7 +49,6 @@ var testRoutines: [Youtine?] =
             index: 1,
             start: "12:00 PM",
             days: [0: "M", 1: "W", 2: "F"],
-            title: "Afternoon Routine",
             borderColor: .blue,
             habits: [
                 Habit(

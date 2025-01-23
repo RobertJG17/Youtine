@@ -10,16 +10,15 @@ import SwiftUI
 struct ExpandedRoutineView: View {
     var width: CGFloat
     var height: CGFloat
+    @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
-    @Binding var routines: [Youtine?]
     
-    var routine: Youtine?
-    
-    var title: String
     var days: [Int:String]
     var start: String
     var habits: [Habit]
     var borderColor: Color
+    
+    @State var routineTitle: String = ""
 
     @Environment(\.deleteRoutineFromDisk) var deleteRoutineFromDisk
     @Environment(\.contextViewModel) var contextViewModel
@@ -27,37 +26,35 @@ struct ExpandedRoutineView: View {
     init(
         width: CGFloat,
         height: CGFloat,
-        routine: Youtine?,
-        routines: Binding<[Youtine?]>,
+        routine: Binding<Youtine?>,
         selectedCellIndex: Binding<Int?>
     ) {
         self.width = width
         self.height = height
-        self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue!)
-        self.days = Youtine.decodeDays(routine?.daysJSON ?? "")
-        self.start = routine?.start ?? ""
-        self.habits = routine?.habits ?? []
-        self.borderColor = Color.from(description: routine?.borderColor ?? "white")
-        self.routine = routine
-        self._routines = routines
+        self._routine = routine
         self._selectedCellIndex = selectedCellIndex
+        
+        self.days = Youtine.decodeDays(
+            routine.wrappedValue?.daysJSON ?? ""
+        )
+        self.start = routine.wrappedValue?.start ?? ""
+        self.habits = routine.wrappedValue?.habits ?? []
+        self.borderColor = Color.from(
+            description: routine.wrappedValue?.borderColor ?? "white"
+        )
     }
     
     // MARK: DELETE FUNCTIONALITY
     func handleDeleteRoutine() -> Void {
         do {
             if let validRoutine = self.routine {
-                handleSetRoutineToNil()
-                try deleteRoutineFromDisk(validRoutine, contextViewModel)
+                try deleteRoutineFromDisk(
+                    validRoutine,
+                    contextViewModel
+                )
             }
         } catch {
             print(error)
-        }
-    }
-    
-    func handleSetRoutineToNil() -> Void {
-        if let validIndex = selectedCellIndex {
-            routines[validIndex] = nil
         }
     }
     
@@ -65,13 +62,14 @@ struct ExpandedRoutineView: View {
         VStack {
             ExpandedHeader(
                 height: height,
-                routine: routine,
+                title: routineTitle,
                 selectedCellIndex: $selectedCellIndex
             )
             
             VStack(spacing: 0) {
                 ExpandedDetailView(
                     start: start,
+                    routine: $routine,
                     selectedCellIndex: $selectedCellIndex
                 )
                 
@@ -80,7 +78,6 @@ struct ExpandedRoutineView: View {
                     height: height
                 )
             }
-            
             .overlay(
                 Image(backgroundImage)
                     .resizable()
@@ -106,6 +103,9 @@ struct ExpandedRoutineView: View {
             .padding(.bottom, 30)
             .preferredColorScheme(.dark)
         }
+        .onAppear {
+            routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex)
+        }
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
         .frame(
             width: width,
@@ -119,8 +119,7 @@ struct ExpandedRoutineView: View {
     ExpandedRoutineView(
         width: 402.2,
         height: 687.6666666667,
-        routine: testRoutines[0],
-        routines: .constant(testRoutines),
+        routine: .constant(testRoutines[0]),
         selectedCellIndex: .constant(0)
     )
 }

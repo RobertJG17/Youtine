@@ -38,15 +38,22 @@ final class ContextViewModel {  // MARK: Acts as invocation/error handling layer
     /// Method used to invoke data manager delete.
     /// - Parameters:
     /// - Parameter routines: Youtine instance
-    func deleteRoutine(routine: Youtine) {
+    func deleteRoutine(byID id: UUID) {
+        let fetchDescriptor = FetchDescriptor<Youtine>(
+            predicate: #Predicate { $0.id == id }
+        )
         do {
-            try dataManager.deleteRoutine(
-                routine: routine
-            )
+            let fetchedRoutines = try context.fetch(fetchDescriptor)
+            
+            if let routine = fetchedRoutines.first {
+                try dataManager.deleteRoutine(routine: routine)
+            } else {
+                print("No routine found with the given ID.")
+            }
         } catch {
             print(error)
         }
-        
     }
+
 }
 

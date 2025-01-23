@@ -16,13 +16,11 @@ struct ExpandedHeader: View {
     
     init(
         height: CGFloat,
-        routine: Youtine?,
+        title: String,
         selectedCellIndex: Binding<Int?>
     ) {
         self.height = height
-        self.title = ManageRoutineView.getRoutineTitle(
-            index: selectedCellIndex.wrappedValue!
-        )
+        self.title = title
         self._selectedCellIndex = selectedCellIndex
     }
     
@@ -50,7 +48,7 @@ struct ExpandedHeader: View {
             currentPage.wrappedValue = .home
             
             /// MARK: SET selectedCellIndex nil
-            selectedCellIndex = nil
+            selectedCellIndex = nil            
         }
         .padding(.top, 100)
         .padding(.horizontal, 20)
@@ -61,7 +59,7 @@ struct ExpandedHeader: View {
 #Preview {
     ExpandedHeader(
         height: 687.666666667,
-        routine: testRoutines[0]!,
+        title: "Morning Routine",
         selectedCellIndex: .constant(1)
     )
 }

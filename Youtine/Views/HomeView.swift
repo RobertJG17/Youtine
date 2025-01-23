@@ -20,13 +20,7 @@ struct HomeView: View {
             width: width,
             height: height
         )
-        .transition(
-            .asymmetric(
-                insertion: .move(edge: .leading),
-                removal: .move(edge: .leading)
-            )
-            
-        )
+        .transition(.move(edge: .leading))
         
         CardsView(
             width: width,
@@ -34,12 +28,7 @@ struct HomeView: View {
             routines: routines,
             selectedCellIndex: $selectedCellIndex
         )
-        .transition(
-            .asymmetric(
-                insertion: .move(edge: .leading),
-                removal: .move(edge: .leading)
-            )
-        )
+        .transition(.move(edge: .leading))
     }
 }
 

@@ -12,7 +12,6 @@ struct EditRoutineView: View {
     var width: CGFloat
     var height: CGFloat
     @Binding var selectedCellIndex: Int?
-    @Binding var routines: [Youtine?]
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
     @Binding var habits: [Habit]
@@ -49,7 +48,6 @@ struct EditRoutineView: View {
                     width: width,
                     height: height,
                     selectedCellIndex: $selectedCellIndex,
-                    routines: $routines,
                     start: $start,
                     selectedDays: $selectedDays,
                     habits: $habits,
@@ -71,7 +69,6 @@ struct EditRoutineView: View {
         width: 402.0,
         height: 687.666666666667,
         selectedCellIndex: .constant(0),
-        routines: .constant(testRoutines),
         start: .constant(testRoutines[0]!.start),
         selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),
