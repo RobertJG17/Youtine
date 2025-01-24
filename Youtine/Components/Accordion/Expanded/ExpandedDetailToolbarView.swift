@@ -29,14 +29,14 @@ struct ExpandedDetailToolbarView: View {
                 isPresented: $showDeleteConfirmation
             ) {
                 Button("Delete", role: .destructive) {
+                    /// MARK: STOP SHOWING DELETE DIALOG
+                    showDeleteConfirmation = false
+                    
                     /// MARK: RUN DELETE FUNCTION TO UPDATE SAVED ROUTINES
                     handleDeleteRoutine()
                     
                     /// MARK: NAVIGATE TO .home
                     currentPage.wrappedValue = .home
-                    
-                    /// MARK: STOP SHOWING DELETE DIALOG
-                    showDeleteConfirmation = false
                 }
             } message: {
                 Text("Delete Routine")

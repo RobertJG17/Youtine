@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct CardView: View {
-    var width: CGFloat
-    var height: CGFloat
     var index: Int
     var routine: Youtine?
     var routineCreated: Bool
@@ -18,14 +16,10 @@ struct CardView: View {
     @Environment(\.currentPage) var currentPage
         
     init(
-        width: CGFloat,
-        height: CGFloat,
         index: Int,
         routine: Youtine?,
         selectedCellIndex: Binding<Int?>
     ) {
-        self.width = width
-        self.height = height
         self.index = index
         self.routine = routine
         self.routineCreated = routine != nil
@@ -37,16 +31,12 @@ struct CardView: View {
         ZStack {
             if routineCreated {
                 RoutineCardView(
-                    width: width,
-                    height: height,
                     index: index,
                     routine: routine,
                     selectedCellIndex: $selectedCellIndex
                 )
             } else {
                 EmptyCardView(
-                    width: width,
-                    height: height,
                     index: index,
                     borderColor: Color.white,
                     selectedCellIndex: $selectedCellIndex
@@ -60,8 +50,6 @@ struct CardView: View {
 
 #Preview {
     CardView(
-        width: 402.0,
-        height: 687.6666666666667,
         index: 1,
         routine: testRoutines[0],
         selectedCellIndex: .constant(1)

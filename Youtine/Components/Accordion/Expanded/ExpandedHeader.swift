@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct ExpandedHeader: View {
-    var height: CGFloat
     var title: String
     @Binding var selectedCellIndex: Int?
     
     @Environment(\.currentPage) var currentPage
+    @Environment(\.screenHeight) var screenHeight
     
     init(
-        height: CGFloat,
         title: String,
         selectedCellIndex: Binding<Int?>
     ) {
-        self.height = height
         self.title = title
         self._selectedCellIndex = selectedCellIndex
     }
@@ -40,7 +38,7 @@ struct ExpandedHeader: View {
                 Image(systemName: "chevron.up")
             }
         }
-        .frame(height: height*0.1)
+        .frame(height: screenHeight.wrappedValue*0.1)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
@@ -55,7 +53,6 @@ struct ExpandedHeader: View {
 
 #Preview {
     ExpandedHeader(
-        height: 687.666666667,
         title: "Morning Routine",
         selectedCellIndex: .constant(1)
     )

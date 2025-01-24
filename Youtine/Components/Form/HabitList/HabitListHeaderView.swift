@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct HabitHeaderView: View {
-    @Binding var showingRoutineInit: Bool
+struct HabitListHeaderView: View {
+    @Binding var showingCreateHabit: Bool
     
     let HEADER_TITLE: String = "Habits"
     let TOOLBAR_ADD_SYSTEM_NAME: String = "plus"
@@ -20,7 +20,7 @@ struct HabitHeaderView: View {
         
         // ???: Add Habit Button
         Button {
-            showingRoutineInit = true
+            showingCreateHabit = true
         } label: {
             Image(systemName: TOOLBAR_ADD_SYSTEM_NAME)
         }
@@ -29,7 +29,7 @@ struct HabitHeaderView: View {
 }
 
 #Preview {
-    HabitHeaderView(
-        showingRoutineInit: .constant(true)
+    HabitListHeaderView(
+        showingCreateHabit: .constant(true)
     )
 }

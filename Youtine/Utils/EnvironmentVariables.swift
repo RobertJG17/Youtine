@@ -12,6 +12,14 @@ struct CurrentPageKey: EnvironmentKey {
     static let defaultValue: Binding<Page> = .constant(.home)
 }
 
+struct ScreenWidthKey: EnvironmentKey {
+    static let defaultValue: Binding<CGFloat> = .constant(400)
+}
+
+struct ScreenHeightKey: EnvironmentKey {
+    static let defaultValue: Binding<CGFloat> = .constant(600)
+}
+
 struct ContentViewModelKey: EnvironmentKey {
     static let defaultValue: ContentViewModel? = nil
 }
@@ -46,6 +54,16 @@ extension EnvironmentValues {
     var currentPage: Binding<Page> {
         get { self[CurrentPageKey.self] }
         set { self[CurrentPageKey.self] = newValue }
+    }
+    
+    var screenWidth: Binding<CGFloat> {
+        get { self[ScreenWidthKey.self] }
+        set { self[ScreenWidthKey.self] = newValue }
+    }
+    
+    var screenHeight: Binding<CGFloat> {
+        get { self[ScreenHeightKey.self] }
+        set { self[ScreenHeightKey.self] = newValue }
     }
     
     var contentViewModel: ContentViewModel? {

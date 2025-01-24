@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct Router: View {
-    var width: CGFloat
-    var height: CGFloat
     @Binding var routines: [Youtine?]
     
     @State private var currentPage: Page = .home
@@ -20,8 +18,6 @@ struct Router: View {
         VStack {
             if currentPage == .home {
                 HomeView(
-                    width: width,
-                    height: height,
                     routines: $routines,
                     selectedCellIndex: $selectedCellIndex
                 )
@@ -33,15 +29,11 @@ struct Router: View {
                 }
             } else if currentPage == .routine {
                 ExpandedRoutineView(
-                    width: width,
-                    height: height,
                     routine: $selectedRoutine,
                     selectedCellIndex: $selectedCellIndex
                 )
             } else if currentPage == .createRoutine || currentPage == .editRoutine {
                 ManageRoutineView(
-                    width: width,
-                    height: height,
                     routine: $selectedRoutine,
                     selectedCellIndex: $selectedCellIndex
                 )
@@ -61,8 +53,6 @@ struct Router: View {
 
 #Preview {
     Router(
-        width: 402.0,
-        height: 687.66666667,
         routines: .constant(testRoutines)
     )
 }

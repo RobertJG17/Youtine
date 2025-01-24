@@ -26,6 +26,9 @@ struct ContentView: View {
     // MARK: Context used to initialize view model
     @Environment(\.modelContext) var context
     
+    @Environment(\.screenWidth) var screenWidth
+    @Environment(\.screenHeight) var screenHeight
+    
     // MARK: Define content view model operations in Content View and pass them via context
     // MARK: NOTE: Passing contentViewModel as an arg seems superfluous
     func writeRoutineToDisk(
@@ -79,10 +82,13 @@ struct ContentView: View {
                 let height = proxy.size.height
                 
                 Router(
-                    width: width,
-                    height: height,
                     routines: $localRoutines
                 )
+                .onAppear {
+                    // MARK: Set screenWidth and screenHeight
+                    screenWidth.wrappedValue = width
+                    screenHeight.wrappedValue = height
+                }
             }
         }
         .onAppear {
@@ -101,10 +107,34 @@ struct ContentView: View {
                     repeating: nil,
                     count: MAX_ROUTINES - newRoutines.count
                 )
+            
+            print("""
+               \n\n\tEntity: ContentView
+               \tLine: 98
+               \tInvocation: onChange(savedRoutines)
+               \tOutput: \n\n\tNew routines: \n\n\(displayRoutines(routines: newRoutines))
+            """)
         })
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
         .preferredColorScheme(.dark)
+    }
+    
+    
+    func displayRoutines(routines: [Youtine?]) -> String {
+        var outputStr = ""
+        
+        routines.forEach { routine in
+            if let validRoutine = routine {
+                outputStr += "\tID: \(validRoutine.id)\n"
+                outputStr += "\tIndex: \(validRoutine.index)\n"
+                outputStr += "\tStart: \(validRoutine.start)\n"
+                outputStr += "\tColor: \(validRoutine.borderColor)\n"
+                outputStr += "\n"
+            }
+        }
+        
+        return outputStr
     }
 }
 

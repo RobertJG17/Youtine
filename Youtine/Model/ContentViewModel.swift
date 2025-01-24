@@ -11,6 +11,7 @@ import Observation
 
 enum ContentViewModelErrors: Error {
     case UninitializedError(message: String)
+    case UnidentifiedRoutineError(message: String)
 }
 
 @Observable
@@ -59,7 +60,14 @@ final class ContentViewModel {  // MARK: Acts as invocation/error handling layer
             if let routine = fetchedRoutines.first {
                 try dataManager.deleteRoutine(routine: routine)
             } else {
-                print("No routine found with the given ID.")
+                throw ContentViewModelErrors.UnidentifiedRoutineError(
+                    message: """
+                        Entity: ContentViewModel \n
+                        Line: 48\n
+                        Function Invocation: deleteRoutine()\n
+                        Output: ERROR - Routine ID not found
+                    """
+                )
             }
         } catch {
             print(error)

@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct ExpandedHabitView: View {
-    // !!!: START
-    
     // MARK: Instance Variables
     var habits: [Habit]
-    var height: CGFloat
-    
+
     // MARK: Initialized local state
     @State var showScrollIndicator: Bool = true
     @State var animatedOpacity: CGFloat = 1
@@ -24,6 +21,8 @@ struct ExpandedHabitView: View {
             partialResult + (habit.completed ? 1 : 0)
         }
     }
+    
+    @Environment(\.screenHeight) var screenHeight
     
     var body: some View {
         VStack(spacing: 0) {
@@ -84,7 +83,7 @@ struct ExpandedHabitView: View {
                 }
             }
             .listStyle(PlainListStyle())
-            .frame(height: height/2.3)
+            .frame(height: screenHeight.wrappedValue/2.3)
             .padding(.leading, 5)
             .padding(.trailing, 20)
             
@@ -143,7 +142,6 @@ struct ExpandedHabitView: View {
 
 #Preview {
     ExpandedHabitView(
-        habits: testRoutines[0]!.habits,
-        height: 687.6666666667
+        habits: testRoutines[0]!.habits
     )
 }

@@ -7,48 +7,30 @@
 
 import SwiftUI
 
-struct HabitInitView: View {
-    var width: CGFloat
-    var height: CGFloat
+struct CreateHabitView: View {
     @Binding var habits: [Habit]
-    @Binding var showingRoutineInit: Bool
+    @Binding var showingCreateHabit: Bool
+    @Binding var label: String
+    @Binding var desc: String
+    @Binding var id: UUID?
     
-    @State var label: String = ""
-    @State var desc: String = ""
+    @Environment(\.screenWidth) var screenWidth
+    @Environment(\.screenHeight) var screenHeight
     
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    Button {
-                        showingRoutineInit = false
-                    } label: {
-                        Image(systemName: "xmark")
-                    }
-                    .foregroundStyle(.white)
-                    
-                    Spacer()
-                    
-                    Button {
-                        showingRoutineInit = false
-                        
-                        if label != "" && desc != "" {
-                            habits.append(
-                                Habit(
-                                    label: label,
-                                    desc: desc
-                                )
-                            )
-                        }
-                    } label: {
-                        Text("Done")
-                    }
-                    .disabled(label == "" || desc == "")
-                    
-                }
+                CreateHabitToolbarView(
+                    habits: $habits,
+                    showingCreateHabit: $showingCreateHabit,
+                    label: $label,
+                    desc: $desc,
+                    id: $id
+                )
                 
                 Spacer()
-                                
+                          
+                // TODO: Create expanded and closed view (see if swift ui has accordion like view)
                 HStack(alignment: .bottom) {
                     Text("Label: ")
                         .font(.system(size: 30, weight: .thin))
@@ -74,9 +56,9 @@ struct HabitInitView: View {
                     Spacer()
                     
                     VStack(spacing: 5) {
-                        TextEditor(text: $desc) // Multiline text input
-                            .frame(height: 150) // Set a height for the TextEditor
-                            .border(Color.gray, width: 1) // Optional: Add a border
+                        TextEditor(text: $desc)             // Multiline text input
+                            .frame(height: 150)             // Set a height for the TextEditor
+                            .border(Color.gray, width: 1)   // Optional: Add a border
                             .padding()
                     }
                     .font(.system(size: 18, weight: .thin))
@@ -92,10 +74,11 @@ struct HabitInitView: View {
 }
 
 #Preview {
-    HabitInitView(
-        width: 402.0,
-        height: 687.666667,
+    CreateHabitView(
         habits: .constant([]),
-        showingRoutineInit: .constant(true)
+        showingCreateHabit: .constant(true),
+        label: .constant("label"),
+        desc: .constant("desc"),
+        id: .constant(UUID())
     )
 }

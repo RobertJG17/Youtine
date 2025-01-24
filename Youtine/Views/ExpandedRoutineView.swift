@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ExpandedRoutineView: View {
-    var width: CGFloat
-    var height: CGFloat
     @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
     
@@ -21,15 +19,13 @@ struct ExpandedRoutineView: View {
     @State var routineTitle: String = ""
 
     @Environment(\.deleteRoutineFromDisk) var deleteRoutineFromDisk
+    @Environment(\.screenWidth) var screenWidth
+    @Environment(\.screenHeight) var screenHeight
     
     init(
-        width: CGFloat,
-        height: CGFloat,
         routine: Binding<Youtine?>,
         selectedCellIndex: Binding<Int?>
     ) {
-        self.width = width
-        self.height = height
         self._routine = routine
         self._selectedCellIndex = selectedCellIndex
         
@@ -57,7 +53,6 @@ struct ExpandedRoutineView: View {
     var body: some View {
         VStack {
             ExpandedHeader(
-                height: height,
                 title: routineTitle,
                 selectedCellIndex: $selectedCellIndex
             )
@@ -70,8 +65,7 @@ struct ExpandedRoutineView: View {
                 )
                 
                 ExpandedHabitView(
-                    habits: habits,
-                    height: height
+                    habits: habits
                 )
             }
             .overlay(
@@ -80,7 +74,7 @@ struct ExpandedRoutineView: View {
                     .opacity(0.2)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea(edges: .horizontal)
-                    .frame(height: height*0.82)
+                    .frame(height: screenHeight.wrappedValue)
             )
             .overlay(
                 VStack {
@@ -92,9 +86,9 @@ struct ExpandedRoutineView: View {
                         .fill(borderColor)
                         .frame(height: 1)
                 }
-                    .frame(height: height*0.82)
+                    .frame(height: screenHeight.wrappedValue)
             )
-            .frame(height: height*0.82)
+            .frame(height: screenHeight.wrappedValue)
             .padding(.top, 15)
             .padding(.bottom, 30)
             .preferredColorScheme(.dark)
@@ -104,8 +98,8 @@ struct ExpandedRoutineView: View {
         }
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
         .frame(
-            width: width,
-            height: height*0.82
+            width: screenWidth.wrappedValue,
+            height: screenHeight.wrappedValue
         )
         .transition(.scale)
     }
@@ -113,8 +107,6 @@ struct ExpandedRoutineView: View {
 
 #Preview {
     ExpandedRoutineView(
-        width: 402.2,
-        height: 687.6666666667,
         routine: .constant(testRoutines[0]),
         selectedCellIndex: .constant(0)
     )

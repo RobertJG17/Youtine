@@ -8,42 +8,45 @@
 import SwiftUI
 
 struct FormView: View {
-    var width: CGFloat
-    var height: CGFloat
     @Binding var routineColor: Color
     @Binding var selectedCellIndex: Int?
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
     @Binding var habits: [Habit]
-    
-    @Binding var showingRoutineInit: Bool
+    @Binding var showingCreateHabit: Bool
     @Binding var showingTimePicker: Bool
+    @Binding var currentLabel: String
+    @Binding var currentDescription: String
+    @Binding var currentHabitID: UUID?
     
     // MARK: Set in onAppear
-    
     @State var routineTitle: String = ""
     
+    @Environment(\.screenWidth) var screenWidth
+    @Environment(\.screenHeight) var screenHeight
+    
     init(
-        width: CGFloat,
-        height: CGFloat,
         routineColor: Binding<Color>,
         selectedCellIndex: Binding<Int?>,
         start: Binding<String>,
         selectedDays: Binding<Dictionary<Int, String>>,
         habits: Binding<Array<Habit>>,
-        showingRoutineInit: Binding<Bool>,
-        showingTimePicker: Binding<Bool>
-        
+        showingCreateHabit: Binding<Bool>,
+        showingTimePicker: Binding<Bool>,
+        currentLabel: Binding<String>,
+        currentDescription: Binding<String>,
+        currentHabitID: Binding<UUID?>
     ) {
-        self.width = width
-        self.height = height
         self._routineColor = routineColor
         self._selectedCellIndex = selectedCellIndex
         self._start = start
         self._selectedDays = selectedDays
         self._habits = habits
-        self._showingRoutineInit = showingRoutineInit
+        self._showingCreateHabit = showingCreateHabit
         self._showingTimePicker = showingTimePicker
+        self._currentLabel = currentLabel
+        self._currentDescription = currentDescription
+        self._currentHabitID = currentHabitID
     }
     
     var body: some View {
@@ -79,7 +82,7 @@ struct FormView: View {
 
             Section(header: Text("Days")) {
                 DayPickerView(
-                    width: width,
+                    width: screenWidth.wrappedValue,
                     routineColor: routineColor,
                     selectedDays: $selectedDays
                 )
@@ -87,20 +90,24 @@ struct FormView: View {
             
             Section(header: Text("Select Color")) {
                 CustomColorPicker(
-                    width: width,
-                    height: height,
+                    width: screenWidth.wrappedValue,
+                    height: screenHeight.wrappedValue,
                     routineColor: $routineColor
                 )
                 
             }
 
             Section(header: HStack(alignment: .center) {
-                HabitHeaderView(
-                    showingRoutineInit: $showingRoutineInit
+                HabitListHeaderView(
+                    showingCreateHabit: $showingCreateHabit
                 )
             }) {
                 HabitListView(
-                    habits: $habits
+                    habits: $habits,
+                    showingCreateHabit: $showingCreateHabit,
+                    currentLabel: $currentLabel,
+                    currentDesc: $currentDescription,
+                    currentHabitID: $currentHabitID
                 )
             }
         }
@@ -113,16 +120,17 @@ struct FormView: View {
     }
 }
 
-//#Preview {
-//    FormView(
-//        width: 402.0,
-//        height: 687.666667,
-//        selectedCellIndex: .constant(0),
-//        routines: .constant(testRoutines),
-//        start: .constant("8:00 a.m."),
-//        selectedDays: .constant(testRoutines[0]!.days),
-//        habits: .constant(testRoutines[0]!.habits),
-//        showingRoutineInit: .constant(false),
-//        showingTimePicker: .constant(false)
-//    )
-//}
+#Preview {
+    FormView(
+        routineColor: .constant(.white),
+        selectedCellIndex: .constant(0),
+        start: .constant("8:00 a.m."),
+        selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),
+        habits: .constant(testRoutines[0]!.habits),
+        showingCreateHabit: .constant(false),
+        showingTimePicker: .constant(false),
+        currentLabel: .constant(""),
+        currentDescription: .constant(""),
+        currentHabitID: .constant(UUID())
+    )
+}

@@ -8,16 +8,12 @@
 import SwiftUI
 
 struct CardsView: View {
-    var width: CGFloat
-    var height: CGFloat
     @Binding var routines: [Youtine?]
     @Binding var selectedCellIndex: Int?
 
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.offset) { index, routine in
             CardView(
-                width: width,
-                height: height,
                 index: index,
                 routine: routine,
                 selectedCellIndex: $selectedCellIndex
@@ -30,8 +26,6 @@ struct CardsView: View {
 
 #Preview {
     CardsView(
-        width: 402.0,
-        height: 687.6666666666667,
         routines: .constant(testRoutines),
         selectedCellIndex: .constant(1)
     )

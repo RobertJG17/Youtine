@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    var width: CGFloat
-    var height: CGFloat
+    @Environment(\.screenHeight) var screenHeight
     
     var body: some View {
         Text("Youtine")
@@ -20,7 +19,7 @@ struct HeaderView: View {
                     design: .rounded
                 )
             )
-            .frame(maxWidth: .infinity, maxHeight: height / 7)
+            .frame(maxWidth: .infinity, maxHeight: screenHeight.wrappedValue / 7)
             .underline(
                 true,
                 pattern: .solid
@@ -30,8 +29,5 @@ struct HeaderView: View {
 }
 
 #Preview {
-    HeaderView(
-        width: 400,
-        height: 687.6666666667
-    )
+    HeaderView()
 }

@@ -26,8 +26,8 @@ final class DataManager {
     
     /// Method used to save routine upon form submission
     /// - Parameter entry: Existing instance found with descriptor from context
-    /// - Parameter routine: Youtine  instance
     /// - Parameter definedContext: Context used to perform Swift Data object management operations
+    /// - Parameters {...rest}: Youtine properties used to update existing entry
     func update(
         entry: Youtine,
         start: String,
@@ -46,14 +46,19 @@ final class DataManager {
         if definedContext.hasChanges {
             do {
                 try definedContext.save()
-                print("Routine updated successfully!")
+                print("""
+                    Entity: DataManager \n
+                    Line: 48\n
+                    Function Invocation: update()\n
+                    Output: ROUTINE UPDATED SUCCESSFULLY!
+                """)
             } catch {
                 throw DataManagerErrors.UpdateError(
                     message: """
                         Entity: DataManager \n
-                        Line: 41\n
+                        Line: 48\n
                         Function Invocation: update()\n
-                        Error: \(error.localizedDescription)
+                        Output: \(error.localizedDescription)
                     """
                 )
             }
@@ -70,15 +75,20 @@ final class DataManager {
             definedContext.insert(routine)
             if definedContext.hasChanges {
                 try definedContext.save()
-                print("Routine saved successfully!")
+                print("""
+                    Entity: DataManager \n
+                    Line: 77\n
+                    Function Invocation: save()\n
+                    Output: ROUTINE SAVED SUCCESSFULLY!
+                """)
             }
         } catch {
             throw DataManagerErrors.SaveError(
                 message: """
                     Entity: DataManager \n
-                    Line: 65\n
+                    Line: 77\n
                     Function Invocation: save()\n
-                    Error: \(error.localizedDescription)
+                    Output: \(error.localizedDescription)
                 """
             )
         }
@@ -97,9 +107,9 @@ final class DataManager {
         guard let context = context else {
             throw DataManagerErrors.InvalidContext(
                 message: """
-                    Entity: DataManager \n
-                    Line: 84\n
-                    Function Invocation: saveRoutine()\n
+                    Entity: DataManager
+                    Line: 107
+                    Function Invocation: saveRoutine()
                     Error: Nil contenxt
                 """
             )
@@ -119,7 +129,6 @@ final class DataManager {
             let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
             let validEntry = existingEntry.first
             
-            print("Routine exists: ", existingEntry)
             
             if let entry = validEntry {
                 try update(
@@ -157,7 +166,7 @@ final class DataManager {
             throw DataManagerErrors.InvalidContext(
                 message: """
                     Entity: DataManager \n
-                    Line: 134\n
+                    Line: 165\n
                     Function Invocation: saveRoutine()\n
                     Error: Nil contenxt
                 """
@@ -167,10 +176,10 @@ final class DataManager {
         context.delete(routine)
         
         print("""
-              Entity: DataManager \n
-              Line: 141\n
-              Function Invocation: deleteRoutine()\n
-              Output: Success, context successfully deleted.
+              Entity: DataManager
+              Line: 141
+              Function Invocation: deleteRoutine()
+              Output: SUCCESS, ROUTINE DELETED!
           """)
         
 //        do {
@@ -182,7 +191,6 @@ final class DataManager {
 //                Output: Success, context successfully deleted.
 //            """)
 //        } catch {
-//            // MARK: Calling save error since error was thrown on .save()
 //            throw DataManagerErrors.SaveError(
 //                message: """
 //                    Entity: DataManager \n

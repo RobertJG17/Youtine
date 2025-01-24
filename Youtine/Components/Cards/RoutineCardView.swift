@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct RoutineCardView: View {
-    var width: CGFloat
-    var height: CGFloat
     var index: Int
     @Binding var selectedCellIndex: Int?
     
@@ -20,6 +18,8 @@ struct RoutineCardView: View {
     var borderColor: Color
 
     @Environment(\.currentPage) var currentPage
+    @Environment(\.screenWidth) var screenWidth
+    @Environment(\.screenHeight) var screenHeight
 
     var habitsCompleted: Int {
         return habits.reduce(0) { partialResult, todo in
@@ -28,8 +28,6 @@ struct RoutineCardView: View {
     }
     
     init(
-        width: CGFloat,
-        height: CGFloat,
         index: Int,
         routine: Youtine?,
         selectedCellIndex: Binding<Int?>
@@ -44,8 +42,6 @@ struct RoutineCardView: View {
             self.borderColor = .white
         }
         
-        self.width = width
-        self.height = height
         self.index = index
         self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue)
                 
@@ -55,7 +51,7 @@ struct RoutineCardView: View {
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: width*0.90, height: height / 4)
+                .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
                 .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
                 .foregroundStyle(Color.black)
             
@@ -77,11 +73,11 @@ struct RoutineCardView: View {
                 )
             }
             .padding(50)
-            .frame(width: width*0.90, height: height / 4)
+            .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
             .preferredColorScheme(.dark)
         }
         // MARK: TAPPABLE FRAME [START]
-        .frame(width: width*0.90, height: height / 4)
+        .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
         .background(Color.clear) // Give the Spacer a tappable area
         .contentShape(Rectangle()) // Ensure the entire area is tappable
         // MARK: [END]
@@ -98,8 +94,6 @@ struct RoutineCardView: View {
 
 #Preview {
     RoutineCardView(
-        width: 402.0,
-        height: 687.66666667,
         index: 0,
         routine: testRoutines[0],
         selectedCellIndex: .constant(0)
