@@ -28,13 +28,19 @@ final class DataManager {
     /// - Parameter entry: Existing instance found with descriptor from context
     /// - Parameter routine: Youtine  instance
     /// - Parameter definedContext: Context used to perform Swift Data object management operations
-    func update(entry: Youtine, routine: Youtine, definedContext: ModelContext) throws -> Void {
-        // !!!: MAKE SURE TO MAP THRU ALL PROPERTIES
-        entry.index = routine.index
-        entry.start = routine.start
-        entry.daysJSON = routine.daysJSON
-        entry.borderColor = routine.borderColor
-        entry.habits = routine.habits
+    func update(
+        entry: Youtine,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit],
+        definedContext: ModelContext
+    ) throws -> Void {
+        // !!!: MAKE SURE TO MAP THRU ALL NECESSARY PROPERTIES
+        entry.start = start
+        entry.daysJSON = Youtine.encodeDays(days)
+        entry.borderColor = borderColor.description
+        entry.habits = habits
 
         // Save changes
         if definedContext.hasChanges {
@@ -80,25 +86,31 @@ final class DataManager {
     
     /// Method used to save routine upon form submission
     /// - Parameter routine: Youtine  instance
-    func saveRoutine(routine: Youtine) throws {
+    func saveRoutine(
+        id: UUID,
+        index: Int,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit]
+    ) throws {
         guard let context = context else {
-            throw ContextErrors.UninitializedError(
+            throw DataManagerErrors.InvalidContext(
                 message: """
                     Entity: DataManager \n
-                    Line: 83\n
+                    Line: 84\n
                     Function Invocation: saveRoutine()\n
-                    Error: Nil context
+                    Error: Nil contenxt
                 """
             )
         }
         
-        // ???: targetId dereferences property outside of predicate declaration scope
-        let targetId = routine.id
+        // ???: id referenced outside of predicate declaration scope
         
         // MARK: Check if existing Youtine object w/ id exists
         let fetchDescriptor = FetchDescriptor<Youtine>(
             predicate: #Predicate { currRoutine in
-                currRoutine.id == targetId // ???: Predicate won't bark now
+                currRoutine.id == id // ???: Predicate won't bark now
             },
             sortBy: [SortDescriptor(\Youtine.id)]
         )
@@ -107,16 +119,26 @@ final class DataManager {
             let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
             let validEntry = existingEntry.first
             
-            print("Existing: ", existingEntry)
-            print("Valid entry: ", validEntry)
+            print("Routine exists: ", existingEntry)
             
             if let entry = validEntry {
                 try update(
                     entry: entry,
-                    routine: routine,
+                    start: start,
+                    days: days,
+                    borderColor: borderColor,
+                    habits: habits,
                     definedContext: context
                 )
             } else {
+                let routine = Youtine(
+                    index: index,
+                    start: start,
+                    days: days,
+                    borderColor: borderColor,
+                    habits: habits
+                )
+                
                 try save(
                     routine: routine,
                     definedContext: context
@@ -132,36 +154,43 @@ final class DataManager {
     ///   - routine: Youtine instance
     func deleteRoutine(routine: Youtine) throws {
         guard let context = context else {
-            throw ContextErrors.UninitializedError(
+            throw DataManagerErrors.InvalidContext(
                 message: """
                     Entity: DataManager \n
-                    Line: 127\n
-                    Function Invocation: deleteRoutine()\n
-                    Error: Nil context
+                    Line: 134\n
+                    Function Invocation: saveRoutine()\n
+                    Error: Nil contenxt
                 """
             )
         }
 
         context.delete(routine)
         
-        do {
+        print("""
+              Entity: DataManager \n
+              Line: 141\n
+              Function Invocation: deleteRoutine()\n
+              Output: Success, context successfully deleted.
+          """)
+        
+//        do {
 //            try context.save()
-            print("""
-                Entity: DataManager \n
-                Line: 141\n
-                Function Invocation: deleteRoutine()\n
-                Output: Success, context successfully deleted.
-            """)
-        } catch {
-            // MARK: Calling save error since error was thrown on .save()
-            throw DataManagerErrors.SaveError(
-                message: """
-                    Entity: DataManager \n
-                    Line: 141\n
-                    Function Invocation: deleteRoutine()\n
-                    Error: \(error.localizedDescription)
-                """
-            )
-        }
+//            print("""
+//                Entity: DataManager \n
+//                Line: 141\n
+//                Function Invocation: deleteRoutine()\n
+//                Output: Success, context successfully deleted.
+//            """)
+//        } catch {
+//            // MARK: Calling save error since error was thrown on .save()
+//            throw DataManagerErrors.SaveError(
+//                message: """
+//                    Entity: DataManager \n
+//                    Line: 141\n
+//                    Function Invocation: deleteRoutine()\n
+//                    Error: \(error.localizedDescription)
+//                """
+//            )
+//        }
     }
 }

@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     var width: CGFloat
     var height: CGFloat
-    var routines: [Youtine?]
+    @Binding var routines: [Youtine?]
     @Binding var selectedCellIndex: Int?
     
     @Environment(\.currentPage) var currentPage
@@ -25,7 +25,7 @@ struct HomeView: View {
         CardsView(
             width: width,
             height: height,
-            routines: routines,
+            routines: $routines,
             selectedCellIndex: $selectedCellIndex
         )
         .transition(.move(edge: .leading))
@@ -36,7 +36,7 @@ struct HomeView: View {
     HomeView(
         width: 402.0,
         height: 687.6666666667,
-        routines: testRoutines,
+        routines: .constant(testRoutines),
         selectedCellIndex: .constant(0)
     )
 }

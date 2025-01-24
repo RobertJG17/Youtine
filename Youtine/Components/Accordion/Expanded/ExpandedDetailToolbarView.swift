@@ -37,11 +37,6 @@ struct ExpandedDetailToolbarView: View {
                     
                     /// MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
-                    
-                    /// MARK: SET SELECTED CELL INDEX
-                    selectedCellIndex = nil
-                    
-                    routine = nil
                 }
             } message: {
                 Text("Delete Routine")

@@ -12,45 +12,63 @@ struct ContentView: View {
     // MARK: Routines - MORNING | AFTERNOON | EVENING
     private let MAX_ROUTINES = 3
 
-    @Query var savedRoutines: [Youtine]
+    @Query(FetchDescriptor<Youtine>(
+        sortBy: [SortDescriptor(\Youtine.index, order: .forward)]
+    )) var savedRoutines: [Youtine]
+
+    @State var contentViewModel: ContentViewModel? = nil
     
-    @State var localRoutines: [Youtine?] = []
-    
-    @State var contextViewModel: ContextViewModel? = nil
+    @State var localRoutines: [Youtine?] = Array.init(
+        repeating: nil,
+        count: 3
+    )
         
     // MARK: Context used to initialize view model
     @Environment(\.modelContext) var context
     
-    // MARK: Define context view model operations in Content View and pass them via context
+    // MARK: Define content view model operations in Content View and pass them via context
+    // MARK: NOTE: Passing contentViewModel as an arg seems superfluous
     func writeRoutineToDisk(
-        routine: Youtine,
-        contextViewModel: ContextViewModel?
+        id: UUID,
+        index: Int,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit]
     ) throws -> Void {
-        guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
+        guard let cvm = contentViewModel else { throw ContentViewModelErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 29\n
+                    Line: 32\n
                     Function Invocation: writeRoutineToDisk()\n
-                    Error: Context View Model not defined
+                    Error: Content View Model not defined
                 """
             )
         }
-        cvm.saveRoutine(routine: routine)
+        
+        cvm.saveRoutine(
+            id: id,
+            index: index,
+            start: start,
+            days: days,
+            borderColor: borderColor,
+            habits: habits
+        )
     }
     
     func deleteRoutineFromDisk(
-        routine: Youtine,
-        contextViewModel: ContextViewModel?
+        routine: Youtine
     ) throws -> Void {
-        guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
+        guard let cvm = contentViewModel else { throw ContentViewModelErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 45\n
+                    Line: 48\n
                     Function Invocation: deleteRoutineFromDisk()\n
-                    Error: Context View Model not defined
+                    Error: Content View Model not defined
                 """
             )
         }
+        
         cvm.deleteRoutine(byID: routine.id)
     }
     
@@ -63,7 +81,7 @@ struct ContentView: View {
                 Router(
                     width: width,
                     height: height,
-                    routines: localRoutines
+                    routines: $localRoutines
                 )
             }
         }
@@ -74,8 +92,8 @@ struct ContentView: View {
                     repeating: nil,
                     count: MAX_ROUTINES - savedRoutines.count
                 )
-            
-            contextViewModel = ContextViewModel(context: context)
+
+            contentViewModel = ContentViewModel(context: context)
         }
         .onChange(of: savedRoutines, { _, newRoutines in
             localRoutines = newRoutines +
@@ -86,7 +104,6 @@ struct ContentView: View {
         })
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
-        .environment(\.contextViewModel, contextViewModel)
         .preferredColorScheme(.dark)
     }
 }

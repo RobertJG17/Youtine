@@ -37,9 +37,6 @@ struct FormToolbarView: View {
                     
                     /// MARK: NAVIGATE TO .home
                     currentPage.wrappedValue = .home
-                    
-                    /// MARK: SET selecteCellIndex nil
-                    selectedCellIndex = nil
                 }
             } message: {
                 Text("Confirm")
@@ -65,10 +62,6 @@ struct FormToolbarView: View {
                     
                     /// MARK: STOP SHOWING CONFIRMATION DIALOG
                     showConfirmConfirmation = false
-                    
-                    /// MARK: SET selecteCellIndex nil
-                    selectedCellIndex = nil
-                    
                 }
             } message: {
                 Text("Confirm")

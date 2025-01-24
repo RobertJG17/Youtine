@@ -9,12 +9,12 @@ import SwiftData
 import SwiftUI
 import Observation
 
-enum ContextErrors: Error {
+enum ContentViewModelErrors: Error {
     case UninitializedError(message: String)
 }
 
 @Observable
-final class ContextViewModel {  // MARK: Acts as invocation/error handling layer for Data Manager
+final class ContentViewModel {  // MARK: Acts as invocation/error handling layer for Data Manager
     private var context: ModelContext
     private let dataManager: DataManager
     
@@ -23,12 +23,24 @@ final class ContextViewModel {  // MARK: Acts as invocation/error handling layer
         self.dataManager = DataManager(context: context)
     }
 
-    /// Method used invoke data manager write
-    /// - Parameter routines: Youtine instance
-    func saveRoutine(routine: Youtine) {
+    /// Method used invoke data manager write.
+    /// - Parameters: Defined in Youtine class
+    func saveRoutine(
+        id: UUID,
+        index: Int,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit]
+    ) {
         do {
             try dataManager.saveRoutine(
-                routine: routine
+                id: id,
+                index: index,
+                start: start,
+                days: days,
+                borderColor: borderColor,
+                habits: habits
             )
         } catch {
             print(error)
@@ -36,8 +48,7 @@ final class ContextViewModel {  // MARK: Acts as invocation/error handling layer
     }
 
     /// Method used to invoke data manager delete.
-    /// - Parameters:
-    /// - Parameter routines: Youtine instance
+    /// - Parameter id: ID of parameter to delete
     func deleteRoutine(byID id: UUID) {
         let fetchDescriptor = FetchDescriptor<Youtine>(
             predicate: #Predicate { $0.id == id }

@@ -10,7 +10,7 @@ import SwiftUI
 struct CardsView: View {
     var width: CGFloat
     var height: CGFloat
-    var routines: [Youtine?]
+    @Binding var routines: [Youtine?]
     @Binding var selectedCellIndex: Int?
 
     var body: some View {
@@ -32,7 +32,7 @@ struct CardsView: View {
     CardsView(
         width: 402.0,
         height: 687.6666666666667,
-        routines: testRoutines,
+        routines: .constant(testRoutines),
         selectedCellIndex: .constant(1)
     )
 }

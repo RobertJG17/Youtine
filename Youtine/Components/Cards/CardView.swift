@@ -43,7 +43,6 @@ struct CardView: View {
                     routine: routine,
                     selectedCellIndex: $selectedCellIndex
                 )
-                
             } else {
                 EmptyCardView(
                     width: width,

@@ -23,39 +23,24 @@ struct ManageRoutineView: View {
     @State private var showingRoutineInit: Bool = false
     @State private var showingTimePicker: Bool = false
     
-    @Environment(\.modelContext) var context
-    @Environment(\.contextViewModel) var contextViewModel
     @Environment(\.writeRoutineToDisk) var writeRoutineToDisk
     
     // MARK: FORM FUNCTIONALITY
     func handleFormSubmit() -> Void {
         do {
             if let validIndex = selectedCellIndex {
-                let newRoutine = buildRoutine(index: validIndex)
-                try writeRoutineToDisk(newRoutine, contextViewModel)
+                try writeRoutineToDisk(
+                    id,
+                    validIndex,
+                    start,
+                    selectedDays,
+                    routineColor,
+                    habits
+                )
             }
         } catch {
             print(error)
         }
-        
-    }
-    
-    func buildRoutine(index: Int) -> Youtine {
-        let routine = Youtine(
-            index: index,
-            start: start,
-            days: selectedDays,
-            borderColor: routineColor,
-            habits: habits
-        )
-        
-        routine.habits.forEach({ habit in
-            print("HABIT: ", habit.label)
-        })
-        
-        // MARK: Set id for existing routines so fetchDescriptor in Data Manager save will capture saved instances
-        routine.setID(id: id)
-        return routine
     }
 
     init(

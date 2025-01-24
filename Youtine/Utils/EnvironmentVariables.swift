@@ -12,16 +12,26 @@ struct CurrentPageKey: EnvironmentKey {
     static let defaultValue: Binding<Page> = .constant(.home)
 }
 
-struct ContextViewModelKey: EnvironmentKey {
-    static let defaultValue: ContextViewModel? = nil
+struct ContentViewModelKey: EnvironmentKey {
+    static let defaultValue: ContentViewModel? = nil
 }
 
 struct WriteRoutineToDiskKey: EnvironmentKey {
-    static let defaultValue: (Youtine, ContextViewModel?) throws -> Void = { _, _  in }
+    static let defaultValue: (
+        UUID,
+        Int,
+        String,
+        [Int: String],
+        Color,
+        [Habit]
+    ) throws -> Void = {
+        _, _, _, _, _, _
+        in
+    }
 }
 
 struct DeleteRoutineFromDiskKey: EnvironmentKey {
-    static let defaultValue: (Youtine, ContextViewModel?) throws -> Void = { _, _  in }
+    static let defaultValue: (Youtine) throws -> Void = { _ in }
 }
 
 struct HandleFormSubmitKey: EnvironmentKey {
@@ -38,22 +48,25 @@ extension EnvironmentValues {
         set { self[CurrentPageKey.self] = newValue }
     }
     
-    var contextViewModel: ContextViewModel? {
-        get { self[ContextViewModelKey.self] }
-        set { self[ContextViewModelKey.self] = newValue }
+    var contentViewModel: ContentViewModel? {
+        get { self[ContentViewModelKey.self] }
+        set { self[ContentViewModelKey.self] = newValue }
     }
     
     var writeRoutineToDisk: (
-        _ routine: Youtine,
-        _ contextViewModel: ContextViewModel?
+        _ id: UUID,
+        _ index: Int,
+        _ start: String,
+        _ days: [Int: String],
+        _ borderColor: Color,
+        _ habits: [Habit]
     ) throws -> Void {
         get { self[WriteRoutineToDiskKey.self] }
         set { self[WriteRoutineToDiskKey.self] = newValue }
     }
     
     var deleteRoutineFromDisk: (
-        _ routine: Youtine,
-        _ contextViewModel: ContextViewModel?
+        _ routine: Youtine
     ) throws -> Void {
         get { self[DeleteRoutineFromDiskKey.self] }
         set { self[DeleteRoutineFromDiskKey.self] = newValue }

@@ -10,7 +10,7 @@ import SwiftUI
 struct Router: View {
     var width: CGFloat
     var height: CGFloat
-    var routines: [Youtine?]
+    @Binding var routines: [Youtine?]
     
     @State private var currentPage: Page = .home
     @State var selectedCellIndex: Int? = nil
@@ -22,9 +22,15 @@ struct Router: View {
                 HomeView(
                     width: width,
                     height: height,
-                    routines: routines,
+                    routines: $routines,
                     selectedCellIndex: $selectedCellIndex
                 )
+                .onAppear {
+                    /// MARK: Anytime we nav to home,
+                    /// ensure selected routine and selected cell index are nil
+                    selectedCellIndex = nil
+                    selectedRoutine = nil
+                }
             } else if currentPage == .routine {
                 ExpandedRoutineView(
                     width: width,
@@ -57,6 +63,6 @@ struct Router: View {
     Router(
         width: 402.0,
         height: 687.66666667,
-        routines: testRoutines
+        routines: .constant(testRoutines)
     )
 }

@@ -21,7 +21,6 @@ struct ExpandedRoutineView: View {
     @State var routineTitle: String = ""
 
     @Environment(\.deleteRoutineFromDisk) var deleteRoutineFromDisk
-    @Environment(\.contextViewModel) var contextViewModel
     
     init(
         width: CGFloat,
@@ -48,10 +47,7 @@ struct ExpandedRoutineView: View {
     func handleDeleteRoutine() -> Void {
         do {
             if let validRoutine = self.routine {
-                try deleteRoutineFromDisk(
-                    validRoutine,
-                    contextViewModel
-                )
+                try deleteRoutineFromDisk(validRoutine)
             }
         } catch {
             print(error)

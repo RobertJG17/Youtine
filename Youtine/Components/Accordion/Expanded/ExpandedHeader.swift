@@ -46,9 +46,6 @@ struct ExpandedHeader: View {
         .onTapGesture {
             /// MARK: NAVIGATE TO .home
             currentPage.wrappedValue = .home
-            
-            /// MARK: SET selectedCellIndex nil
-            selectedCellIndex = nil            
         }
         .padding(.top, 100)
         .padding(.horizontal, 20)
