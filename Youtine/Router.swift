@@ -40,7 +40,6 @@ struct Router: View {
                 .transition(.scale)
             }
         }
-        .padding(.bottom, 40)
         .environment(\.currentPage, $currentPage)
         .animation(.easeInOut, value: currentPage)
         .onChange(of: selectedCellIndex, { index, newIndex in

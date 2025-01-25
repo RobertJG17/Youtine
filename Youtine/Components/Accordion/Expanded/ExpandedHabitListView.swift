@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedHabitView: View {
+struct ExpandedHabitListView: View {
     // MARK: Instance Variables
     var habits: [Habit]
 
@@ -28,7 +28,7 @@ struct ExpandedHabitView: View {
         VStack(spacing: 0) {
             // Routine title
             HStack(alignment: .center) {
-                Text("Tasks")
+                Text("Habits")
                     .font(
                         .system(
                             size: 30,
@@ -57,6 +57,8 @@ struct ExpandedHabitView: View {
                             Text(desc)
                                 .font(.caption)
                                 .fontWeight(.light)
+                                .lineLimit(1) // Set the number of lines to display
+                                .truncationMode(.tail) // Use ellipsis for overflow
                         }
                     }
                     .foregroundStyle(Color.white)
@@ -141,7 +143,7 @@ struct ExpandedHabitView: View {
 }
 
 #Preview {
-    ExpandedHabitView(
+    ExpandedHabitListView(
         habits: testRoutines[0]!.habits
     )
 }

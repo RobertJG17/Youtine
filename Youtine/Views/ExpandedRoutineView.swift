@@ -64,7 +64,7 @@ struct ExpandedRoutineView: View {
                     selectedCellIndex: $selectedCellIndex
                 )
                 
-                ExpandedHabitView(
+                ExpandedHabitListView(
                     habits: habits
                 )
             }
