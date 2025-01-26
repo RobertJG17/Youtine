@@ -158,10 +158,10 @@ The disk methods are used in subviews on form submission and routine deletion. T
 
 [X] Create environment vars and functions to attach to view hierarchy to execute Swift Data operations
 
-[ ] Create Expanded/Shortened view for Habit list views
--  [ ] Add down chevron to right of list row item
--  [ ] Add ellipses on first line
--  [ ] On tap gesture, expand to show entire desc
+[X] Create disclosure group for HabitListView (
+
+[ ] Add state / env var to denote the state (create | edit)
+-  [ ] Dynamically change Title/Toolbar labels/Confirmation descriptions
 
 [ ] Create unit tests
 

@@ -61,7 +61,6 @@ struct DayPickerView: View {
                 let day = "Th"
                 handleDayClicked(currKey: currKey, day: day)
             }
-            
             Image(systemName: isFilled(currKey: 4) ? "f.square.fill" : "f.square")
                 .resizable()
                 .scaledToFit()
@@ -99,6 +98,7 @@ struct DayPickerView: View {
                     let day = "S"
                     handleDayClicked(currKey: currKey, day: day)
                 }
+                .clipShape(Rectangle())
         }
         .frame(width: width / 1.5)
         .foregroundStyle(routineColor)
