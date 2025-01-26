@@ -22,6 +22,7 @@ struct ExpandedHabitListView: View {
         }
     }
     
+    @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
     var body: some View {
@@ -38,6 +39,11 @@ struct ExpandedHabitListView: View {
                 Spacer()
             }
             .padding(.leading, 25)
+            
+            Rectangle()
+                .frame(width: screenWidth.wrappedValue*0.9, height: 0.2)
+                .padding(.horizontal, 20)
+                .padding(.top, 15)
             
             List(habits, id: \.id) { habit in
                 let completed = habit.completed
@@ -62,7 +68,6 @@ struct ExpandedHabitListView: View {
                         }
                     }
                     .foregroundStyle(Color.white)
-                    .padding(.leading, 20)
                     .symbolEffect(
                         .bounce,
                         value: habit.completed

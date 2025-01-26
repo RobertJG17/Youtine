@@ -28,7 +28,7 @@ struct ExpandedDetailToolbarView: View {
                 "expanded-delete-dialog",
                 isPresented: $showDeleteConfirmation
             ) {
-                Button("Delete", role: .destructive) {
+                Button("Delete Routine", role: .destructive) {
                     /// MARK: RUN DELETE FUNCTION TO UPDATE SAVED ROUTINES
                     handleDeleteRoutine()
                     
@@ -39,8 +39,12 @@ struct ExpandedDetailToolbarView: View {
                     showDeleteConfirmation = false
                 }
             } message: {
-                Text("Delete Routine")
+                Text("Confirm")
             }
+            
+            Rectangle()
+                .frame(width: 0.2, height: 25)
+                .padding(.top, 5)
             
             Button {
                 /// MARK: NAVIGATE TO .editRoutine

@@ -17,6 +17,9 @@ struct FormToolbarView: View {
     @State private var showDeleteConfirmation = false
     @State private var showConfirmConfirmation = false
     
+    @State private var deleteButtonTitle: String = "Delete"
+    @State private var saveButtonTitle: String = "Create Routine"
+    
     var body: some View {
         HStack {
             
@@ -31,12 +34,18 @@ struct FormToolbarView: View {
                 "delete-dialog",
                 isPresented: $showDeleteConfirmation
             ) {
-                Button("Delete", role: .destructive) {
+                Button(deleteButtonTitle, role: .destructive) {
                     /// MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
                     
-                    /// MARK: NAVIGATE TO .home
-                    currentPage.wrappedValue = .home
+                    // MARK: Conditional navigation
+                    if currentPage.wrappedValue == .editRoutine {
+                        /// MARK: NAVIGATE BACK TO .routine
+                        currentPage.wrappedValue = .routine
+                    } else {
+                        /// MARK: NAVIGATE TO .home
+                        currentPage.wrappedValue = .home
+                    }
                 }
             } message: {
                 Text("Confirm")
@@ -53,7 +62,7 @@ struct FormToolbarView: View {
                 "confirm-dialog",
                 isPresented: $showConfirmConfirmation
             ) {
-                Button("Create Routine") {
+                Button(saveButtonTitle) {
                     /// MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
                     handleFormSubmit()
                     
@@ -68,6 +77,13 @@ struct FormToolbarView: View {
             }
         }
         .padding(.bottom, 20)
+        .onAppear {
+            deleteButtonTitle = currentPage.wrappedValue == .editRoutine
+            ? "Discard Changes" : "Delete"
+            
+            saveButtonTitle = currentPage.wrappedValue == .editRoutine
+            ? "Save Changes" : "Create Routine"
+        }
     }
 }
 

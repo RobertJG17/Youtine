@@ -11,7 +11,11 @@ struct ExpandedDetailView: View {
     var start: String
     @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
+    
+    // MARK: State to hold decoded daysJSON
     @State var days: [Int: String]?
+    
+    @Environment(\.screenWidth) var screenWidth
     
     init(
         start: String,
@@ -54,18 +58,21 @@ struct ExpandedDetailView: View {
                     selectedCellIndex: $selectedCellIndex
                 )
             }
-            .padding(.bottom, 10)
+            
+            Rectangle()
+                .frame(width: screenWidth.wrappedValue*0.9, height: 0.2)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 8)
                         
-            // Start time strip
             HStack {
                 Text("Start Time")
                 Image(systemName: "clock")
                 Spacer()
                 Text(start)
             }
-            .padding(.leading, 20)
+            
             Divider()
-            // Start time strip
+            
             HStack {
                 Text("Days Assigned")
                 Image(systemName: "calendar")
@@ -123,7 +130,6 @@ struct ExpandedDetailView: View {
                     days = decodedDays
                 }
             }
-            .padding(.leading, 20)
         }
         .padding(25)
         .padding(.top, 0)
