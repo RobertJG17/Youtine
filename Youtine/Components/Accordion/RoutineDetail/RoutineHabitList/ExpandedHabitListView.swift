@@ -45,7 +45,7 @@ struct ExpandedHabitListView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 15)
         
-            HabitListItems(
+            RoutineHabitListView(
                 habits: habits,
                 canScroll: $canScroll,
                 showScrollIndicator: $showScrollIndicator

@@ -26,8 +26,8 @@ struct HabitListView: View {
         
             HStack(alignment: .center, spacing: 0) {
                 HabitListDisclosureGroupView(
-                    label: label,
-                    desc: desc,
+                    label: label.wrappedValue,
+                    desc: desc.wrappedValue,
                     locked: $locked
                 )
                 

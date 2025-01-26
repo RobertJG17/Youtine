@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-struct HabitListItems: View {
+struct RoutineHabitListView: View {
     var habits: [Habit]
     @Binding var canScroll: Bool?
     @Binding var showScrollIndicator: Bool
@@ -33,15 +33,13 @@ struct HabitListItems: View {
                         Image(systemName: labelImage)
                             .animation(.easeInOut)
                         VStack(alignment: .leading) {
-                            Text(label)
-                            Text(desc)
-                                .font(.caption)
-                                .fontWeight(.light)
-                                .lineLimit(1) // Set the number of lines to display
-                                .truncationMode(.tail) // Use ellipsis for overflow
+                            HabitListDisclosureGroupView(
+                                label: label,
+                                desc: desc,
+                                locked: .constant(false)
+                            )
                         }
                     }
-                    .foregroundStyle(Color.white)
                     .symbolEffect(
                         .bounce,
                         value: habit.completed
@@ -81,7 +79,7 @@ struct HabitListItems: View {
 }
 
 #Preview {
-    HabitListItems(
+    RoutineHabitListView(
         habits: testRoutines[0]!.habits,
         canScroll: .constant(false),
         showScrollIndicator: .constant(false)

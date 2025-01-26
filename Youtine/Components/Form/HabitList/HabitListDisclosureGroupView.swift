@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct HabitListDisclosureGroupView: View {
-    @Binding var label: String
-    @Binding var desc: String
+    var label: String
+    var desc: String
     @Binding var locked: Bool
     
     @State private var isExpanded: Bool = false
@@ -63,8 +63,8 @@ struct HabitListDisclosureGroupView: View {
 
 #Preview {
     HabitListDisclosureGroupView(
-        label: .constant(""),
-        desc: .constant(""),
+        label: "",
+        desc: "",
         locked: .constant(false)
     )
 }
