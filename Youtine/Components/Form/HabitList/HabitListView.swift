@@ -13,44 +13,58 @@ struct HabitListView: View {
     @Binding var currentLabel: String
     @Binding var currentDesc: String
     @Binding var currentHabitID: UUID?
-    
+        
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
+    @State var locked: Bool = false
+    
     var body: some View {
-        ScrollView {
-            List($habits, id: \.id, editActions: .all) { todo in
-                let label = todo.label.wrappedValue
-                let desc = todo.desc.wrappedValue
-            
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(label)
-                        Text(desc)
-                            .font(.caption)
-                            .fontWeight(.light)
-                            .lineLimit(1) // Set the number of lines to display
-                            .truncationMode(.tail) // Use ellipsis for overflow
-                    }
+        List($habits, id: \.id, editActions: .all) { todo in
+            let label = todo.label
+            let desc = todo.desc
+        
+            HStack(alignment: .center, spacing: 0) {
+                HabitListDisclosureGroupView(
+                    label: label,
+                    desc: desc,
+                    locked: $locked
+                )
+                
+                Spacer()
+                
+                Divider()
+                
+                // TODO: Create edit pencil and use Tip Kit for swipe to delete action
+                Button {
+                    // MARK: Capture properties in state to initialize CreateHabitView
+                    currentLabel = label.wrappedValue
+                    currentDesc = desc.wrappedValue
+                    currentHabitID = todo.id
                     
-                    Spacer()
-                    
-                    // TODO: Create edit pencil and use Tip Kit for swipe to delete action
-                    Button {
-                        // MARK: Capture properties in state to initialize CreateHabitView with
-                        currentLabel = label
-                        currentDesc = desc
-                        currentHabitID = todo.id
-                        
-                        showingCreateHabit = true
-                    } label: {
-                        Image(systemName: "pencil")
-                    }
+                    showingCreateHabit = true
+                    locked = true
+                } label: {
+                    Image(systemName: "pencil")
+                        .frame(
+                            width: screenWidth.wrappedValue*0.10,
+                            height: screenHeight.wrappedValue*0.08,
+                            alignment: .center
+                        )
+                        .padding(.leading, 15)
                 }
+                .contentShape(Rectangle())
+                .background(Color.clear)
+                .foregroundStyle(Color.white)
+                .transition(.move(edge: .bottom))
             }
-            .frame(width: screenWidth.wrappedValue, height: screenHeight.wrappedValue/4.0)
+//            .listRowBackground(Color.clear)
         }
-        .frame(width: screenWidth.wrappedValue, height: screenHeight.wrappedValue/4.0)
+        .frame(
+            width: screenWidth.wrappedValue*0.8
+        )
+        
+        
     }
 }
 

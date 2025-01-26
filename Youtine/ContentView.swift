@@ -84,6 +84,8 @@ struct ContentView: View {
                 Router(
                     routines: $localRoutines
                 )
+                .environment(\.screenWidth, screenWidth)
+                .environment(\.screenHeight, screenHeight)
                 .onAppear {
                     // MARK: Set screenWidth and screenHeight
                     screenWidth.wrappedValue = width
