@@ -58,7 +58,9 @@ struct HabitListView: View {
                 .foregroundStyle(Color.white)
                 .transition(.move(edge: .bottom))
             }
-//            .listRowBackground(Color.clear)
+            
+            // !!!: Can't decide between this and default list row bg
+            .listRowBackground(Color.clear)
         }
         .frame(
             width: screenWidth.wrappedValue*0.8
