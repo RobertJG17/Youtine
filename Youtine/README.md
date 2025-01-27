@@ -7,6 +7,8 @@ are to reinforce positive habits that benefit you.
 Takes idea of simple todo app but incoporates habit
 building tips/suggestions from Atomic Habits by James Clear.
 
+![image info](./Images/home_page.png "Youtine Home Page")
+
 ### Data Model (evolving)
 ```Swift
 //
@@ -85,45 +87,61 @@ Swift Data is a modern, pure-code framework developed by Apple. Though Core Data
 is still widely used, Swift Data reduces overhead with its macros-based approach (@Query/@Model) and
 integrates nicely with SwiftUI. I am using this [article](https://www.hackingwithswift.com/articles/263/build-your-first-app-with-swiftui-and-swiftdata) currently as reference.
 
-### From ContextViewModel.swift
+### From ContentView.swift
 ```SwiftUI
-@State var contextViewModel: ContextViewModel? = nil
+@Query(FetchDescriptor<Youtine>(
+        sortBy: [SortDescriptor(\Youtine.index, order: .forward)]
+    )) var savedRoutines: [Youtine]
+    
+@State var dataManagerService: DataManager? = nil
         
-// MARK: Context used to initialize view model
+// MARK: Context used to initialize service model
 @Environment(\.modelContext) var context
 
-// MARK: Define context view model operations in Content View and pass them via context
-func writeRoutineToDisk(
-    routine: Youtine,
-    contextViewModel: ContextViewModel?
-) throws -> Void {
-    guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
-            message: """
-                Entity: ContentView \n
-                Line: 32\n
-                Function Invocation: writeRoutineToDisk()\n
-                Error: Context View Model not defined
-            """
+// MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
+    func writeRoutineToDisk(
+        id: UUID,
+        index: Int,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit]
+    ) throws -> Void {
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
+                message: """
+                    Entity: ContentView \n
+                    Line: 40\n
+                    Function Invocation: writeRoutineToDisk()\n
+                    Error: Data Manager not defined
+                """
+            )
+        }
+        
+        dms.saveRoutine(
+            id: id,
+            index: index,
+            start: start,
+            days: days,
+            borderColor: borderColor,
+            habits: habits
         )
     }
-    cvm.saveRoutine(routine: routine)
-}
-
-func deleteRoutineFromDisk(
-    routine: Youtine,
-    contextViewModel: ContextViewModel?
-) throws -> Void {
-    guard let cvm = contextViewModel else { throw ContextErrors.UninitializedError(
-            message: """
-                Entity: ContentView \n
-                Line: 48\n
-                Function Invocation: deleteRoutineFromDisk()\n
-                Error: Context View Model not defined
-            """
-        )
+    
+    func deleteRoutineFromDisk(
+        routine: Youtine
+    ) throws -> Void {
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
+                message: """
+                    Entity: ContentView \n
+                    Line: 63\n
+                    Function Invocation: deleteRoutineFromDisk()\n
+                    Error: Data Manager not defined
+                """
+            )
+        }
+        
+        dms.deleteRoutine(byID: routine.id)
     }
-    cvm.deleteRoutine(routine: routine)
-}
 {...body}
 .onAppear {
     // MARK: Set local state to array with youtines and nil entries otherwise
@@ -133,11 +151,24 @@ func deleteRoutineFromDisk(
             count: MAX_ROUTINES - savedRoutines.count
         )
     
-    contextViewModel = ContextViewModel(context: context)
+    dataManagerService = DataManager(context: context)
 }
+.onChange(of: savedRoutines, { _, newRoutines in
+            localRoutines = newRoutines +
+                Array.init(
+                    repeating: nil,
+                    count: MAX_ROUTINES - newRoutines.count
+                )
+            
+            print("""
+               \n\n\tEntity: ContentView
+               \tLine: 102
+               \tInvocation: onChange(savedRoutines)
+               \tOutput: \n\n\tNew routines: \n\n\(displayRoutines(routines: newRoutines))
+            """)
+        })
 .environment(\.writeRoutineToDisk, writeRoutineToDisk)
 .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
-.environment(\.contextViewModel, contextViewModel)
 ```
 The disk methods are used in subviews on form submission and routine deletion. They are declared in Content View so we can attach them as environment vars to the rest of the view hierarchy. This gives us a way to propagate operations without needing to explicitly define them as properties inherited by a subview.
                                                       
@@ -160,12 +191,13 @@ The disk methods are used in subviews on form submission and routine deletion. T
 
 [X] Create disclosure group for HabitListView (
 
-[ ] Add state / env var to denote the state (create | edit)
--  [ ] Dynamically change Title/Toolbar labels/Confirmation descriptions
+[X] Add state / env var to denote the state (create | edit)
+-  [X] Dynamically change Title/Toolbar labels/Confirmation descriptions
 
+[X] Explore cloud based storage solution with firebase to optimize local memory usage
+-  [X] Can use Firebase or CloudKit which is Apples BaaS and enables us to use a generous amount of cloud storage
+-  
 [ ] Create unit tests
-
-[ ] Explore cloud based storage solution with firebase to optimize local memory usage
 
 
 ### Pragma Marks
