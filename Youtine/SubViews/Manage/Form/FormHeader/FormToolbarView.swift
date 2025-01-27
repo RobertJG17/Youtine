@@ -20,6 +20,16 @@ struct FormToolbarView: View {
     @State private var deleteButtonTitle: String = "Delete"
     @State private var saveButtonTitle: String = "Create Routine"
     
+    func handleNav() -> Void {
+        if currentPage.wrappedValue == .editRoutine {
+            /// MARK: NAVIGATE TO .routine
+            currentPage.wrappedValue = .routine
+        } else {
+            /// MARK: NAVIGATE TO .home
+            currentPage.wrappedValue = .home
+        }
+    }
+    
     var body: some View {
         HStack {
             
@@ -38,14 +48,8 @@ struct FormToolbarView: View {
                     /// MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
                     
-                    // MARK: Conditional navigation
-                    if currentPage.wrappedValue == .editRoutine {
-                        /// MARK: NAVIGATE BACK TO .routine
-                        currentPage.wrappedValue = .routine
-                    } else {
-                        /// MARK: NAVIGATE TO .home
-                        currentPage.wrappedValue = .home
-                    }
+                    /// MARK: Conditional Navigation based on currentPage state
+                    handleNav()
                 }
             } message: {
                 Text("Confirm")
@@ -66,8 +70,8 @@ struct FormToolbarView: View {
                     /// MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
                     handleFormSubmit()
                     
-                    /// MARK: NAVIGATE TO .home
-                    currentPage.wrappedValue = .home
+                    /// MARK: Conditional Navigation based on currentPage state
+                    handleNav()
                     
                     /// MARK: STOP SHOWING CONFIRMATION DIALOG
                     showConfirmConfirmation = false

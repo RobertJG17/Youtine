@@ -38,14 +38,13 @@ struct RoutineHeaderView: View {
                 Image(systemName: "chevron.up")
             }
         }
-        .frame(height: screenHeight.wrappedValue*0.1)
+        .frame(height: screenHeight.wrappedValue*0.36)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
             /// MARK: NAVIGATE TO .home
             currentPage.wrappedValue = .home
         }
-        .padding(.top, 100)
         .padding(.horizontal, 20)
         .preferredColorScheme(.dark)
     }
