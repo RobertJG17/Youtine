@@ -15,17 +15,16 @@ struct ContentView: View {
     @Query(FetchDescriptor<Youtine>(
         sortBy: [SortDescriptor(\Youtine.index, order: .forward)]
     )) var savedRoutines: [Youtine]
-
-    @State var contentViewModel: ContentViewModel? = nil
     
     @State var localRoutines: [Youtine?] = Array.init(
         repeating: nil,
         count: 3
     )
+    
+    @State var dataManagerService: DataManager?
         
     // MARK: Context used to initialize view model
     @Environment(\.modelContext) var context
-    
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
@@ -39,17 +38,17 @@ struct ContentView: View {
         borderColor: Color,
         habits: [Habit]
     ) throws -> Void {
-        guard let cvm = contentViewModel else { throw ContentViewModelErrors.UninitializedError(
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 32\n
+                    Line: 42\n
                     Function Invocation: writeRoutineToDisk()\n
                     Error: Content View Model not defined
                 """
             )
         }
         
-        cvm.saveRoutine(
+        dms.saveRoutine(
             id: id,
             index: index,
             start: start,
@@ -62,7 +61,7 @@ struct ContentView: View {
     func deleteRoutineFromDisk(
         routine: Youtine
     ) throws -> Void {
-        guard let cvm = contentViewModel else { throw ContentViewModelErrors.UninitializedError(
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
                     Line: 48\n
@@ -72,7 +71,7 @@ struct ContentView: View {
             )
         }
         
-        cvm.deleteRoutine(byID: routine.id)
+        dms.deleteRoutine(byID: routine.id)
     }
     
     var body: some View {
@@ -84,8 +83,6 @@ struct ContentView: View {
                 Router(
                     routines: $localRoutines
                 )
-                .environment(\.screenWidth, screenWidth)
-                .environment(\.screenHeight, screenHeight)
                 .onAppear {
                     // MARK: Set screenWidth and screenHeight
                     screenWidth.wrappedValue = width
@@ -101,7 +98,7 @@ struct ContentView: View {
                     count: MAX_ROUTINES - savedRoutines.count
                 )
 
-            contentViewModel = ContentViewModel(context: context)
+            dataManagerService = DataManager(context: context)
         }
         .onChange(of: savedRoutines, { _, newRoutines in
             localRoutines = newRoutines +
@@ -112,7 +109,7 @@ struct ContentView: View {
             
             print("""
                \n\n\tEntity: ContentView
-               \tLine: 98
+               \tLine: 105
                \tInvocation: onChange(savedRoutines)
                \tOutput: \n\n\tNew routines: \n\n\(displayRoutines(routines: newRoutines))
             """)
@@ -122,7 +119,7 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
     }
     
-    
+    // MARK: Debug helper function
     func displayRoutines(routines: [Youtine?]) -> String {
         var outputStr = ""
         

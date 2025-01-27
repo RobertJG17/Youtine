@@ -9,11 +9,17 @@ import SwiftData
 import SwiftUI
 import Observation
 
+// This will become sole file over content view model
+// Since we will just inject this service file into content view
+// and call the save/update and delete methods instead of having a pass thru structure
+
 enum DataManagerErrors: Error {
     case InvalidContext(message: String)
     case UpdateError(message: String)
     case SaveError(message: String)
     case DeleteError(message: String)
+    case UnidentifiedRoutineError(message: String)
+    case UninitializedError(message: String)
 }
 
 @Observable
@@ -103,29 +109,28 @@ final class DataManager {
         days: [Int: String],
         borderColor: Color,
         habits: [Habit]
-    ) throws {
-        guard let context = context else {
-            throw DataManagerErrors.InvalidContext(
-                message: """
-                    Entity: DataManager
-                    Line: 107
-                    Function Invocation: saveRoutine()
-                    Error: Nil contenxt
-                """
-            )
-        }
-        
-        // ???: id referenced outside of predicate declaration scope
-        
-        // MARK: Check if existing Youtine object w/ id exists
-        let fetchDescriptor = FetchDescriptor<Youtine>(
-            predicate: #Predicate { currRoutine in
-                currRoutine.id == id // ???: Predicate won't bark now
-            },
-            sortBy: [SortDescriptor(\Youtine.id)]
-        )
-        
+    ) {
         do {
+            guard let context = context else {
+                throw DataManagerErrors.InvalidContext(
+                    message: """
+                        Entity: DataManager
+                        Line: 107
+                        Function Invocation: saveRoutine()
+                        Error: Nil contenxt
+                    """
+                )
+            }
+            
+            // ???: id referenced outside of predicate declaration scope
+            // MARK: Check if existing Youtine object w/ id exists
+            let fetchDescriptor = FetchDescriptor<Youtine>(
+                predicate: #Predicate { currRoutine in
+                    currRoutine.id == id // ???: Predicate won't bark now
+                },
+                sortBy: [SortDescriptor(\Youtine.id)]
+            )
+            
             let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
             let validEntry = existingEntry.first
             
@@ -154,34 +159,51 @@ final class DataManager {
                 )
             }
         } catch {
-            throw error
+            print(error)
         }
     }
     
     /// Method used to set routine at specified index to nil
     /// - Parameters:
     ///   - routine: Youtine instance
-    func deleteRoutine(routine: Youtine) throws {
-        guard let context = context else {
-            throw DataManagerErrors.InvalidContext(
-                message: """
-                    Entity: DataManager \n
-                    Line: 165\n
-                    Function Invocation: saveRoutine()\n
-                    Error: Nil contenxt
-                """
-            )
+    func deleteRoutine(byID id: UUID) {
+        do {
+            guard let context = context else {
+                throw DataManagerErrors.InvalidContext(
+                    message: """
+                        Entity: DataManager
+                        Line: 170
+                        Function Invocation: deleteRoutine()
+                        Error: Nil contenxt
+                    """
+                )
+            }
+            
+            let fetchDescriptor = FetchDescriptor<Youtine>( predicate: #Predicate { $0.id == id } )
+            let fetchedRoutines = try context.fetch(fetchDescriptor)
+            
+            if let routine = fetchedRoutines.first {
+                context.delete(routine)
+                print("""
+                      Entity: DataManager
+                      Line: 185
+                      Function Invocation: deleteRoutine()
+                      Output: SUCCESS, ROUTINE DELETED!
+                  """)
+            } else {
+                throw DataManagerErrors.UnidentifiedRoutineError(
+                    message: """
+                        Entity: Data Manager \n
+                        Line: 185\n
+                        Function Invocation: deleteRoutine()\n
+                        Output: ERROR - Routine ID not found
+                    """
+                )
+            }
+        } catch {
+            print(error)
         }
-
-        context.delete(routine)
-        
-        print("""
-              Entity: DataManager
-              Line: 141
-              Function Invocation: deleteRoutine()
-              Output: SUCCESS, ROUTINE DELETED!
-          """)
-        
+    
 //        do {
 //            try context.save()
 //            print("""

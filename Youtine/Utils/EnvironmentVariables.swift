@@ -20,10 +20,6 @@ struct ScreenHeightKey: EnvironmentKey {
     static let defaultValue: Binding<CGFloat> = .constant(600)
 }
 
-struct ContentViewModelKey: EnvironmentKey {
-    static let defaultValue: ContentViewModel? = nil
-}
-
 struct WriteRoutineToDiskKey: EnvironmentKey {
     static let defaultValue: (
         UUID,
@@ -64,11 +60,6 @@ extension EnvironmentValues {
     var screenHeight: Binding<CGFloat> {
         get { self[ScreenHeightKey.self] }
         set { self[ScreenHeightKey.self] = newValue }
-    }
-    
-    var contentViewModel: ContentViewModel? {
-        get { self[ContentViewModelKey.self] }
-        set { self[ContentViewModelKey.self] = newValue }
     }
     
     var writeRoutineToDisk: (
