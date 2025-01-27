@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedDetailToolbarView: View {
+struct RoutineDetailToolbarView: View {
     @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
     
@@ -57,5 +57,8 @@ struct ExpandedDetailToolbarView: View {
 }
 
 #Preview {
-    ExpandedDetailToolbarView(routine: .constant(testRoutines[0]), selectedCellIndex: .constant(0))
+    RoutineDetailToolbarView(
+        routine: .constant(testRoutines[0]),
+        selectedCellIndex: .constant(0)
+    )
 }

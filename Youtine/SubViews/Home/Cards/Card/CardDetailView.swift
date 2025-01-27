@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShortenedDetailView: View {
+struct CardDetailView: View {
     var start: String
     var habitsCompleted: Int
     var habits: [Habit]
@@ -35,7 +35,7 @@ struct ShortenedDetailView: View {
 }
 
 #Preview {
-    ShortenedDetailView(
+    CardDetailView(
         start: "8:00 AM",
         habitsCompleted: 3,
         habits: testRoutines[0]!.habits

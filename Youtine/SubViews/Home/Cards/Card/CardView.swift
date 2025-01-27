@@ -58,7 +58,7 @@ struct RoutineCardView: View {
             VStack {
                 Spacer()
                 
-                ShortenedHeader(
+                CardHeaderView(
                     title: title
                 )
                 
@@ -66,7 +66,7 @@ struct RoutineCardView: View {
                 
                 Spacer()
                 
-                ShortenedDetailView(
+                CardDetailView(
                     start: start,
                     habitsCompleted: habitsCompleted,
                     habits: habits

@@ -28,7 +28,7 @@ struct Router: View {
                     selectedRoutine = nil
                 }
             } else if currentPage == .routine {
-                ExpandedRoutineView(
+                RoutineView(
                     routine: $selectedRoutine,
                     selectedCellIndex: $selectedCellIndex
                 )

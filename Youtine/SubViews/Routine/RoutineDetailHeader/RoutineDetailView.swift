@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedDetailView: View {
+struct RoutineDetailView: View {
     var start: String
     @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
@@ -53,7 +53,7 @@ struct ExpandedDetailView: View {
                         )
                     )
                 Spacer()
-                ExpandedDetailToolbarView(
+                RoutineDetailToolbarView(
                     routine: $routine,
                     selectedCellIndex: $selectedCellIndex
                 )
@@ -138,7 +138,7 @@ struct ExpandedDetailView: View {
 }
 
 #Preview {
-    ExpandedDetailView(
+    RoutineDetailView(
         start: "8:00 AM", routine: .constant(testRoutines[0]),
         selectedCellIndex: .constant(0)
     )

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShortenedHeader: View {
+struct CardHeaderView: View {
     var title: String
     
     var body: some View {
@@ -28,5 +28,5 @@ struct ShortenedHeader: View {
 }
 
 #Preview {
-    ShortenedHeader(title: "Morning Routine")
+    CardHeaderView(title: "Morning Routine")
 }

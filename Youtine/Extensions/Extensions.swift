@@ -94,7 +94,7 @@ extension ManageRoutineView {
     }
 }
 
-extension ExpandedRoutineView {
+extension RoutineView {
     var backgroundImage: String {
         switch(selectedCellIndex) {
         case 0:

@@ -13,7 +13,7 @@ struct CardsView: View {
 
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.offset) { index, routine in
-            CardView(
+            CardRouterView(
                 index: index,
                 routine: routine,
                 selectedCellIndex: $selectedCellIndex

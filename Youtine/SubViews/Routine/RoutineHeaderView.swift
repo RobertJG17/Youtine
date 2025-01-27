@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedHeader: View {
+struct RoutineHeaderView: View {
     var title: String
     @Binding var selectedCellIndex: Int?
     
@@ -52,7 +52,7 @@ struct ExpandedHeader: View {
 }
 
 #Preview {
-    ExpandedHeader(
+    RoutineHeaderView(
         title: "Morning Routine",
         selectedCellIndex: .constant(1)
     )

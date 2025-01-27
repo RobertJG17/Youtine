@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedRoutineView: View {
+struct RoutineView: View {
     @Binding var routine: Youtine?
     @Binding var selectedCellIndex: Int?
     
@@ -52,18 +52,17 @@ struct ExpandedRoutineView: View {
     
     var body: some View {
         VStack {
-            ExpandedHeader(
+            RoutineHeaderView(
                 title: routineTitle,
                 selectedCellIndex: $selectedCellIndex
             )
             
             VStack(spacing: 0) {
-                ExpandedDetailView(
+                RoutineDetailView(
                     start: start,
                     routine: $routine,
                     selectedCellIndex: $selectedCellIndex
                 )
-                
                 Spacer()
                 
                 RoutineHabitView(
@@ -97,6 +96,7 @@ struct ExpandedRoutineView: View {
         }
         .onAppear {
             routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex)
+            
         }
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
         .frame(
@@ -108,7 +108,7 @@ struct ExpandedRoutineView: View {
 }
 
 #Preview {
-    ExpandedRoutineView(
+    RoutineView(
         routine: .constant(testRoutines[0]),
         selectedCellIndex: .constant(0)
     )
