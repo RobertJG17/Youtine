@@ -13,32 +13,14 @@ struct RoutineHabitView: View {
 
     // MARK: Initialized local state
     @State var showScrollIndicator: Bool = true
-    @State var animatedOpacity: CGFloat = 1
     @State var canScroll: Bool? = nil
-    
-    var habitsCompleted: Int {
-        return habits.reduce(0) { partialResult, habit in
-            partialResult + (habit.completed ? 1 : 0)
-        }
-    }
     
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
     var body: some View {
         VStack(spacing: 0) {
-            // Routine title
-            HStack(alignment: .center) {
-                Text("Habits")
-                    .font(
-                        .system(
-                            size: 30,
-                            weight: .light
-                        )
-                    )
-                Spacer()
-            }
-            .padding(.leading, 25)
+            RoutineHabitHeaderView()
             
             Rectangle()
                 .frame(width: screenWidth.wrappedValue*0.9, height: 0.3)
@@ -51,62 +33,11 @@ struct RoutineHabitView: View {
                 showScrollIndicator: $showScrollIndicator
             )
             
-            VStack {
-                HStack{
-                    Spacer()
-                    if !habits.isEmpty {
-                        Button {
-                            canScroll = true
-                        } label: {
-                            Image(systemName: "chevron.down.2")
-                                .opacity(
-                                    showScrollIndicator ?
-                                    1 : 0
-                                )
-                                .opacity(animatedOpacity)
-                                .padding(.top, 8)
-                                .animation(
-                                    .easeInOut(duration: 0.55)
-                                    .repeatForever(
-                                        autoreverses: true
-                                    ),
-                                    value: animatedOpacity // Animate the scale
-                                )
-                                
-                                .onAppear {
-                                    animatedOpacity = 0.35 // Trigger the animation
-                                }
-                        }
-                        .foregroundStyle(Color.white)
-                    }
-                    Spacer()
-                }
-                .padding(.top, 15)
-                .padding(.bottom, 8)
-                
-                HStack {
-                    Text("Completed:")
-                        .font(
-                            .system(
-                                size: 30,
-                                weight: .light
-                            )
-                        )
-                        .opacity(0.7)
-                    Spacer()
-                    Text("\(habitsCompleted)/\(habits.count)")
-                        .font(
-                            .system(
-                                size: 30,
-                                weight: .light
-                            )
-                        )
-                        .opacity(0.7)
-                }
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
-                .padding(.bottom, 45)
-            }
+            RoutineHabitFooterView(
+                habits: habits,
+                showScrollIndicator: showScrollIndicator,
+                canScroll: $canScroll
+            )
         }
         .preferredColorScheme(.dark)
     }

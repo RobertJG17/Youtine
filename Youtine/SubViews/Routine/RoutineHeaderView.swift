@@ -46,7 +46,7 @@ struct RoutineHeaderView: View {
             currentPage.wrappedValue = .home
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, 5)
+        .padding(.bottom, 10)
         .preferredColorScheme(.dark)
     }
 }
