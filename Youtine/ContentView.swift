@@ -23,7 +23,7 @@ struct ContentView: View {
     
     @State var dataManagerService: DataManager?
         
-    // MARK: Context used to initialize view model
+    // MARK: Context used to initialize service model
     @Environment(\.modelContext) var context
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
@@ -40,9 +40,9 @@ struct ContentView: View {
         guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 42\n
+                    Line: 40\n
                     Function Invocation: writeRoutineToDisk()\n
-                    Error: Content View Model not defined
+                    Error: Data Manager not defined
                 """
             )
         }
@@ -63,9 +63,9 @@ struct ContentView: View {
         guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 48\n
+                    Line: 63\n
                     Function Invocation: deleteRoutineFromDisk()\n
-                    Error: Content View Model not defined
+                    Error: Data Manager not defined
                 """
             )
         }
@@ -108,7 +108,7 @@ struct ContentView: View {
             
             print("""
                \n\n\tEntity: ContentView
-               \tLine: 105
+               \tLine: 102
                \tInvocation: onChange(savedRoutines)
                \tOutput: \n\n\tNew routines: \n\n\(displayRoutines(routines: newRoutines))
             """)
