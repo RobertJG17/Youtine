@@ -66,7 +66,7 @@ struct RoutineHabitView: View {
                                 .opacity(animatedOpacity)
                                 .padding(.top, 8)
                                 .animation(
-                                    .easeInOut(duration: 0.95)
+                                    .easeInOut(duration: 0.75)
                                     .repeatForever(
                                         autoreverses: true
                                     ),
