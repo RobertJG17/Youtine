@@ -214,7 +214,9 @@ The disk methods are used in subviews on form submission and routine deletion. T
 
 [X] Explore cloud based storage solution with firebase to optimize local memory usage
 -  [X] Can use Firebase or CloudKit which is Apples BaaS and enables us to use a generous amount of cloud storage
--  
+
+[ ] Create push notifications for user that remind them a Routine has commenced
+-  [ ] Keep track of how long it takes a user to complete all habits (track progress overtime)
 
 [ ] Create unit tests
 

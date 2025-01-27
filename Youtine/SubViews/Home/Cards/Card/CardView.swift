@@ -43,7 +43,7 @@ struct RoutineCardView: View {
         }
         
         self.index = index
-        self.title = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue)
+        self.title = ManageRoutineView.getRoutineTitle(index: index)
                 
         self._selectedCellIndex = selectedCellIndex
     }
