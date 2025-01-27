@@ -28,8 +28,7 @@ struct ContentView: View {
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
-    // MARK: Define content view model operations in Content View and pass them via context
-    // MARK: NOTE: Passing contentViewModel as an arg seems superfluous
+    // MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
     func writeRoutineToDisk(
         id: UUID,
         index: Int,
