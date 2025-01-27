@@ -64,7 +64,6 @@ struct RoutineHabitView: View {
                                     1 : 0
                                 )
                                 .opacity(animatedOpacity)
-                                .padding(.trailing, 20)
                                 .padding(.top, 8)
                                 .animation(
                                     .easeInOut(duration: 0.95)
@@ -75,12 +74,14 @@ struct RoutineHabitView: View {
                                 )
                                 
                                 .onAppear {
-                                    animatedOpacity = 0.75 // Trigger the animation
+                                    animatedOpacity = 0.35 // Trigger the animation
                                 }
                         }
                         .foregroundStyle(Color.white)
                     }
+                    Spacer()
                 }
+                .padding(.top, 15)
                 .padding(.bottom, 20)
                 
                 HStack {
