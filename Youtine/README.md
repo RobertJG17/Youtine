@@ -7,7 +7,20 @@ are to reinforce positive habits that benefit you.
 Takes idea of simple todo app but incoporates habit
 building tips/suggestions from Atomic Habits by James Clear.
 
+
+## Screenshots
+
+### Home
 ![image info](./Images/home_page.png "Youtine Home Page")
+
+### Routine Detail
+![image info](./Images/routine_detail.png "Routine Detail Page")
+
+### Edit Routine
+![image info](./Images/edit_routine.png "Edit Routine Page")
+
+### Confirmation Dialog (included save + delete))
+![image info](./Images/dialog.png "Confirmation Dialog")
 
 ### Data Model (evolving)
 ```Swift
@@ -197,6 +210,7 @@ The disk methods are used in subviews on form submission and routine deletion. T
 [X] Explore cloud based storage solution with firebase to optimize local memory usage
 -  [X] Can use Firebase or CloudKit which is Apples BaaS and enables us to use a generous amount of cloud storage
 -  
+
 [ ] Create unit tests
 
 
