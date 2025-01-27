@@ -41,7 +41,7 @@ struct RoutineHabitView: View {
             .padding(.leading, 25)
             
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.9, height: 0.2)
+                .frame(width: screenWidth.wrappedValue*0.9, height: 0.3)
                 .padding(.horizontal, 20)
                 .padding(.top, 15)
         
@@ -82,7 +82,7 @@ struct RoutineHabitView: View {
                     Spacer()
                 }
                 .padding(.top, 15)
-                .padding(.bottom, 20)
+                .padding(.bottom, 8)
                 
                 HStack {
                     Text("Completed:")
@@ -105,7 +105,7 @@ struct RoutineHabitView: View {
                 }
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
-                .padding(.bottom, 30)
+                .padding(.bottom, 45)
             }
         }
         .preferredColorScheme(.dark)

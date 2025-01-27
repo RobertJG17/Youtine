@@ -60,7 +60,7 @@ struct RoutineDetailView: View {
             }
             
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.9, height: 0.2)
+                .frame(width: screenWidth.wrappedValue*0.9, height: 0.3)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 8)
                         
@@ -132,7 +132,7 @@ struct RoutineDetailView: View {
             }
         }
         .padding(25)
-        .padding(.top, 0)
+        .padding(.top, 15)
         .preferredColorScheme(.dark)
     }
 }

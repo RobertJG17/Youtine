@@ -54,7 +54,7 @@ struct RoutineHabitListView: View {
                     )
 //                    .border(Color.green) MARK: DEBUG
                 }
-//                .border(Color.yellow)
+//                .border(Color.yellow) MARK: DEBUG
                 .onAppear {
                     guard let lastHabit: Habit = habits.last else { return }
                     

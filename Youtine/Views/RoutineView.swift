@@ -90,8 +90,7 @@ struct RoutineView: View {
                     .frame(height: screenHeight.wrappedValue)
             )
             .frame(height: screenHeight.wrappedValue)
-            .padding(.top, 15)
-            .padding(.bottom, 30)
+            .padding(.bottom, 10)
             .preferredColorScheme(.dark)
         }
         .onAppear {
