@@ -187,16 +187,21 @@ The disk methods are used in subviews on form submission and routine deletion. T
                                                       
 ### Todos
 [X] Build out display for empty container view (no local data persisted/previous routines saved)
+
 [X] Complete refactor of View Hierarchy and respective subview hierarchy
+
 [X] Finish building out Routine creation screen
+
 -  [X] Tidy up navigation from and to HabitInitView
 -  [X] Create cancel button to discard currently created Routine
 -  [X] Create done button to complete current Routine and save to local storage
 
 [X] Finish building out Edit creation screen
+
 -  [X] Create ManageRoutineView screen that conditionally intializes state variables and serves said state to EditRoutineView
 
 [X] Explore Swift Data integration
+
 - [X] Write data to persistent storage
 - [X] Read data from persistent storage
 
