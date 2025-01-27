@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ExpandedHabitListView: View {
+struct RoutineHabitView: View {
     // MARK: Instance Variables
     var habits: [Habit]
 
@@ -65,6 +65,7 @@ struct ExpandedHabitListView: View {
                                 )
                                 .opacity(animatedOpacity)
                                 .padding(.trailing, 20)
+                                .padding(.top, 8)
                                 .animation(
                                     .easeInOut(duration: 0.95)
                                     .repeatForever(
@@ -111,7 +112,7 @@ struct ExpandedHabitListView: View {
 }
 
 #Preview {
-    ExpandedHabitListView(
+    RoutineHabitView(
         habits: testRoutines[0]!.habits
     )
 }

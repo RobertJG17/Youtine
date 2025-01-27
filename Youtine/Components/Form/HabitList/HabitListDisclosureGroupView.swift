@@ -28,7 +28,7 @@ struct HabitListDisclosureGroupView: View {
                         .fontWeight(.light)
                         .fixedSize(horizontal: false, vertical: true) // Allow multiline text
                         .frame(
-                            width: screenWidth.wrappedValue / 3.0,
+                            width: screenWidth.wrappedValue / 1.75,
                             alignment: .leading
                         )
                         .transition(.opacity)
@@ -50,7 +50,6 @@ struct HabitListDisclosureGroupView: View {
                 }
             }
         }
-        .ignoresSafeArea(edges: .leading)
         .contentShape(Rectangle())
         .background(Color.clear)
         .onTapGesture {

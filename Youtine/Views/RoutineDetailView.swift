@@ -66,7 +66,7 @@ struct ExpandedRoutineView: View {
                 
                 Spacer()
                 
-                ExpandedHabitListView(
+                RoutineHabitView(
                     habits: habits
                 )
             }
