@@ -57,6 +57,16 @@ extension ContentView {
         return formatter
     }()
     
+    func promptNotificationsGrant() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("Notifications prompt finished!")
+            } else if let error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     // MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
     func writeRoutineToDisk(
         id: UUID,

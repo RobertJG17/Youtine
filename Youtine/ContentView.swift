@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UserNotifications
 
 struct ContentView: View {
     // MARK: Routines - MORNING | AFTERNOON | EVENING
@@ -55,6 +56,9 @@ struct ContentView: View {
 
             // MARK: Initialize Data Manager with Swift Data context
             dataManagerService = DataManager(context: context)
+            
+            // MARK: Prompt user for permission to schedule local notifications
+            promptNotificationsGrant()
         }
         .onChange(of: savedRoutines, { _, newRoutines in
             localRoutines = newRoutines +
