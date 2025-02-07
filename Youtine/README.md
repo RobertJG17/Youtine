@@ -22,7 +22,12 @@ building tips/suggestions from Atomic Habits by James Clear.
 ### Confirmation Dialog (included save + delete))
 ![image info](./Images/dialog.png "Confirmation Dialog")
 
-### Data Model (evolving)
+### Swift Data Integration
+Swift Data is a modern, pure-code framework developed by Apple. Though Core Data
+is still widely used, Swift Data reduces overhead with its macros-based approach (@Query/@Model) and
+integrates nicely with SwiftUI. I am using this [article](https://www.hackingwithswift.com/articles/263/build-your-first-app-with-swiftui-and-swiftdata) currently as reference.
+
+### From Routine.swift
 ```Swift
 //
 //  Routine.swift
@@ -94,11 +99,6 @@ class Habit: Identifiable {
 }
 
 ```
-
-### Swift Data Integration
-Swift Data is a modern, pure-code framework developed by Apple. Though Core Data
-is still widely used, Swift Data reduces overhead with its macros-based approach (@Query/@Model) and
-integrates nicely with SwiftUI. I am using this [article](https://www.hackingwithswift.com/articles/263/build-your-first-app-with-swiftui-and-swiftdata) currently as reference.
 
 ### From ContentView.swift
 ```SwiftUI
