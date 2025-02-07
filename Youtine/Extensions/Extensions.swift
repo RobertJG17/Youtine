@@ -56,6 +56,51 @@ extension ContentView {
         formatter.timeStyle = .medium
         return formatter
     }()
+    
+    // MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
+    func writeRoutineToDisk(
+        id: UUID,
+        index: Int,
+        start: String,
+        days: [Int: String],
+        borderColor: Color,
+        habits: [Habit]
+    ) throws -> Void {
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
+                message: """
+                    Entity: ContentView \n
+                    Line: 40\n
+                    Function Invocation: writeRoutineToDisk()\n
+                    Error: Data Manager not defined
+                """
+            )
+        }
+        
+        dms.saveRoutine(
+            id: id,
+            index: index,
+            start: start,
+            days: days,
+            borderColor: borderColor,
+            habits: habits
+        )
+    }
+    
+    func deleteRoutineFromDisk(
+        routine: Youtine
+    ) throws -> Void {
+        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
+                message: """
+                    Entity: ContentView \n
+                    Line: 63\n
+                    Function Invocation: deleteRoutineFromDisk()\n
+                    Error: Data Manager not defined
+                """
+            )
+        }
+        
+        dms.deleteRoutine(byID: routine.id)
+    }
 }
 
 extension ManageRoutineView {
