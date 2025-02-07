@@ -53,6 +53,7 @@ struct ContentView: View {
                     count: MAX_ROUTINES - savedRoutines.count
                 )
 
+            // MARK: Initialize Data Manager with Swift Data context
             dataManagerService = DataManager(context: context)
         }
         .onChange(of: savedRoutines, { _, newRoutines in
