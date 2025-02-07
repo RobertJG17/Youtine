@@ -52,6 +52,9 @@ final class DataManager {
         if definedContext.hasChanges {
             do {
                 try definedContext.save()
+                
+                // MARK: Update existing local notification for application
+                
                 print("""
                     Entity: DataManager \n
                     Line: 48\n
@@ -81,6 +84,10 @@ final class DataManager {
             definedContext.insert(routine)
             if definedContext.hasChanges {
                 try definedContext.save()
+                
+                // MARK: Create new local notification for application
+                
+                
                 print("""
                     Entity: DataManager \n
                     Line: 77\n

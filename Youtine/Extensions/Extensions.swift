@@ -57,6 +57,15 @@ extension ContentView {
         return formatter
     }()
     
+    static func getDateFromString(timeString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX") // Ensures correct AM/PM parsing
+        let date = formatter.date(from: timeString)
+        
+        return date!
+    }
+    
     func promptNotificationsGrant() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
