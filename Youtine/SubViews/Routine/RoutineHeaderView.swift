@@ -38,7 +38,7 @@ struct RoutineHeaderView: View {
                 Image(systemName: "chevron.up")
             }
         }
-        .frame(height: screenHeight.wrappedValue*0.36)
+        .frame(height: screenHeight.wrappedValue*0.30)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {

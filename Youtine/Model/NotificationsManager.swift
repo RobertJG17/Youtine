@@ -11,19 +11,19 @@ class NotificationsManager {
     func addNotification(id: String, index: Int, startTime: String) {
         let content = UNMutableNotificationContent()
         let title = ManageRoutineView.getRoutineTitle(index: index)
-        let subtitle = startTime
+        let body = "Habits are waiting to be formed!"
         
         content.title = title
-        content.subtitle = subtitle
+        content.body = body
         content.sound = UNNotificationSound.default
         
-        let date = ContentView.getDateFromString(timeString: startTime)
+        let date = getDateFromString(timeString: startTime)
         let dateComponents = getDateComponents(date: date)
 
         // Create a calendar-based trigger
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
-        // choose a random identifier
+        // Provision notification request
         let request = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
 
         // add our notification request
@@ -49,5 +49,12 @@ class NotificationsManager {
         return dateComponents
     }
     
-    
+    func getDateFromString(timeString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX") // Ensures correct AM/PM parsing
+        let date = formatter.date(from: timeString)
+        
+        return date!
+    }
 }

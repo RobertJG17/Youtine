@@ -25,9 +25,11 @@ enum DataManagerErrors: Error {
 @Observable
 final class DataManager {
     private var context: ModelContext?
+    private var notificationsManager: NotificationsManager
     
     init(context: ModelContext?) {
         self.context = context
+        self.notificationsManager = NotificationsManager()
     }
     
     /// Method used to save routine upon form submission
@@ -54,6 +56,11 @@ final class DataManager {
                 try definedContext.save()
                 
                 // MARK: Update existing local notification for application
+                notificationsManager.updateNotification(
+                    id: entry.id.uuidString,
+                    index: entry.index,
+                    newStartTime: start
+                )
                 
                 print("""
                     Entity: DataManager \n
@@ -86,7 +93,11 @@ final class DataManager {
                 try definedContext.save()
                 
                 // MARK: Create new local notification for application
-                
+                notificationsManager.addNotification(
+                    id: routine.id.uuidString,
+                    index: routine.index,
+                    startTime: routine.start
+                )
                 
                 print("""
                     Entity: DataManager \n
@@ -191,6 +202,10 @@ final class DataManager {
             
             if let routine = fetchedRoutines.first {
                 context.delete(routine)
+                
+                // MARK: Remove local notification for application
+                notificationsManager.deleteNotification(id: routine.id.uuidString)
+                
                 print("""
                       Entity: DataManager
                       Line: 185
