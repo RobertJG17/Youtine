@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Binding var routines: [Youtine?]
+    @Binding var routines: [Routine?]
     @Binding var selectedCellIndex: Int?
     
     @Environment(\.currentPage) var currentPage

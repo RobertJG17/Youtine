@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoutineDetailView: View {
     var start: String
-    @Binding var routine: Youtine?
+    @Binding var routine: Routine?
     @Binding var selectedCellIndex: Int?
     
     // MARK: State to hold decoded daysJSON
@@ -19,7 +19,7 @@ struct RoutineDetailView: View {
     
     init(
         start: String,
-        routine: Binding<Youtine?>,
+        routine: Binding<Routine?>,
         selectedCellIndex: Binding<Int?>
     ) {
         self.start = start
@@ -126,7 +126,7 @@ struct RoutineDetailView: View {
             }
             .onAppear {
                 if let validRoutine = self.routine {
-                    let decodedDays = Youtine.decodeDays(validRoutine.daysJSON)
+                    let decodedDays = Routine.decodeDays(validRoutine.daysJSON)
                     days = decodedDays
                 }
             }

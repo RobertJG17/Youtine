@@ -72,7 +72,7 @@ struct EditRoutineView: View {
         routineColor: .constant(Color.white),
         selectedCellIndex: .constant(0),
         start: .constant(testRoutines[0]!.start),
-        selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),
+        selectedDays: .constant(Routine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),
         showingCreateHabit: .constant(false),
         showingTimePicker: .constant(false),

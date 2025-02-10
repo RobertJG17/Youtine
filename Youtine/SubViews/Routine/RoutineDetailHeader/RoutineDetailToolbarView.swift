@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RoutineDetailToolbarView: View {
-    @Binding var routine: Youtine?
+    @Binding var routine: Routine?
     @Binding var selectedCellIndex: Int?
     
     @State var showDeleteConfirmation: Bool = false

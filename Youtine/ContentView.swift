@@ -13,11 +13,11 @@ struct ContentView: View {
     // MARK: Routines - MORNING | AFTERNOON | EVENING
     private let MAX_ROUTINES = 3
 
-    @Query(FetchDescriptor<Youtine>(
-        sortBy: [SortDescriptor(\Youtine.index, order: .forward)]
-    )) var savedRoutines: [Youtine]
+    @Query(FetchDescriptor<Routine>(
+        sortBy: [SortDescriptor(\Routine.index, order: .forward)]
+    )) var savedRoutines: [Routine]
     
-    @State var localRoutines: [Youtine?] = Array.init(
+    @State var localRoutines: [Routine?] = Array.init(
         repeating: nil,
         count: 3
     )

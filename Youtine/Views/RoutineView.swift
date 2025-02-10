@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RoutineView: View {
-    @Binding var routine: Youtine?
+    @Binding var routine: Routine?
     @Binding var selectedCellIndex: Int?
     
     var days: [Int:String]
@@ -23,13 +23,13 @@ struct RoutineView: View {
     @Environment(\.screenHeight) var screenHeight
     
     init(
-        routine: Binding<Youtine?>,
+        routine: Binding<Routine?>,
         selectedCellIndex: Binding<Int?>
     ) {
         self._routine = routine
         self._selectedCellIndex = selectedCellIndex
         
-        self.days = Youtine.decodeDays(
+        self.days = Routine.decodeDays(
             routine.wrappedValue?.daysJSON ?? ""
         )
         self.start = routine.wrappedValue?.start ?? ""

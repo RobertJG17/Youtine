@@ -125,7 +125,7 @@ struct FormView: View {
         routineColor: .constant(.white),
         selectedCellIndex: .constant(0),
         start: .constant("8:00 a.m."),
-        selectedDays: .constant(Youtine.decodeDays(testRoutines[0]!.daysJSON)),
+        selectedDays: .constant(Routine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),
         showingCreateHabit: .constant(false),
         showingTimePicker: .constant(false),

@@ -14,6 +14,6 @@ struct YoutineApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: [Youtine.self, Habit.self])
+        .modelContainer(for: [Routine.self, Habit.self])
     }
 }

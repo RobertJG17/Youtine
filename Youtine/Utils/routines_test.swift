@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-var testRoutines: [Youtine?] =
+var testRoutines: [Routine?] =
     [
-        Youtine(
+        Routine(
             index: 0,
             start: "8:00 AM",
             days: [0: "M", 1: "W", 2: "F"],
@@ -45,7 +45,7 @@ var testRoutines: [Youtine?] =
                 )
             ]
         ),
-        Youtine(
+        Routine(
             index: 1,
             start: "12:00 PM",
             days: [0: "M", 1: "W", 2: "F"],

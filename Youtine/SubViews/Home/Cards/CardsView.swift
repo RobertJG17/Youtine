@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CardsView: View {
-    @Binding var routines: [Youtine?]
+    @Binding var routines: [Routine?]
     @Binding var selectedCellIndex: Int?
 
     var body: some View {

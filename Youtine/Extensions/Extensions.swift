@@ -97,7 +97,7 @@ extension ContentView {
     }
     
     func deleteRoutineFromDisk(
-        routine: Youtine
+        routine: Routine
     ) throws -> Void {
         guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """

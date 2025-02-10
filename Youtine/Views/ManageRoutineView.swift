@@ -46,7 +46,7 @@ struct ManageRoutineView: View {
     }
 
     init(
-        routine: Binding<Youtine?>,
+        routine: Binding<Routine?>,
         selectedCellIndex: Binding<Int?>
     ) {
         self._selectedCellIndex = selectedCellIndex
@@ -56,7 +56,7 @@ struct ManageRoutineView: View {
             self.id = unwrappedRoutine.id
             self.routineColor = Color.from(description: unwrappedRoutine.borderColor)
             self.start = unwrappedRoutine.start
-            self.selectedDays = Youtine.decodeDays(unwrappedRoutine.daysJSON)
+            self.selectedDays = Routine.decodeDays(unwrappedRoutine.daysJSON)
             self.habits = unwrappedRoutine.habits
         } else {
             self.id = UUID()

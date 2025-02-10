@@ -35,7 +35,7 @@ struct WriteRoutineToDiskKey: EnvironmentKey {
 }
 
 struct DeleteRoutineFromDiskKey: EnvironmentKey {
-    static let defaultValue: (Youtine) throws -> Void = { _ in }
+    static let defaultValue: (Routine) throws -> Void = { _ in }
 }
 
 struct HandleFormSubmitKey: EnvironmentKey {
@@ -75,7 +75,7 @@ extension EnvironmentValues {
     }
     
     var deleteRoutineFromDisk: (
-        _ routine: Youtine
+        _ routine: Routine
     ) throws -> Void {
         get { self[DeleteRoutineFromDiskKey.self] }
         set { self[DeleteRoutineFromDiskKey.self] = newValue }

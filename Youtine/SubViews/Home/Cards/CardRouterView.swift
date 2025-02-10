@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CardRouterView: View {
     var index: Int
-    var routine: Youtine?
+    var routine: Routine?
     var routineCreated: Bool
     @Binding var selectedCellIndex: Int?
     
@@ -17,7 +17,7 @@ struct CardRouterView: View {
         
     init(
         index: Int,
-        routine: Youtine?,
+        routine: Routine?,
         selectedCellIndex: Binding<Int?>
     ) {
         self.index = index

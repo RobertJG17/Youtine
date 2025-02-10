@@ -29,7 +29,7 @@ struct RoutineCardView: View {
     
     init(
         index: Int,
-        routine: Youtine?,
+        routine: Routine?,
         selectedCellIndex: Binding<Int?>
     ) {
         if let validRoutine = routine {

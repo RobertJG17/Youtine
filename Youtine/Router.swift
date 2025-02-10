@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct Router: View {
-    @Binding var routines: [Youtine?]
+    @Binding var routines: [Routine?]
     
     @State private var currentPage: Page = .home
     @State var selectedCellIndex: Int? = nil
-    @State var selectedRoutine: Youtine? = nil
+    @State var selectedRoutine: Routine? = nil
     
     var body: some View {
         VStack {

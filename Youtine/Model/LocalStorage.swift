@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 @Model
-class Youtine: Identifiable {
+class Routine: Identifiable {
     var id: UUID
     var index: Int
     var start: String
@@ -27,11 +27,10 @@ class Youtine: Identifiable {
         self.id = UUID() // Generate a unique identifier
         self.index = index
         self.start = start
-        self.daysJSON = Youtine.encodeDays(days)
+        self.daysJSON = Routine.encodeDays(days)
         self.borderColor = borderColor.description
         self.habits = habits
     }
-    
 
     // Helper to encode days dictionary into JSON
     static func encodeDays(_ days: [Int: String]) -> String {

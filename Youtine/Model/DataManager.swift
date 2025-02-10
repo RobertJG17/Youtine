@@ -37,7 +37,7 @@ final class DataManager {
     /// - Parameter definedContext: Context used to perform Swift Data object management operations
     /// - Parameters {...rest}: Youtine properties used to update existing entry
     func update(
-        entry: Youtine,
+        entry: Routine,
         start: String,
         days: [Int: String],
         borderColor: Color,
@@ -46,7 +46,7 @@ final class DataManager {
     ) throws -> Void {
         // !!!: MAKE SURE TO MAP THRU ALL NECESSARY PROPERTIES
         entry.start = start
-        entry.daysJSON = Youtine.encodeDays(days)
+        entry.daysJSON = Routine.encodeDays(days)
         entry.borderColor = borderColor.description
         entry.habits = habits
 
@@ -84,9 +84,9 @@ final class DataManager {
     }
     
     /// Method used to save routine upon form submission
-    /// - Parameter routine: Youtine  instance
+    /// - Parameter routine: Routine  instance
     /// - Parameter definedContext: Context used to perform Swift Data object management operations
-    func save(routine: Youtine, definedContext: ModelContext) throws {
+    func save(routine: Routine, definedContext: ModelContext) throws {
         do {
             definedContext.insert(routine)
             if definedContext.hasChanges {
@@ -119,7 +119,12 @@ final class DataManager {
     }
     
     /// Method used to save routine upon form submission
-    /// - Parameter routine: Youtine  instance
+    /// - Parameter id: ID of Routine
+    /// - Parameter index: Index of Routine
+    /// - Parameter start: Start time of Routine
+    /// - Parameter days: Days that a user would like to have this Routine
+    /// - Parameter borderColor: Color that a user has chosen for their  routine
+    /// - Parameter habits: Habits that a user has configured for their Routine
     func saveRoutine(
         id: UUID,
         index: Int,
@@ -141,15 +146,15 @@ final class DataManager {
             }
             
             // ???: id referenced outside of predicate declaration scope
-            // MARK: Check if existing Youtine object w/ id exists
-            let fetchDescriptor = FetchDescriptor<Youtine>(
+            // MARK: Check if existing Routine object w/ id exists
+            let fetchDescriptor = FetchDescriptor<Routine>(
                 predicate: #Predicate { currRoutine in
                     currRoutine.id == id // ???: Predicate won't bark now
                 },
-                sortBy: [SortDescriptor(\Youtine.id)]
+                sortBy: [SortDescriptor(\Routine.id)]
             )
             
-            let existingEntry: [Youtine] = try context.fetch(fetchDescriptor)
+            let existingEntry: [Routine] = try context.fetch(fetchDescriptor)
             let validEntry = existingEntry.first
             
             
@@ -163,7 +168,7 @@ final class DataManager {
                     definedContext: context
                 )
             } else {
-                let routine = Youtine(
+                let routine = Routine(
                     index: index,
                     start: start,
                     days: days,
@@ -183,7 +188,7 @@ final class DataManager {
     
     /// Method used to set routine at specified index to nil
     /// - Parameters:
-    ///   - routine: Youtine instance
+    ///   - id: ID of Routine we want to delete
     func deleteRoutine(byID id: UUID) {
         do {
             guard let context = context else {
@@ -197,7 +202,7 @@ final class DataManager {
                 )
             }
             
-            let fetchDescriptor = FetchDescriptor<Youtine>( predicate: #Predicate { $0.id == id } )
+            let fetchDescriptor = FetchDescriptor<Routine>( predicate: #Predicate { $0.id == id } )
             let fetchedRoutines = try context.fetch(fetchDescriptor)
             
             if let routine = fetchedRoutines.first {
