@@ -49,7 +49,10 @@ struct TimePickerView: View {
         // Adjust locale to use AM/PM format if needed
         formatter.locale = Locale(identifier: "en_US_POSIX")
         
-        return formatter.string(from: selectedTime)
+        let rawString = formatter.string(from: selectedTime)
+        
+        // ???: Normalize spaces to standard spaces (U+0020)
+        return rawString.replacingOccurrences(of: "\u{202F}", with: " ")
     }
 }
 

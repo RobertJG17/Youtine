@@ -10,20 +10,24 @@ import SwiftUI
 struct FormHeaderView: View {
     var routineTitle: String?
     @Binding var selectedCellIndex: Int?
+    var hasChanges: Bool
     
     @Environment(\.currentPage) var currentPage
     @Environment(\.handleFormSubmit) var handleFormSubmit
     
     var body: some View {
         VStack {
-            FormToolbarView(selectedCellIndex: $selectedCellIndex)
+            FormToolbarView(
+                selectedCellIndex: $selectedCellIndex,
+                hasChanges: hasChanges
+            )
             
             Spacer()
             
             HStack {
-                if routineTitle != nil {
-                    Text(routineTitle!)
-                        .font(.system(size: 35, weight: .light))
+                if let title = routineTitle {
+                    Text(title)
+                        .font(.system(size: 30, weight: .light))
                 }
             }
         }

@@ -21,6 +21,7 @@ struct FormView: View {
     
     // MARK: Set in onAppear
     @State var routineTitle: String = ""
+    var hasChanges: Bool
     
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
@@ -35,7 +36,8 @@ struct FormView: View {
         showingTimePicker: Binding<Bool>,
         currentLabel: Binding<String>,
         currentDescription: Binding<String>,
-        currentHabitID: Binding<UUID?>
+        currentHabitID: Binding<UUID?>,
+        hasChanges: Bool
     ) {
         self._routineColor = routineColor
         self._selectedCellIndex = selectedCellIndex
@@ -47,6 +49,7 @@ struct FormView: View {
         self._currentLabel = currentLabel
         self._currentDescription = currentDescription
         self._currentHabitID = currentHabitID
+        self.hasChanges = hasChanges
     }
     
     var body: some View {
@@ -54,7 +57,8 @@ struct FormView: View {
             Section(
                 header: FormHeaderView(
                     routineTitle: routineTitle,
-                    selectedCellIndex: $selectedCellIndex
+                    selectedCellIndex: $selectedCellIndex,
+                    hasChanges: hasChanges
                 )
             ) {}
 
@@ -112,7 +116,7 @@ struct FormView: View {
             }
         }
         .onAppear {
-            routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex)
+            routineTitle = getRoutineTitle(index: selectedCellIndex)
         }
         .scrollContentBackground(.hidden)
         .background(Color.black.ignoresSafeArea())
@@ -131,6 +135,7 @@ struct FormView: View {
         showingTimePicker: .constant(false),
         currentLabel: .constant(""),
         currentDescription: .constant(""),
-        currentHabitID: .constant(UUID())
+        currentHabitID: .constant(UUID()),
+        hasChanges: false
     )
 }

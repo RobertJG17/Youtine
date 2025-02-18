@@ -65,8 +65,6 @@ struct HabitListView: View {
         .frame(
             width: screenWidth.wrappedValue*0.8
         )
-        
-        
     }
 }
 

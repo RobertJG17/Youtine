@@ -20,15 +20,12 @@ struct CreateHabitToolbarView: View {
     }
     
     func update(index: Int) {
-        // ???: If habits array contains id === to id saved to state
-        let index = habits.firstIndex { habit in habit.id == id }
+        // MARK: Access existing habit
+        let habitToEdit = habits[index]
         
-        if let validIndex = index {
-            let habitToEdit = habits[validIndex]
-            habitToEdit.label = label
-            habitToEdit.desc = desc
-        }
-        
+        // MARK: Adjust habit label & desc
+        habitToEdit.label = label
+        habitToEdit.desc = desc
     }
     
     func save() {
@@ -56,7 +53,7 @@ struct CreateHabitToolbarView: View {
             
             Button {
                 if label != "" && desc != "" {
-                    // ???: If habit exists in state
+                    // ???: Check if habit exists in state
                     let index = habits.firstIndex { habit in habit.id == id }
                     
                     if let validIndex = index {

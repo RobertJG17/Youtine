@@ -16,9 +16,12 @@ struct EditRoutineView: View {
     @Binding var habits: [Habit]
     @Binding var showingCreateHabit: Bool
     @Binding var showingTimePicker: Bool
+    
     @Binding var currentLabel: String
     @Binding var currentDescription: String
     @Binding var currentHabitID: UUID?
+    
+    var hasChanges: Bool
     
     @Environment(\.currentPage) var currentPage
 
@@ -55,7 +58,8 @@ struct EditRoutineView: View {
                     showingTimePicker: $showingTimePicker,
                     currentLabel: $currentLabel,
                     currentDescription: $currentDescription,
-                    currentHabitID: $currentHabitID
+                    currentHabitID: $currentHabitID,
+                    hasChanges: hasChanges
                 )
                 .padding(.bottom, 20)
                 .transition(.scale)
@@ -78,6 +82,7 @@ struct EditRoutineView: View {
         showingTimePicker: .constant(false),
         currentLabel: .constant(""),
         currentDescription: .constant(""),
-        currentHabitID: .constant(UUID())
+        currentHabitID: .constant(UUID()),
+        hasChanges: false
     )
 }

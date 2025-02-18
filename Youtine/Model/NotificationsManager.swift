@@ -10,7 +10,7 @@ import UserNotifications
 class NotificationsManager {
     func addNotification(id: String, index: Int, startTime: String) {
         let content = UNMutableNotificationContent()
-        let title = ManageRoutineView.getRoutineTitle(index: index)
+        let title = getRoutineTitle(index: index)
         let body = "Habits are waiting to be formed!"
         
         content.title = title

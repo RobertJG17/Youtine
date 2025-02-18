@@ -20,7 +20,9 @@ struct FormToolbarView: View {
     @State private var deleteButtonTitle: String = "Delete"
     @State private var saveButtonTitle: String = "Create Routine"
     
-    func handleNav() -> Void {
+    var hasChanges: Bool
+    
+    func handleNav() {
         if currentPage.wrappedValue == .editRoutine {
             /// MARK: NAVIGATE TO .routine
             currentPage.wrappedValue = .routine
@@ -32,7 +34,6 @@ struct FormToolbarView: View {
     
     var body: some View {
         HStack {
-            
             Button {
                 showDeleteConfirmation = true
             } label: {
@@ -44,6 +45,7 @@ struct FormToolbarView: View {
                 "delete-dialog",
                 isPresented: $showDeleteConfirmation
             ) {
+                
                 Button(deleteButtonTitle, role: .destructive) {
                     /// MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
@@ -88,9 +90,15 @@ struct FormToolbarView: View {
             saveButtonTitle = currentPage.wrappedValue == .editRoutine
             ? "Save Changes" : "Create Routine"
         }
+        .onChange(of: hasChanges) { _, newValue in
+            print("Has changes?: ", hasChanges)
+        }
     }
 }
 
 #Preview {
-    FormToolbarView(selectedCellIndex: .constant(0))
+    FormToolbarView(
+        selectedCellIndex: .constant(0),
+        hasChanges: false
+    )
 }

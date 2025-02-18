@@ -94,7 +94,7 @@ struct RoutineView: View {
             .preferredColorScheme(.dark)
         }
         .onAppear {
-            routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex)
+            routineTitle = getRoutineTitle(index: selectedCellIndex)
             
         }
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)

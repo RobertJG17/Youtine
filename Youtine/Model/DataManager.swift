@@ -230,24 +230,5 @@ final class DataManager {
         } catch {
             print(error)
         }
-    
-//        do {
-//            try context.save()
-//            print("""
-//                Entity: DataManager \n
-//                Line: 141\n
-//                Function Invocation: deleteRoutine()\n
-//                Output: Success, context successfully deleted.
-//            """)
-//        } catch {
-//            throw DataManagerErrors.SaveError(
-//                message: """
-//                    Entity: DataManager \n
-//                    Line: 141\n
-//                    Function Invocation: deleteRoutine()\n
-//                    Error: \(error.localizedDescription)
-//                """
-//            )
-//        }
     }
 }

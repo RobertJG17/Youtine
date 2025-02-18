@@ -20,10 +20,13 @@ struct ManageRoutineView: View {
     @State private var selectedDays: [Int: String]
     @State private var showingCreateHabit: Bool = false
     @State private var showingTimePicker: Bool = false
+    
     /// ---
     @State private var currentLabel = ""
     @State private var currentDescription = ""
     @State private var currentHabitID: UUID?
+    
+    @State var hasChanges: Bool = false
     
     @Environment(\.writeRoutineToDisk) var writeRoutineToDisk
     
@@ -53,22 +56,22 @@ struct ManageRoutineView: View {
 
         // MARK: If routine == nil, the form will render with default values
         if let unwrappedRoutine = routine.wrappedValue {
+            // MARK: Initial values for EDITING a routine
             self.id = unwrappedRoutine.id
             self.routineColor = Color.from(description: unwrappedRoutine.borderColor)
             self.start = unwrappedRoutine.start
             self.selectedDays = Routine.decodeDays(unwrappedRoutine.daysJSON)
             self.habits = unwrappedRoutine.habits
         } else {
+            // MARK: Initial values for CREATING a routine
             self.id = UUID()
-            self.routineColor = ManageRoutineView.getRoutineColor(
-                index: selectedCellIndex.wrappedValue!
-            )
+            self.routineColor = getRoutineColor(index: selectedCellIndex.wrappedValue)
             self.start = "8:00 AM"
             self.selectedDays = [:]
             self.habits = []
         }
         
-        self.routineTitle = ManageRoutineView.getRoutineTitle(index: selectedCellIndex.wrappedValue)
+        self.routineTitle = getRoutineTitle(index: selectedCellIndex.wrappedValue)
     }
     
     var body: some View {
@@ -82,8 +85,24 @@ struct ManageRoutineView: View {
             showingTimePicker: $showingTimePicker,
             currentLabel: $currentLabel,
             currentDescription: $currentDescription,
-            currentHabitID: $currentHabitID
+            currentHabitID: $currentHabitID,
+            hasChanges: hasChanges
         )
+        .onChange(of: start) { _, nextValue in
+            hasChanges = true
+        }
+        .onChange(of: selectedDays) { prevValue, nextValue in
+            hasChanges = prevValue == nextValue
+        }
+//        .onChange(of: routineColor) { prevValue, nextValue in
+//            hasChanges = prevValue == nextValue
+//        }
+//        .onChange(of: habits) { prevValue, nextValue in
+//            hasChanges = prevValue == nextValue
+//        }
+        .onChange(of: hasChanges) { _, newVal in
+            print("Has changes?: ", newVal)
+        }
         .environment(\.handleFormSubmit, handleFormSubmit)
     }
 }
