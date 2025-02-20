@@ -40,6 +40,9 @@ struct TimePickerView: View {
             width: screenWidth.wrappedValue,
             height: screenHeight.wrappedValue
         )
+        .onAppear {
+            selectedTime = getDateFromString(timeString: start)
+        }
         .preferredColorScheme(.dark)
     }
 
