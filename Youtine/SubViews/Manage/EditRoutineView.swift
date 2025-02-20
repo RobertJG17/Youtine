@@ -22,6 +22,7 @@ struct EditRoutineView: View {
     @State private var currentDescription = ""
     @State private var currentHabitID: UUID?
     
+    // MARK: Initial Values we declare and then set in onAppear()
     @State var initialStart: String = ""
     @State var initialSelectedDays: [Int: String] = [:]
     @State var initialRoutineColor: Color = Color.white
@@ -80,6 +81,8 @@ struct EditRoutineView: View {
             initialSelectedDays = selectedDays
             initialHabits = habits
         }
+        
+        // MARK: These onChange modifiers compare the initial form values to changed values to determine whether or not to present confirmation dialogs in FormToolbarView
         .onChange(of: start) { _, newStart in
             hasChanges = initialStart != newStart
         }

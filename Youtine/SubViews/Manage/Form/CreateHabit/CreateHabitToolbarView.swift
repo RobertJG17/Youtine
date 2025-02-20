@@ -37,6 +37,8 @@ struct CreateHabitToolbarView: View {
         
         // MARK: Save new habit in memory
         habits.append(newHabit)
+        
+        // !!!: On Form cancel, parent view (ManageRoutineView) is dimissed and any newly created habits currently persisted in memory are lost since they are not explicitly saved
     }
     
     var body: some View {

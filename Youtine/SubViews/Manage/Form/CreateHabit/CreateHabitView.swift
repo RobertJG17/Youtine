@@ -56,8 +56,8 @@ struct CreateHabitView: View {
                     Spacer()
                     
                     VStack(spacing: 5) {
-                        TextEditor(text: $desc)             // Multiline text input
-                            .frame(height: 150)             // Set a height for the TextEditor
+                        TextEditor(text: $desc)    // Multiline text input
+                            .frame(height: 150)    // Set a height for the TextEditor
                             .border(Color.gray, width: 1)   // Optional: Add a border
                             .padding()
                     }

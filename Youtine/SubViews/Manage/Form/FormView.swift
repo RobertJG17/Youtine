@@ -98,7 +98,6 @@ struct FormView: View {
                     height: screenHeight.wrappedValue,
                     routineColor: $routineColor
                 )
-                
             }
 
             Section(header: HStack(alignment: .center) {
