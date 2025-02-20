@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct FormHeaderView: View {
-    var routineTitle: String?
+    @Binding var hasChanges: Bool
     @Binding var selectedCellIndex: Int?
-    var hasChanges: Bool
+    var routineTitle: String?
     
     @Environment(\.currentPage) var currentPage
     @Environment(\.handleFormSubmit) var handleFormSubmit
@@ -18,8 +18,8 @@ struct FormHeaderView: View {
     var body: some View {
         VStack {
             FormToolbarView(
-                selectedCellIndex: $selectedCellIndex,
-                hasChanges: hasChanges
+                hasChanges: $hasChanges,
+                selectedCellIndex: $selectedCellIndex
             )
             
             Spacer()

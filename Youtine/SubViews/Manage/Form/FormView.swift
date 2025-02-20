@@ -18,10 +18,10 @@ struct FormView: View {
     @Binding var currentLabel: String
     @Binding var currentDescription: String
     @Binding var currentHabitID: UUID?
+    @Binding var hasChanges: Bool
     
     // MARK: Set in onAppear
     @State var routineTitle: String = ""
-    var hasChanges: Bool
     
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
@@ -37,7 +37,7 @@ struct FormView: View {
         currentLabel: Binding<String>,
         currentDescription: Binding<String>,
         currentHabitID: Binding<UUID?>,
-        hasChanges: Bool
+        hasChanges: Binding<Bool>
     ) {
         self._routineColor = routineColor
         self._selectedCellIndex = selectedCellIndex
@@ -49,16 +49,16 @@ struct FormView: View {
         self._currentLabel = currentLabel
         self._currentDescription = currentDescription
         self._currentHabitID = currentHabitID
-        self.hasChanges = hasChanges
+        self._hasChanges = hasChanges
     }
     
     var body: some View {
         Form {
             Section(
                 header: FormHeaderView(
-                    routineTitle: routineTitle,
+                    hasChanges: $hasChanges,
                     selectedCellIndex: $selectedCellIndex,
-                    hasChanges: hasChanges
+                    routineTitle: routineTitle
                 )
             ) {}
 
@@ -136,6 +136,6 @@ struct FormView: View {
         currentLabel: .constant(""),
         currentDescription: .constant(""),
         currentHabitID: .constant(UUID()),
-        hasChanges: false
+        hasChanges: .constant(false)
     )
 }

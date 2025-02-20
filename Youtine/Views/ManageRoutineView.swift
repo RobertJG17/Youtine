@@ -21,13 +21,6 @@ struct ManageRoutineView: View {
     @State private var showingCreateHabit: Bool = false
     @State private var showingTimePicker: Bool = false
     
-    /// ---
-    @State private var currentLabel = ""
-    @State private var currentDescription = ""
-    @State private var currentHabitID: UUID?
-    
-    @State var hasChanges: Bool = false
-    
     @Environment(\.writeRoutineToDisk) var writeRoutineToDisk
     
     // MARK: Submit form declared here to capture all needed state vars
@@ -82,27 +75,8 @@ struct ManageRoutineView: View {
             selectedDays: $selectedDays,
             habits: $habits,
             showingCreateHabit: $showingCreateHabit,
-            showingTimePicker: $showingTimePicker,
-            currentLabel: $currentLabel,
-            currentDescription: $currentDescription,
-            currentHabitID: $currentHabitID,
-            hasChanges: hasChanges
+            showingTimePicker: $showingTimePicker
         )
-        .onChange(of: start) { _, nextValue in
-            hasChanges = true
-        }
-        .onChange(of: selectedDays) { prevValue, nextValue in
-            hasChanges = prevValue == nextValue
-        }
-//        .onChange(of: routineColor) { prevValue, nextValue in
-//            hasChanges = prevValue == nextValue
-//        }
-//        .onChange(of: habits) { prevValue, nextValue in
-//            hasChanges = prevValue == nextValue
-//        }
-        .onChange(of: hasChanges) { _, newVal in
-            print("Has changes?: ", newVal)
-        }
         .environment(\.handleFormSubmit, handleFormSubmit)
     }
 }

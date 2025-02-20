@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FormToolbarView: View {
+    @Binding var hasChanges: Bool
     @Binding var selectedCellIndex: Int?
     
     @Environment(\.currentPage) var currentPage
@@ -20,14 +21,12 @@ struct FormToolbarView: View {
     @State private var deleteButtonTitle: String = "Delete"
     @State private var saveButtonTitle: String = "Create Routine"
     
-    var hasChanges: Bool
-    
     func handleNav() {
         if currentPage.wrappedValue == .editRoutine {
-            /// MARK: NAVIGATE TO .routine
+            // MARK: NAVIGATE TO .routine
             currentPage.wrappedValue = .routine
         } else {
-            /// MARK: NAVIGATE TO .home
+            // MARK: NAVIGATE TO .home
             currentPage.wrappedValue = .home
         }
     }
@@ -35,7 +34,12 @@ struct FormToolbarView: View {
     var body: some View {
         HStack {
             Button {
-                showDeleteConfirmation = true
+                if hasChanges {
+                    showDeleteConfirmation = true
+                } else {
+                    handleNav()
+                }
+                
             } label: {
                 Text("Cancel")
                     .fontWeight(.light)
@@ -47,10 +51,10 @@ struct FormToolbarView: View {
             ) {
                 
                 Button(deleteButtonTitle, role: .destructive) {
-                    /// MARK: STOP SHOWING DELETE DIALOG
+                    // MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
                     
-                    /// MARK: Conditional Navigation based on currentPage state
+                    // MARK: Conditional Navigation based on currentPage state
                     handleNav()
                 }
             } message: {
@@ -69,13 +73,13 @@ struct FormToolbarView: View {
                 isPresented: $showConfirmConfirmation
             ) {
                 Button(saveButtonTitle) {
-                    /// MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
+                    // MARK: RUN SUBMIT FUNCTION TO UPDATE SAVED ROUTINES
                     handleFormSubmit()
                     
-                    /// MARK: Conditional Navigation based on currentPage state
+                    // MARK: Conditional Navigation based on currentPage state
                     handleNav()
                     
-                    /// MARK: STOP SHOWING CONFIRMATION DIALOG
+                    // MARK: STOP SHOWING CONFIRMATION DIALOG
                     showConfirmConfirmation = false
                 }
             } message: {
@@ -98,7 +102,7 @@ struct FormToolbarView: View {
 
 #Preview {
     FormToolbarView(
-        selectedCellIndex: .constant(0),
-        hasChanges: false
+        hasChanges: .constant(false),
+        selectedCellIndex: .constant(0)
     )
 }

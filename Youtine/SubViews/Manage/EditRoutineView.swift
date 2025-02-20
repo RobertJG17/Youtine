@@ -17,11 +17,17 @@ struct EditRoutineView: View {
     @Binding var showingCreateHabit: Bool
     @Binding var showingTimePicker: Bool
     
-    @Binding var currentLabel: String
-    @Binding var currentDescription: String
-    @Binding var currentHabitID: UUID?
+    // MARK: These variables are set in HabitListView and accessed in CreateHabitView
+    @State private var currentLabel = ""
+    @State private var currentDescription = ""
+    @State private var currentHabitID: UUID?
     
-    var hasChanges: Bool
+    @State var initialStart: String = ""
+    @State var initialSelectedDays: [Int: String] = [:]
+    @State var initialRoutineColor: Color = Color.white
+    @State var initialHabits: [Habit] = []
+    
+    @State var hasChanges: Bool = false
     
     @Environment(\.currentPage) var currentPage
 
@@ -59,7 +65,7 @@ struct EditRoutineView: View {
                     currentLabel: $currentLabel,
                     currentDescription: $currentDescription,
                     currentHabitID: $currentHabitID,
-                    hasChanges: hasChanges
+                    hasChanges: $hasChanges
                 )
                 .padding(.bottom, 20)
                 .transition(.scale)
@@ -68,6 +74,50 @@ struct EditRoutineView: View {
         .animation(.easeInOut, value: currentPage.wrappedValue)
         .animation(.easeInOut, value: showingCreateHabit)
         .animation(.easeInOut, value: showingTimePicker)
+        .onAppear {
+            initialStart = start
+            initialRoutineColor = routineColor
+            initialSelectedDays = selectedDays
+            initialHabits = habits
+        }
+        .onChange(of: start) { _, newStart in
+            hasChanges = initialStart != newStart
+        }
+        .onChange(of: routineColor) { _, newColor in
+            hasChanges = initialRoutineColor != newColor
+        }
+        .onChange(of: selectedDays) { _, newSelectedDays in
+            if (initialSelectedDays.count != newSelectedDays.count) {
+                hasChanges = true
+            } else {
+                let keys = newSelectedDays.keys
+                keys.forEach { key in
+                    if (initialSelectedDays[key] != newSelectedDays[key]) {
+                        hasChanges = true
+                        return
+                    }
+                }
+                
+                hasChanges = false
+            }
+        }
+        .onChange(of: habits) { _, newHabits in
+            if (initialHabits.count != newHabits.count) {
+                hasChanges = true
+            } else {
+                for (idx, habit) in newHabits.enumerated() {
+                    if (
+                        initialHabits[idx].label != habit.label ||
+                        initialHabits[idx].desc != habit.desc
+                    ) {
+                        hasChanges = true
+                        return
+                    }
+                }
+                
+                hasChanges = false
+            }
+        }
     }
 }
 
@@ -79,10 +129,6 @@ struct EditRoutineView: View {
         selectedDays: .constant(Routine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),
         showingCreateHabit: .constant(false),
-        showingTimePicker: .constant(false),
-        currentLabel: .constant(""),
-        currentDescription: .constant(""),
-        currentHabitID: .constant(UUID()),
-        hasChanges: false
+        showingTimePicker: .constant(false)
     )
 }
