@@ -17,10 +17,7 @@ struct ContentView: View {
         sortBy: [SortDescriptor(\Routine.index, order: .forward)]
     )) var savedRoutines: [Routine]
     
-    @State var localRoutines: [Routine?] = Array.init(
-        repeating: nil,
-        count: 3
-    )
+    @State var routines: [Routine?] = []
     
     // MARK: Used in Extensions
     @State var dataManagerService: DataManager?
@@ -37,7 +34,7 @@ struct ContentView: View {
                 let height = proxy.size.height
                 
                 Router(
-                    routines: $localRoutines
+                    routines: $routines
                 )
                 .onAppear {
                     // MARK: Set screenWidth and screenHeight
@@ -48,7 +45,7 @@ struct ContentView: View {
         }
         .onAppear {
             // MARK: Set local state to array with youtines and nil entries otherwise
-            localRoutines = savedRoutines +
+            routines = savedRoutines +
                 Array.init(
                     repeating: nil,
                     count: MAX_ROUTINES - savedRoutines.count
@@ -61,7 +58,7 @@ struct ContentView: View {
             promptNotificationsGrant()
         }
         .onChange(of: savedRoutines, { _, newRoutines in
-            localRoutines = newRoutines +
+            routines = newRoutines +
                 Array.init(
                     repeating: nil,
                     count: MAX_ROUTINES - newRoutines.count
