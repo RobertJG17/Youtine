@@ -50,13 +50,6 @@ extension Color {
 
 // MARK: VIEWS (START)
 extension ContentView {
-    static var itemFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .medium
-        return formatter
-    }()
-    
     func promptNotificationsGrant() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
