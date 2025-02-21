@@ -22,10 +22,10 @@ struct Router: View {
                     selectedCellIndex: $selectedCellIndex
                 )
                 .onAppear {
-                    // MARK: Anytime we nav to home, set selected routine to nil
+                    // MARK: Anytime we nav to home, set selectedCellIndex to nil
                     selectedCellIndex = nil
                     
-                    // MARK: And selected cell index are nil
+                    // MARK: And set selectedRoutine to nil
                     selectedRoutine = nil
                 }
             } else if currentPage == .routine {
@@ -43,10 +43,10 @@ struct Router: View {
         }
         .environment(\.currentPage, $currentPage)
         .animation(.easeInOut, value: currentPage)
-        .onChange(of: selectedCellIndex, { index, newIndex in
+        .onChange(of: selectedCellIndex) { index, newIndex in
             guard let validIndex = newIndex else { return }
             selectedRoutine = routines[validIndex]
-        })
+        }
         .background()
     }
 }

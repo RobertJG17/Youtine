@@ -29,13 +29,13 @@ struct RoutineDetailToolbarView: View {
                 isPresented: $showDeleteConfirmation
             ) {
                 Button("Delete Routine", role: .destructive) {
-                    /// MARK: RUN DELETE FUNCTION TO UPDATE SAVED ROUTINES
+                    // MARK: RUN DELETE FUNCTION TO UPDATE SAVED ROUTINES
                     handleDeleteRoutine()
                     
-                    /// MARK: NAVIGATE TO .home
+                    // MARK: NAVIGATE TO .home
                     currentPage.wrappedValue = .home
                     
-                    /// MARK: STOP SHOWING DELETE DIALOG
+                    // MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
                 }
             } message: {
@@ -47,7 +47,7 @@ struct RoutineDetailToolbarView: View {
                 .padding(.top, 5)
             
             Button {
-                /// MARK: NAVIGATE TO .editRoutine
+                // MARK: NAVIGATE TO .editRoutine
                 currentPage.wrappedValue = .editRoutine
             } label: {
                 Image(systemName: "pencil")

@@ -42,7 +42,7 @@ struct RoutineHeaderView: View {
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
-            /// MARK: NAVIGATE TO .home
+            // MARK: NAVIGATE TO .home
             currentPage.wrappedValue = .home
         }
         .padding(.horizontal, 20)

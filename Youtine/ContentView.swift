@@ -57,13 +57,13 @@ struct ContentView: View {
             // MARK: Prompt user for permission to schedule local notifications
             promptNotificationsGrant()
         }
-        .onChange(of: savedRoutines, { _, newRoutines in
+        .onChange(of: savedRoutines) { _, newRoutines in
             routines = newRoutines +
                 Array.init(
                     repeating: nil,
                     count: MAX_ROUTINES - newRoutines.count
                 )
-        })
+        }
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
         .preferredColorScheme(.dark)
