@@ -167,19 +167,12 @@ class Habit: Identifiable {
     dataManagerService = DataManager(context: context)
 }
 .onChange(of: savedRoutines, { _, newRoutines in
-            localRoutines = newRoutines +
-                Array.init(
-                    repeating: nil,
-                    count: MAX_ROUTINES - newRoutines.count
-                )
-            
-            print("""
-               \n\n\tEntity: ContentView
-               \tLine: 102
-               \tInvocation: onChange(savedRoutines)
-               \tOutput: \n\n\tNew routines: \n\n\(displayRoutines(routines: newRoutines))
-            """)
-        })
+    localRoutines = newRoutines +
+        Array.init(
+            repeating: nil,
+            count: MAX_ROUTINES - newRoutines.count
+        )
+})
 .environment(\.writeRoutineToDisk, writeRoutineToDisk)
 .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
 ```
