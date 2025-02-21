@@ -22,14 +22,15 @@ struct HabitListDisclosureGroupView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(label) // Label stays static
+            Text(label)
             
             DisclosureGroup(isExpanded: $isExpanded) {
                 if !disclosureExpansionLocked {
                     Text(desc)
                         .font(.caption)
                         .fontWeight(.light)
-                        .fixedSize(horizontal: false, vertical: true) // Allow multiline text
+                        // ???: Allow multiline text
+                        .fixedSize(horizontal: false, vertical: true)
                         .frame(
                             width: screenWidth.wrappedValue / 1.75,
                             alignment: .leading
@@ -37,9 +38,8 @@ struct HabitListDisclosureGroupView: View {
                         .transition(.opacity)
                 }
             } label: {
-                // Truncated description with ellipsis when collapsed
+                // MARK: Truncated description with ellipsis when collapsed
                 if !isExpanded {
-
                     Text(desc)
                         .font(.caption)
                         .fontWeight(.light)
