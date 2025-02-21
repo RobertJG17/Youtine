@@ -14,6 +14,7 @@ struct RoutineHabitListView: View {
     @Binding var showScrollIndicator: Bool
     
     @State var animatedOpacity: CGFloat = 1
+    @State var disclosureExpansionLocked: Bool = false
     
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
@@ -50,7 +51,7 @@ struct RoutineHabitListView: View {
                     HabitListDisclosureGroupView(
                         label: habit.label,
                         desc: habit.desc,
-                        locked: .constant(false)
+                        disclosureExpansionLocked: $disclosureExpansionLocked
                     )
 //                    .border(Color.green) MARK: DEBUG
                 }

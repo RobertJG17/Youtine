@@ -17,7 +17,7 @@ struct HabitListView: View {
     @Environment(\.screenWidth) var screenWidth
     @Environment(\.screenHeight) var screenHeight
     
-    @State var locked: Bool = false
+    @State var disclosureExpansionLocked: Bool = false
     
     var body: some View {
         List($habits, id: \.id, editActions: .all) { todo in
@@ -28,7 +28,7 @@ struct HabitListView: View {
                 HabitListDisclosureGroupView(
                     label: label.wrappedValue,
                     desc: desc.wrappedValue,
-                    locked: $locked
+                    disclosureExpansionLocked: $disclosureExpansionLocked
                 )
                 
                 Spacer()
@@ -43,7 +43,9 @@ struct HabitListView: View {
                     currentHabitID = todo.id
                     
                     showingCreateHabit = true
-                    locked = true
+                    
+                    // ???: Prevents the disclosure group from expanding when entering edit state
+                    disclosureExpansionLocked = true
                 } label: {
                     Image(systemName: "pencil")
                         .frame(

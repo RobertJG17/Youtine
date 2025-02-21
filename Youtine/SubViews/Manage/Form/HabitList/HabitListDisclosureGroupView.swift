@@ -7,10 +7,13 @@
 
 import SwiftUI
 
+// MARK: This View is being leveraged in both RoutineHabitListView & HabitListView
+// MARK: RoutineHabitListView is rendered when viewing an existing Routine
+// MARK: HabitListView is rendered when editing an existing Routine or creating a new Routine
 struct HabitListDisclosureGroupView: View {
     var label: String
     var desc: String
-    @Binding var locked: Bool
+    @Binding var disclosureExpansionLocked: Bool
     
     @State private var isExpanded: Bool = false
     
@@ -22,7 +25,7 @@ struct HabitListDisclosureGroupView: View {
             Text(label) // Label stays static
             
             DisclosureGroup(isExpanded: $isExpanded) {
-                if !locked {
+                if !disclosureExpansionLocked {
                     Text(desc)
                         .font(.caption)
                         .fontWeight(.light)
@@ -64,6 +67,6 @@ struct HabitListDisclosureGroupView: View {
     HabitListDisclosureGroupView(
         label: "",
         desc: "",
-        locked: .constant(false)
+        disclosureExpansionLocked: .constant(false)
     )
 }
