@@ -68,6 +68,7 @@ struct FormToolbarView: View {
             } label: {
                 Text("Done")
             }
+            .disabled(!hasChanges)
             .confirmationDialog(
                 "confirm-dialog",
                 isPresented: $showConfirmConfirmation
@@ -93,9 +94,6 @@ struct FormToolbarView: View {
             
             saveButtonTitle = currentPage.wrappedValue == .editRoutine
             ? "Save Changes" : "Create Routine"
-        }
-        .onChange(of: hasChanges) { _, newValue in
-            print("Has changes?: ", hasChanges)
         }
     }
 }
