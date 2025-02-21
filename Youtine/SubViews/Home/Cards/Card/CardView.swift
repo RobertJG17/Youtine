@@ -82,10 +82,10 @@ struct RoutineCardView: View {
         .contentShape(Rectangle()) // Ensure the entire area is tappable
         // MARK: [END]
         .onTapGesture {
-            /// MARK: NAVIGATE TO .routine
+            // MARK: NAVIGATE TO .routine
             currentPage.wrappedValue = .routine
             
-            /// MARK: SET selectedCellIndex index
+            // MARK: SET selectedCellIndex index
             selectedCellIndex = index
         }
         .background(Color.black)

@@ -22,9 +22,10 @@ struct Router: View {
                     selectedCellIndex: $selectedCellIndex
                 )
                 .onAppear {
-                    /// MARK: Anytime we nav to home,
-                    /// ensure selected routine and selected cell index are nil
+                    // MARK: Anytime we nav to home, set selected routine to nil
                     selectedCellIndex = nil
+                    
+                    // MARK: And selected cell index are nil
                     selectedRoutine = nil
                 }
             } else if currentPage == .routine {
