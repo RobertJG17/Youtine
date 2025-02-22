@@ -7,7 +7,17 @@
 
 import UserNotifications
 
-class NotificationsManager {
+class NotificationsService {
+    static func promptNotificationsGrant() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("Notifications prompt finished!")
+            } else if let error {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
     func addNotification(id: String, index: Int, startTime: String) {
         let content = UNMutableNotificationContent()
         let title = getRoutineTitle(index: index)

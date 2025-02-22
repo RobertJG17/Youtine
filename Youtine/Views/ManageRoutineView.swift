@@ -59,7 +59,7 @@ struct ManageRoutineView: View {
             // MARK: Initial values for CREATING a routine
             self.id = UUID()
             self.routineColor = getRoutineColor(index: selectedCellIndex.wrappedValue)
-            self.start = "8:00 AM"
+            self.start = getRoutineStartTime(index: selectedCellIndex.wrappedValue)
             self.selectedDays = [:]
             self.habits = []
         }

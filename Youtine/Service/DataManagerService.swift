@@ -23,13 +23,13 @@ enum DataManagerErrors: Error {
 }
 
 @Observable
-final class DataManager {
+final class DataManagerService {
     private var context: ModelContext?
-    private var notificationsManager: NotificationsManager
+    private var notificationsManager: NotificationsService
     
     init(context: ModelContext?) {
         self.context = context
-        self.notificationsManager = NotificationsManager()
+        self.notificationsManager = NotificationsService()
     }
     
     /// Method used to save routine upon form submission

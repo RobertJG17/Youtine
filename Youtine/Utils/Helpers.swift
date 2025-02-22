@@ -43,6 +43,24 @@ func getRoutineTitle(index: Int?) -> String {
     return titleToReturn
 }
 
+func getRoutineStartTime(index: Int?) -> String {
+    var timeToReturn: String = "8:00 AM"
+    guard let currIdx = index else { return timeToReturn }
+    
+    switch(currIdx) {
+    case 0:
+        timeToReturn = "8:00 AM"
+    case 1:
+        timeToReturn = "12:00 PM"
+    case 2:
+        timeToReturn = "8:00 PM"
+    default:
+        timeToReturn = "8:00 AM"
+    }
+    
+    return timeToReturn
+}
+
 func getDateFromString(timeString: String) -> Date {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mm a"
