@@ -6,24 +6,31 @@
 //
 
 import FirebaseAuth
+import FirebaseCore
 import Foundation
 import AuthenticationServices
+import GoogleSignIn
 
 class LoginViewModel {
-    var userSession: User?
-    var authService: FirebaseAuthSerivice
-    
-    init() {
+    var authService: FirebaseAuthService
+    var appleAuthService: AppleAuthService
+    var googleAuthService: GoogleAuthService
         
+    init(authService: FirebaseAuthService) {
+        self.authService = authService
+        self.appleAuthService = AppleAuthService(authService: authService)
+        self.googleAuthService = GoogleAuthService(authService: authService)
     }
     
     func handleAppleSignInRequest(withRequest request: ASAuthorizationAppleIDRequest) {
-        print("In handleAppleSignInRequest: ", request)
+        appleAuthService.handleAppleSignInRequest(withRequest: request)
     }
     
     func handleAppleSignInCompletion(withResult result: Result<ASAuthorization, any Error>) {
-        print("In handleAppleSignInCompletion: ", result)
+        appleAuthService.handleAppleSignInCompletion(withResult: result)
+    }
+    
+    func handleSignInWithGoogle() {
+        googleAuthService.handleSignInWithGoogle()
     }
 }
-
-
