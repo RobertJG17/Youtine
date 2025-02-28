@@ -13,9 +13,11 @@ struct HeaderView: View {
     @Environment(\.screenHeight) var screenHeight
     
     var authService: FirebaseAuthService
+    var vm: HeaderViewModel
     
     init(authService: FirebaseAuthService) {
         self.authService = authService
+        self.vm = HeaderViewModel(authService: authService)
     }
     
     var body: some View {
@@ -31,10 +33,15 @@ struct HeaderView: View {
             .underline(true, pattern: .solid)
             .background(alignment: .trailing) {
                 if authService.userSession != nil {
-                    Image(systemName: "door.right.hand.open")
-                        .resizable()
-                        .frame(maxWidth: 30, maxHeight: 30)
-                        .padding(.trailing, 16)
+                    Button {
+                        vm.handleLogOut()
+                    } label: {
+                        Image(systemName: "door.right.hand.open")
+                            .resizable()
+                            .frame(maxWidth: 30, maxHeight: 30)
+                            .padding(.trailing, 16)
+                    }
+                    
                 }
                 
             }
