@@ -41,7 +41,7 @@ struct HeaderView: View {
                             .frame(maxWidth: 30, maxHeight: 30)
                             .padding(.trailing, 16)
                     }
-                    
+                    .foregroundStyle(Color.white)
                 }
                 
             }
