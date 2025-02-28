@@ -9,24 +9,21 @@ import Firebase
 import FirebaseAuth
 
 @Observable
-class AuthService {
+class FirebaseAuthService {
     var userSession: FirebaseAuth.User?
+    var authenticationError: Bool = false
     
     func updateUserSession() {
+        print("Current user: \(String(describing: Auth.auth().currentUser))")
         self.userSession = Auth.auth().currentUser
     }
     
-    func login(withEmail email: String,
-               password: String) async throws {
-        do {
-            let result = try await Auth.auth().signIn(withEmail: email, password: password)
-            self.updateUserSession()
-            print("DEBUG: Hello user \(result.user.uid)")
-        } catch {
-            print("DEBUG: User login failed in AUTH SERVICE: \(error.localizedDescription)")
-            throw error
-        }
-        
+    func triggerAuthenticationError() {
+        self.authenticationError = true
+    }
+    
+    func resetAuthErrorState() {
+        self.authenticationError = false
     }
     
     func signOut() {
