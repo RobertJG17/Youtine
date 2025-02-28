@@ -69,3 +69,4 @@ func getDateFromString(timeString: String) -> Date {
     
     return date!
 }
+    
