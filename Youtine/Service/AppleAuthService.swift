@@ -57,8 +57,6 @@ class AppleAuthService {
     }
     
     func handleAppleSignInRequest(withRequest request: ASAuthorizationAppleIDRequest) {
-        print("In handleAppleSignInRequest: ", request)
-        
         request.requestedScopes = [.fullName]
         let nonce = securityService.randomNonceString()
         securityService.currentNonce = nonce
@@ -66,8 +64,6 @@ class AppleAuthService {
     }
     
     func handleAppleSignInCompletion(withResult result: Result<ASAuthorization, any Error>) {
-        print("In handleAppleSignInCompletion: ", result)
-        
         if case .failure(let failure) = result {
             print(failure.localizedDescription)
         }
