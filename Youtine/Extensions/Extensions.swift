@@ -49,7 +49,7 @@ extension Color {
 // !!!: -----------------------------------------
 
 // MARK: VIEWS (START)
-extension ContentView {    
+extension MainView {
     // MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
     func writeRoutineToDisk(
         id: UUID,
