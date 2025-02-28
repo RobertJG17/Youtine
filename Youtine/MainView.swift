@@ -18,29 +18,24 @@ struct MainView: View {
     
     @State var routines: [Routine?] = []
     
-    // MARK: Used in Extensions
+    // MARK: Used in Extensions, encapsulates logic for Swift Data operations
     @State var dataManagerService: DataManagerService?
         
-    // MARK: Context used to initialize service model
+    // MARK: Context for Swift Data operations
     @Environment(\.modelContext) var context
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    
+    var authService: FirebaseAuthService
+    
+    init(authService: FirebaseAuthService) {
+        self.authService = authService
+    }
     
     var body: some View {
         NavigationView {
-            GeometryReader { proxy in
-                let width = proxy.size.width
-                let height = proxy.size.height
-                
-                Router(
-                    routines: $routines
-                )
-                .onAppear {
-                    // MARK: Set screenWidth and screenHeight
-                    screenWidth.wrappedValue = width
-                    screenHeight.wrappedValue = height
-                }
-            }
+            Router(
+                authService: authService,
+                routines: $routines
+            )
         }
         .onAppear {
             // MARK: Set local state to array with youtines and nil entries otherwise
@@ -65,10 +60,9 @@ struct MainView: View {
         }
         .environment(\.writeRoutineToDisk, writeRoutineToDisk)
         .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
-        .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
-    MainView()
+    MainView(authService: FirebaseAuthService())
 }

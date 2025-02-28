@@ -13,8 +13,16 @@ struct HomeView: View {
     
     @Environment(\.currentPage) var currentPage
     
+    var authService: FirebaseAuthService
+    
+    init(authService: FirebaseAuthService, routines: Binding<[Routine?]>, selectedCellIndex: Binding<Int?>) {
+        self.authService = authService
+        self._routines = routines
+        self._selectedCellIndex = selectedCellIndex
+    }
+    
     var body: some View {
-        HeaderView()
+        HeaderView(authService: authService)
         .transition(.move(edge: .leading))
         
         CardsView(
@@ -27,6 +35,7 @@ struct HomeView: View {
 
 #Preview {
     HomeView(
+        authService: FirebaseAuthService(),
         routines: .constant(testRoutines),
         selectedCellIndex: .constant(0)
     )

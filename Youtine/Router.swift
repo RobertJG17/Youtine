@@ -14,10 +14,18 @@ struct Router: View {
     @State var selectedCellIndex: Int? = nil
     @State var selectedRoutine: Routine? = nil
     
+    var authService: FirebaseAuthService
+    
+    init(authService: FirebaseAuthService, routines: Binding<[Routine?]>) {
+        self.authService = authService
+        self._routines = routines
+    }
+    
     var body: some View {
         VStack {
             if currentPage == .home {
                 HomeView(
+                    authService: authService,
                     routines: $routines,
                     selectedCellIndex: $selectedCellIndex
                 )
@@ -53,6 +61,7 @@ struct Router: View {
 
 #Preview {
     Router(
+        authService: FirebaseAuthService(),
         routines: .constant(testRoutines)
     )
 }

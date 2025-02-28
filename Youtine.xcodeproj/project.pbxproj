@@ -10,6 +10,8 @@
 		C5D415842D69099B00A9CFE0 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C5D415832D69099B00A9CFE0 /* FirebaseAuth */; };
 		C5D415862D69099B00A9CFE0 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = C5D415852D69099B00A9CFE0 /* FirebaseDatabase */; };
 		C5D415882D69099B00A9CFE0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C5D415872D69099B00A9CFE0 /* FirebaseFirestore */; };
+		C5D415952D6D091200A9CFE0 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = C5D415942D6D091200A9CFE0 /* GoogleSignIn */; };
+		C5D415A32D6FEB1900A9CFE0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5D415A22D6FEB1900A9CFE0 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,11 +35,25 @@
 		C5B462302D14ABBC005DCF69 /* Youtine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Youtine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B462452D14ABC0005DCF69 /* YoutineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoutineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5B4624F2D14ABC0005DCF69 /* YoutineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YoutineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5D415A22D6FEB1900A9CFE0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C5D415A52D6FF31000A9CFE0 /* Exceptions for "Youtine" folder in "Youtine" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C5B4622F2D14ABBC005DCF69 /* Youtine */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C5B462322D14ABBC005DCF69 /* Youtine */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C5D415A52D6FF31000A9CFE0 /* Exceptions for "Youtine" folder in "Youtine" target */,
+			);
 			path = Youtine;
 			sourceTree = "<group>";
 		};
@@ -59,6 +75,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5D415862D69099B00A9CFE0 /* FirebaseDatabase in Frameworks */,
+				C5D415952D6D091200A9CFE0 /* GoogleSignIn in Frameworks */,
 				C5D415842D69099B00A9CFE0 /* FirebaseAuth in Frameworks */,
 				C5D415882D69099B00A9CFE0 /* FirebaseFirestore in Frameworks */,
 			);
@@ -84,6 +101,7 @@
 		C5B462272D14ABBC005DCF69 = {
 			isa = PBXGroup;
 			children = (
+				C5D415A22D6FEB1900A9CFE0 /* GoogleService-Info.plist */,
 				C5B462322D14ABBC005DCF69 /* Youtine */,
 				C5B462482D14ABC0005DCF69 /* YoutineTests */,
 				C5B462522D14ABC0005DCF69 /* YoutineUITests */,
@@ -124,6 +142,7 @@
 				C5D415832D69099B00A9CFE0 /* FirebaseAuth */,
 				C5D415852D69099B00A9CFE0 /* FirebaseDatabase */,
 				C5D415872D69099B00A9CFE0 /* FirebaseFirestore */,
+				C5D415942D6D091200A9CFE0 /* GoogleSignIn */,
 			);
 			productName = Youtine;
 			productReference = C5B462302D14ABBC005DCF69 /* Youtine.app */;
@@ -209,6 +228,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C5D415822D69099B00A9CFE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C5D415932D6D091200A9CFE0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C5B462312D14ABBC005DCF69 /* Products */;
@@ -227,6 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5D415A32D6FEB1900A9CFE0 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,12 +429,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Youtine/Youtine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Youtine/Preview Content\"";
 				DEVELOPMENT_TEAM = 38RM5593K9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Youtine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -437,12 +460,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Youtine/Youtine.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Youtine/Preview Content\"";
 				DEVELOPMENT_TEAM = 38RM5593K9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Youtine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -583,6 +608,14 @@
 				version = 11.8.1;
 			};
 		};
+		C5D415932D6D091200A9CFE0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -600,6 +633,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C5D415822D69099B00A9CFE0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		C5D415942D6D091200A9CFE0 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5D415932D6D091200A9CFE0 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
