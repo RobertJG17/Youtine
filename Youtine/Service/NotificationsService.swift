@@ -7,7 +7,8 @@
 
 import UserNotifications
 
-class NotificationsService {
+struct NotificationsService {
+    // ???: Function is static so it can be invoked after a user signs in without creating a NotificationService Instance
     static func promptNotificationsGrant() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -21,7 +22,7 @@ class NotificationsService {
     func addNotification(id: String, index: Int, startTime: String) {
         let content = UNMutableNotificationContent()
         let title = getRoutineTitle(index: index)
-        let body = "Habits are waiting to be formed!"
+        let body = "Begin your \(getRoutineTitle(index: index).lowercased()) now!"
         
         content.title = title
         content.body = body
@@ -51,11 +52,5 @@ class NotificationsService {
     func deleteNotification(id: String) {
         // Remove the existing notification
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
-    }
-    
-    func getDateComponents(date: Date) -> DateComponents {
-        let calendar = Calendar.current
-        let dateComponents = calendar.dateComponents([.hour, .minute], from: date)
-        return dateComponents
     }
 }

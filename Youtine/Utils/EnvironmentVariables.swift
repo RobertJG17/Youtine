@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Abstract environment setup to observable class
 // MARK: Environment keys
 struct CurrentPageKey: EnvironmentKey {
     static let defaultValue: Binding<Page> = .constant(.home)

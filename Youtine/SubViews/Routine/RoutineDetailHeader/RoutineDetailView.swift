@@ -139,7 +139,8 @@ struct RoutineDetailView: View {
 
 #Preview {
     RoutineDetailView(
-        start: "8:00 AM", routine: .constant(testRoutines[0]),
+        start: "8:00 AM",
+        routine: .constant(testRoutines[0]),
         selectedCellIndex: .constant(0)
     )
 }

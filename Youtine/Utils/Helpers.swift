@@ -70,3 +70,8 @@ func getDateFromString(timeString: String) -> Date {
     return date!
 }
     
+func getDateComponents(date: Date) -> DateComponents {
+    let calendar = Calendar.current
+    let dateComponents = calendar.dateComponents([.hour, .minute], from: date)
+    return dateComponents
+}

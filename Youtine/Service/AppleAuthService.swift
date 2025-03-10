@@ -46,7 +46,6 @@ fileprivate struct SecurityService {
     }
 }
 
-
 class AppleAuthService {
     var authService: FirebaseAuthService
     fileprivate var securityService: SecurityService

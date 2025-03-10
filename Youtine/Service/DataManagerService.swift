@@ -22,14 +22,23 @@ enum DataManagerErrors: Error {
     case UninitializedError(message: String)
 }
 
+class FirebaseStorageService {
+    func addEntry() {
+        // ???: Should be called in a 1-1 fashion as user saves a routine
+        
+    }
+}
+
 @Observable
-final class DataManagerService {
+class DataManagerService {
     private var context: ModelContext?
     private var notificationsManager: NotificationsService
+    private var firebaseStorageManager: FirebaseStorageService
     
     init(context: ModelContext?) {
         self.context = context
         self.notificationsManager = NotificationsService()
+        self.firebaseStorageManager = FirebaseStorageService()
     }
     
     /// Method used to save routine upon form submission
@@ -64,7 +73,6 @@ final class DataManagerService {
                 
                 print("""
                     Entity: DataManager \n
-                    Line: 48\n
                     Function Invocation: update()\n
                     Output: ROUTINE UPDATED SUCCESSFULLY!
                 """)
@@ -72,7 +80,6 @@ final class DataManagerService {
                 throw DataManagerErrors.UpdateError(
                     message: """
                         Entity: DataManager \n
-                        Line: 48\n
                         Function Invocation: update()\n
                         Output: \(error.localizedDescription)
                     """
@@ -101,7 +108,6 @@ final class DataManagerService {
                 
                 print("""
                     Entity: DataManager \n
-                    Line: 77\n
                     Function Invocation: save()\n
                     Output: ROUTINE SAVED SUCCESSFULLY!
                 """)
@@ -110,7 +116,6 @@ final class DataManagerService {
             throw DataManagerErrors.SaveError(
                 message: """
                     Entity: DataManager \n
-                    Line: 77\n
                     Function Invocation: save()\n
                     Output: \(error.localizedDescription)
                 """
@@ -138,7 +143,6 @@ final class DataManagerService {
                 throw DataManagerErrors.InvalidContext(
                     message: """
                         Entity: DataManager
-                        Line: 107
                         Function Invocation: saveRoutine()
                         Error: Nil contenxt
                     """
@@ -195,7 +199,6 @@ final class DataManagerService {
                 throw DataManagerErrors.InvalidContext(
                     message: """
                         Entity: DataManager
-                        Line: 170
                         Function Invocation: deleteRoutine()
                         Error: Nil contenxt
                     """
@@ -213,7 +216,6 @@ final class DataManagerService {
                 
                 print("""
                       Entity: DataManager
-                      Line: 185
                       Function Invocation: deleteRoutine()
                       Output: SUCCESS, ROUTINE DELETED!
                   """)
@@ -221,7 +223,6 @@ final class DataManagerService {
                 throw DataManagerErrors.UnidentifiedRoutineError(
                     message: """
                         Entity: Data Manager \n
-                        Line: 185\n
                         Function Invocation: deleteRoutine()\n
                         Output: ERROR - Routine ID not found
                     """
