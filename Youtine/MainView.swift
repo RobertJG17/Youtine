@@ -50,6 +50,8 @@ struct MainView: View {
             
             // MARK: Prompt user for permission to schedule local notifications
             NotificationsService.promptNotificationsGrant()
+            
+            
         }
         .onChange(of: savedRoutines) { _, newRoutines in
             routines = newRoutines +

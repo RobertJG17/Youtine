@@ -62,8 +62,8 @@ extension MainView {
         guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 40\n
-                    Function Invocation: writeRoutineToDisk()\n
+                    File: Extensions \n
+                    Function Invocation: writeRoutineToDisk() \n
                     Error: Data Manager not defined
                 """
             )
@@ -85,8 +85,8 @@ extension MainView {
         guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
                 message: """
                     Entity: ContentView \n
-                    Line: 63\n
-                    Function Invocation: deleteRoutineFromDisk()\n
+                    File: Extensions \n
+                    Function Invocation: deleteRoutineFromDisk() \n
                     Error: Data Manager not defined
                 """
             )
