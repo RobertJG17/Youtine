@@ -14,39 +14,39 @@ struct DayPickerView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: isFilled(currKey: 0) ? "m.square.fill" : "m.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 0
-                    let day = "M"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            Image(systemName: isFilled(currKey: 1) ? "t.square.fill" : "t.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 1
-                    let day = "T"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            Image(systemName: isFilled(currKey: 2) ? "w.square.fill" : "w.square")
+            Image(systemName: isFilled(currKey: 2) ? "m.square.fill" : "m.square")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 42, height: 24, alignment: .top)
                 .onTapGesture {
                     let currKey = 2
+                    let day = "M"
+                    handleDayClicked(currKey: currKey, day: day)
+                }
+            Image(systemName: isFilled(currKey: 3) ? "t.square.fill" : "t.square")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 42, height: 24, alignment: .top)
+                .onTapGesture {
+                    let currKey = 3
+                    let day = "T"
+                    handleDayClicked(currKey: currKey, day: day)
+                }
+            Image(systemName: isFilled(currKey: 4) ? "w.square.fill" : "w.square")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 42, height: 24, alignment: .top)
+                .onTapGesture {
+                    let currKey = 4
                     let day = "W"
                     handleDayClicked(currKey: currKey, day: day)
                 }
             HStack(alignment: .center, spacing: 0) {
-                Image(systemName: isFilled(currKey: 3) ? "t.square.fill" : "t.square")
+                Image(systemName: isFilled(currKey: 5) ? "t.square.fill" : "t.square")
                     .resizable()
                     .scaledToFit()
                     .padding(.trailing, -3)
-                Image(systemName: isFilled(currKey: 3) ? "h.square.fill" : "h.square")
+                Image(systemName: isFilled(currKey: 5) ? "h.square.fill" : "h.square")
                     .resizable()
                     .scaledToFit()
                     
@@ -57,25 +57,25 @@ struct DayPickerView: View {
             .background(Color.clear)
             .contentShape(Rectangle())
             .onTapGesture {
-                let currKey = 3
+                let currKey = 5
                 let day = "Th"
                 handleDayClicked(currKey: currKey, day: day)
             }
-            Image(systemName: isFilled(currKey: 4) ? "f.square.fill" : "f.square")
+            Image(systemName: isFilled(currKey: 6) ? "f.square.fill" : "f.square")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 42, height: 24, alignment: .top)
                 .onTapGesture {
-                    let currKey = 4
+                    let currKey = 6
                     let day = "F"
                     handleDayClicked(currKey: currKey, day: day)
                 }
             HStack(spacing: 0) {
-                Image(systemName: isFilled(currKey: 5) ? "s.square.fill" : "s.square")
+                Image(systemName: isFilled(currKey: 7) ? "s.square.fill" : "s.square")
                     .resizable()
                     .scaledToFit()
                     .padding(.trailing, -3)
-                Image(systemName: isFilled(currKey: 5) ? "a.square.fill" : "a.square")
+                Image(systemName: isFilled(currKey: 7) ? "a.square.fill" : "a.square")
                     .resizable()
                     .scaledToFit()
             }
@@ -85,16 +85,16 @@ struct DayPickerView: View {
             .background(Color.clear)
             .contentShape(Rectangle())
             .onTapGesture {
-                let currKey = 5
+                let currKey = 7
                 let day = "Sa"
                 handleDayClicked(currKey: currKey, day: day)
             }
-            Image(systemName: isFilled(currKey: 6) ? "s.square.fill" : "s.square")
+            Image(systemName: isFilled(currKey: 1) ? "s.square.fill" : "s.square")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 42, height: 24, alignment: .top)
                 .onTapGesture {
-                    let currKey = 6
+                    let currKey = 1
                     let day = "S"
                     handleDayClicked(currKey: currKey, day: day)
                 }
