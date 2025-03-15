@@ -140,7 +140,7 @@ I've avoided adding sign in with email and password to create as seamless of a s
 
 [ ] Integrate Firebase Storage to collecting statistics per routine and
 
-[ ] Integrate inspirational quote API to encourage user to stay on track
+[ ] Integrate inspirational quote API to encourage user to stay on track (may not be possible to create push notification with dynamic body)
 
 [ ] Create unit tests
 
