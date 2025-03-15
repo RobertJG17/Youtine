@@ -17,6 +17,7 @@ struct RoutineView: View {
     var borderColor: Color
     
     @State var routineTitle: String = ""
+    @State var backgroundImage: String = "morning" // ???: To prevent asset error
 
     @Environment(\.deleteRoutineFromDisk) var deleteRoutineFromDisk
     @Environment(\.screenWidth) var screenWidth
@@ -95,7 +96,7 @@ struct RoutineView: View {
         }
         .onAppear {
             routineTitle = getRoutineTitle(index: selectedCellIndex)
-            
+            backgroundImage = getRoutineBackgroundImage(index: selectedCellIndex)
         }
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
         .frame(
