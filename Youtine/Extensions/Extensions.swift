@@ -96,21 +96,6 @@ extension MainView {
     }
 }
 
-extension RoutineView {
-    var backgroundImage: String {
-        switch(selectedCellIndex) {
-        case 0:
-            return "morning"
-        case 1:
-            return "noon"
-        case 2:
-            return "night"
-        default:
-            return "morning"
-        }
-    }
-}
-
 extension DayPickerView {
     func isIndDictionary(currKey: Int) -> Dictionary<Int,String>.Element? {
         return selectedDays.first(

@@ -31,16 +31,34 @@ func getRoutineTitle(index: Int?) -> String {
     
     switch(currIdx) {
     case 0:
-        titleToReturn = "Morning Routine"
+        titleToReturn = "Morning Routine ☀️"
     case 1:
         titleToReturn = "Afternoon Routine"
     case 2:
-        titleToReturn = "Evening Routine"
+        titleToReturn = "Evening Routine 🌙"
     default:
         titleToReturn = "Routine"
     }
     
     return titleToReturn
+}
+
+func getRoutineBackgroundImage(index: Int?) -> String {
+    var backgroundImage: String = "morning"
+    guard let currIdx = index else { return backgroundImage }
+    
+    switch(currIdx) {
+    case 0:
+        backgroundImage = "morning"
+    case 1:
+        backgroundImage = "noon"
+    case 2:
+        backgroundImage = "night"
+    default:
+        backgroundImage = "morning"
+    }
+    
+    return backgroundImage
 }
 
 func getRoutineStartTime(index: Int?) -> String {
