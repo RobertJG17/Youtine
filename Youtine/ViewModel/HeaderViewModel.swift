@@ -12,7 +12,5 @@ class HeaderViewModel {
         self.authService = authService
     }
     
-    func handleLogOut() {
-        self.authService.signOut()
-    }
+    
 }

@@ -13,11 +13,10 @@ struct HabitListView: View {
     @Binding var currentLabel: String
     @Binding var currentDesc: String
     @Binding var currentHabitID: UUID?
-        
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
     
     @State var disclosureExpansionLocked: Bool = false
+    
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         List($habits, id: \.id, editActions: .all) { todo in
@@ -49,8 +48,8 @@ struct HabitListView: View {
                 } label: {
                     Image(systemName: "pencil")
                         .frame(
-                            width: screenWidth.wrappedValue*0.10,
-                            height: screenHeight.wrappedValue*0.08,
+                            width: environmentContext.screenWidth*0.10,
+                            height: environmentContext.screenHeight*0.08,
                             alignment: .center
                         )
                         .padding(.leading, 15)
@@ -58,14 +57,13 @@ struct HabitListView: View {
                 .contentShape(Rectangle())
                 .background(Color.clear)
                 .foregroundStyle(Color.white)
-                .transition(.move(edge: .bottom))
             }
             
             // !!!: Can't decide between this and default list row bg
             .listRowBackground(Color.clear)
         }
         .frame(
-            width: screenWidth.wrappedValue*0.8
+            width: environmentContext.screenWidth*0.8
         )
     }
 }

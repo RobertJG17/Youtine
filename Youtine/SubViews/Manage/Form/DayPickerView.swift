@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct DayPickerView: View {
-    var width: CGFloat
     var routineColor: Color
     @Binding var selectedDays: [Int: String]
+    
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         HStack(spacing: 0) {
@@ -100,18 +101,18 @@ struct DayPickerView: View {
                 }
                 .clipShape(Rectangle())
         }
-        .frame(width: width / 1.5)
+        .frame(width: environmentContext.screenWidth / 1.5)
         .foregroundStyle(routineColor)
         .transition(.asymmetric(insertion: .opacity, removal: .opacity))
         .animation(.easeIn, value: selectedDays)
-        .frame(width: width*0.78)
+        .frame(width: environmentContext.screenWidth*0.78)
         .padding(.leading, 6)
     }
 }
 
 #Preview {
     DayPickerView(
-        width: 402.0, routineColor: Color.yellow,
+        routineColor: Color.yellow,
         selectedDays: .constant(
             [
                 0: "M",

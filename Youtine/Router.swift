@@ -10,50 +10,36 @@ import SwiftUI
 struct Router: View {
     @Binding var routines: [Routine?]
     
-    @State private var currentPage: Page = .home
-    @State var selectedCellIndex: Int? = nil
-    @State var selectedRoutine: Routine? = nil
-    
-    var authService: FirebaseAuthService
-    
-    init(authService: FirebaseAuthService, routines: Binding<[Routine?]>) {
-        self.authService = authService
-        self._routines = routines
-    }
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(\.modelContext) var context
     
     var body: some View {
         VStack {
-            if currentPage == .home {
-                HomeView(
-                    authService: authService,
-                    routines: $routines,
-                    selectedCellIndex: $selectedCellIndex
-                )
+            if environmentContext.currentPage == .home {
+                HomeView(routines: $routines)
                 .onAppear {
                     // MARK: Anytime we nav to home, set selectedCellIndex to nil
-                    selectedCellIndex = nil
+                    environmentContext.updateSelectedCellIndex(to: nil)
                     
                     // MARK: And set selectedRoutine to nil
-                    selectedRoutine = nil
+                    environmentContext.updateSelectedRoutine(to: nil)
                 }
-            } else if currentPage == .routine {
-                RoutineView(
-                    routine: $selectedRoutine,
-                    selectedCellIndex: $selectedCellIndex
-                )
-            } else if currentPage == .createRoutine || currentPage == .editRoutine {
+            } else if environmentContext.currentPage == .routine {
+                RoutineView()
+                .transition(.scale)
+            } else if environmentContext.currentPage == .createRoutine ||
+                      environmentContext.currentPage == .editRoutine {
                 ManageRoutineView(
-                    routine: $selectedRoutine,
-                    selectedCellIndex: $selectedCellIndex
+                    routine: environmentContext.selectedRoutine,
+                    selectedCellIndex: environmentContext.selectedCellIndex
                 )
                 .transition(.scale)
             }
         }
-        .environment(\.currentPage, $currentPage)
-        .animation(.easeInOut, value: currentPage)
-        .onChange(of: selectedCellIndex) { index, newIndex in
+        .animation(.easeInOut, value: environmentContext.currentPage)
+        .onChange(of: environmentContext.selectedCellIndex) { index, newIndex in
             guard let validIndex = newIndex else { return }
-            selectedRoutine = routines[validIndex]
+            environmentContext.updateSelectedRoutine(to: routines[validIndex])
         }
         .background()
     }
@@ -61,7 +47,6 @@ struct Router: View {
 
 #Preview {
     Router(
-        authService: FirebaseAuthService(),
         routines: .constant(testRoutines)
     )
 }

@@ -17,8 +17,7 @@ struct HabitListDisclosureGroupView: View {
     
     @State private var isExpanded: Bool = false
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -32,7 +31,7 @@ struct HabitListDisclosureGroupView: View {
                         // ???: Allow multiline text
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(
-                            width: screenWidth.wrappedValue / 1.75,
+                            width: environmentContext.screenWidth / 1.75,
                             alignment: .leading
                         )
                         .transition(.opacity)
@@ -46,7 +45,7 @@ struct HabitListDisclosureGroupView: View {
                         .lineLimit(isExpanded ? nil : 1) // Set to nil when expanded
                         .truncationMode(.tail)
                         .frame(
-                            width: screenWidth.wrappedValue / 2.0,
+                            width: environmentContext.screenWidth / 2.0,
                             alignment: .leading
                         )
                         .transition(.opacity)

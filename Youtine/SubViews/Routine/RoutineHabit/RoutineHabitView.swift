@@ -9,21 +9,20 @@ import SwiftUI
 
 struct RoutineHabitView: View {
     // MARK: Instance Variables
-    var habits: [Habit]
+    @Binding var habits: [Habit]
 
     // MARK: Initialized local state
     @State var showScrollIndicator: Bool = true
     @State var canScroll: Bool? = nil
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         VStack(spacing: 0) {
             RoutineHabitHeaderView()
             
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.9, height: 0.3)
+                .frame(width: environmentContext.screenWidth*0.9, height: 0.3)
                 .padding(.horizontal, 20)
                 .padding(.top, 15)
         
@@ -45,6 +44,6 @@ struct RoutineHabitView: View {
 
 #Preview {
     RoutineHabitView(
-        habits: testRoutines[0]!.habits
+        habits: .constant(testRoutines[0]!.habits)
     )
 }

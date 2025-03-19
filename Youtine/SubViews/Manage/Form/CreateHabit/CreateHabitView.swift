@@ -14,9 +14,6 @@ struct CreateHabitView: View {
     @Binding var desc: String
     @Binding var id: UUID?
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
-    
     var body: some View {
         NavigationStack {
             VStack {

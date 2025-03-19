@@ -25,6 +25,25 @@ func getRoutineColor(index: Int?) -> Color {
     return colorToReturn
 }
 
+func getRoutineScoreColor(habits: [Habit], habitsCompleted: Int) -> Color {
+    guard habits.count != 0 else { return Color.white }
+    
+    var color = Color.white
+    let score = Double(habitsCompleted)/Double(habits.count)
+            
+    if score >= 0.0 && score < 0.33333 {
+        color = Color.red
+    } else if score >= 0.33333 && score < 0.66666 {
+        color = Color.orange
+    } else if score >= 0.66666 && score < 0.8 {
+        color = Color.yellow
+    } else if score >= 0.8 {
+        color = Color.green
+    }
+    
+    return color
+}
+
 func getRoutineTitle(index: Int?) -> String {
     var titleToReturn: String = "Routine"
     guard let currIdx = index else { return titleToReturn }

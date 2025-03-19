@@ -13,8 +13,7 @@ struct TimePickerView: View {
     
     @State private var selectedTime = Date()
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
 
     var body: some View {
         VStack {
@@ -37,8 +36,8 @@ struct TimePickerView: View {
             }
         }
         .frame(
-            width: screenWidth.wrappedValue,
-            height: screenHeight.wrappedValue
+            width: environmentContext.screenWidth,
+            height: environmentContext.screenHeight
         )
         .onAppear {
             selectedTime = getDateFromString(timeString: start)

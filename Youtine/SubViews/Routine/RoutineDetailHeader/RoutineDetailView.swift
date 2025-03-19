@@ -8,31 +8,15 @@
 import SwiftUI
 
 struct RoutineDetailView: View {
-    var start: String
-    @Binding var routine: Routine?
-    @Binding var selectedCellIndex: Int?
+    @Binding var start: String
+    @Binding var days: [Int: String]
     
-    // MARK: State to hold decoded daysJSON
-    @State var days: [Int: String]?
-    
-    @Environment(\.screenWidth) var screenWidth
-    
-    init(
-        start: String,
-        routine: Binding<Routine?>,
-        selectedCellIndex: Binding<Int?>
-    ) {
-        self.start = start
-        self._routine = routine
-        self._selectedCellIndex = selectedCellIndex
-    }
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     func getFontWeight(day: String) -> Font.Weight {
-        guard let containsDay = days?.contains(where: { (key: Int, value: String) in
+        let containsDay = days.contains(where: { (key: Int, value: String) in
             value == day
-        }) else {
-            return .regular
-        }
+        })
         
         if containsDay {
             return .bold
@@ -53,14 +37,14 @@ struct RoutineDetailView: View {
                         )
                     )
                 Spacer()
-                RoutineDetailToolbarView(
-                    routine: $routine,
-                    selectedCellIndex: $selectedCellIndex
-                )
+                RoutineDetailToolbarView()
             }
             
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.9, height: 0.3)
+                .frame(
+                    width: environmentContext.screenWidth*0.9,
+                    height: 0.3
+                )
                 .padding(.horizontal, 20)
                 .padding(.bottom, 8)
                         
@@ -125,8 +109,8 @@ struct RoutineDetailView: View {
                 .font(.system(size: 15))
             }
             .onAppear {
-                if let validRoutine = self.routine {
-                    let decodedDays = Routine.decodeDays(validRoutine.daysJSON)
+                if let routine = environmentContext.selectedRoutine {
+                    let decodedDays = Routine.decodeDays(routine.daysJSON)
                     days = decodedDays
                 }
             }
@@ -138,9 +122,5 @@ struct RoutineDetailView: View {
 }
 
 #Preview {
-    RoutineDetailView(
-        start: "8:00 AM",
-        routine: .constant(testRoutines[0]),
-        selectedCellIndex: .constant(0)
-    )
+    RoutineDetailView(start: .constant("8:00 AM"), days: .constant([:]))
 }

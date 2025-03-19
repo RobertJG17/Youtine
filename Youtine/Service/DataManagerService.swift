@@ -49,14 +49,14 @@ class DataManagerService {
         entry: Routine,
         start: String,
         days: [Int: String],
-        borderColor: Color,
+        color: Color,
         habits: [Habit],
         definedContext: ModelContext
     ) throws -> Void {
         // !!!: MAKE SURE TO MAP THRU ALL NECESSARY PROPERTIES
         entry.start = start
         entry.daysJSON = Routine.encodeDays(days)
-        entry.borderColor = borderColor.description
+        entry.color = color.description
         entry.habits = habits
 
         // Save changes
@@ -128,14 +128,14 @@ class DataManagerService {
     /// - Parameter index: Index of Routine
     /// - Parameter start: Start time of Routine
     /// - Parameter days: Days that a user would like to have this Routine
-    /// - Parameter borderColor: Color that a user has chosen for their  routine
+    /// - Parameter color: Color that a user has chosen for their  routine
     /// - Parameter habits: Habits that a user has configured for their Routine
     func saveRoutine(
         id: UUID,
         index: Int,
         start: String,
         days: [Int: String],
-        borderColor: Color,
+        color: Color,
         habits: [Habit]
     ) {
         do {
@@ -167,7 +167,7 @@ class DataManagerService {
                     entry: entry,
                     start: start,
                     days: days,
-                    borderColor: borderColor,
+                    color: color,
                     habits: habits,
                     definedContext: context
                 )
@@ -176,7 +176,7 @@ class DataManagerService {
                     index: index,
                     start: start,
                     days: days,
-                    borderColor: borderColor,
+                    color: color,
                     habits: habits
                 )
                 

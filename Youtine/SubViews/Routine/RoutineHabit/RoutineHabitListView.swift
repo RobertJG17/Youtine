@@ -16,8 +16,7 @@ struct RoutineHabitListView: View {
     @State var animatedOpacity: CGFloat = 1
     @State var disclosureExpansionLocked: Bool = false
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -74,9 +73,6 @@ struct RoutineHabitListView: View {
                 .contentShape(Rectangle())
             }
             .listStyle(PlainListStyle())
-            .padding(.leading, 5)
-            .padding(.trailing, 20)
-            .frame(height: screenHeight.wrappedValue / 2.3)
 //            .border(Color.orange) MARK: DEBUG
             .onReceive(Just(canScroll), perform: { _ in
                 if let scroll = canScroll, scroll == true {
@@ -88,6 +84,9 @@ struct RoutineHabitListView: View {
                 }
             })
         }
+        .padding(.leading, 5)
+        .padding(.trailing, 20)
+        .frame(height: environmentContext.screenHeight / 2.3)
     }
 }
 

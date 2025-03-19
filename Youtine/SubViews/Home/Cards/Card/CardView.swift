@@ -9,7 +9,6 @@ import SwiftUI
 
 struct RoutineCardView: View {
     var index: Int
-    @Binding var selectedCellIndex: Int?
     
     // ???: Properties from routine
     var title: String
@@ -17,9 +16,7 @@ struct RoutineCardView: View {
     var habits: [Habit]
     var borderColor: Color
 
-    @Environment(\.currentPage) var currentPage
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
 
     var habitsCompleted: Int {
         return habits.reduce(0) { partialResult, todo in
@@ -29,13 +26,12 @@ struct RoutineCardView: View {
     
     init(
         index: Int,
-        routine: Routine?,
-        selectedCellIndex: Binding<Int?>
+        routine: Routine?
     ) {
         if let validRoutine = routine {
             self.start = validRoutine.start
             self.habits = validRoutine.habits
-            self.borderColor = Color.from(description: validRoutine.borderColor)
+            self.borderColor = Color.from(description: validRoutine.color)
         } else {
             self.start = ""
             self.habits = []
@@ -44,14 +40,15 @@ struct RoutineCardView: View {
         
         self.index = index
         self.title = getRoutineTitle(index: index)
-                
-        self._selectedCellIndex = selectedCellIndex
     }
     
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
+                .frame(
+                    width: environmentContext.screenWidth*0.90,
+                    height: environmentContext.screenHeight / 4
+                )
                 .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
                 .foregroundStyle(Color.black)
             
@@ -73,20 +70,26 @@ struct RoutineCardView: View {
                 )
             }
             .padding(50)
-            .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
+            .frame(
+                width: environmentContext.screenWidth*0.90,
+                height: environmentContext.screenHeight / 4
+            )
             .preferredColorScheme(.dark)
         }
         // MARK: TAPPABLE FRAME [START]
-        .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
+        .frame(
+            width: environmentContext.screenWidth*0.90,
+            height: environmentContext.screenHeight / 4
+        )
         .background(Color.clear) // Give the Spacer a tappable area
         .contentShape(Rectangle()) // Ensure the entire area is tappable
         // MARK: [END]
         .onTapGesture {
             // MARK: NAVIGATE TO .routine
-            currentPage.wrappedValue = .routine
-            
-            // MARK: SET selectedCellIndex index
-            selectedCellIndex = index
+            environmentContext.updatePage(to: .routine)
+                        
+            // MARK: SET selectedCellIndex
+            environmentContext.updateSelectedCellIndex(to: index)
         }
         .background(Color.black)
     }
@@ -95,7 +98,6 @@ struct RoutineCardView: View {
 #Preview {
     RoutineCardView(
         index: 0,
-        routine: testRoutines[0],
-        selectedCellIndex: .constant(0)
+        routine: testRoutines[0]
     )
 }

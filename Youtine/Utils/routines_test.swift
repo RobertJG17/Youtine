@@ -13,7 +13,7 @@ var testRoutines: [Routine?] =
             index: 0,
             start: "8:00 AM",
             days: [0: "M", 1: "W", 2: "F"],
-            borderColor: .red,
+            color: .red,
             habits: [
                 Habit(
                     label: "Wash Face",
@@ -49,7 +49,7 @@ var testRoutines: [Routine?] =
             index: 1,
             start: "12:00 PM",
             days: [0: "M", 1: "W", 2: "F"],
-            borderColor: .blue,
+            color: .blue,
             habits: [
                 Habit(
                     label: "Wash Face",

@@ -1,5 +1,5 @@
 //
-//  CreateRoutineView.swift
+//  ManageRoutineView.swift
 //  Youtine
 //
 //  Created by Bobby Guerra on 1/17/25.
@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct ManageRoutineView: View {
-    // MARK: Instance Variables
-    @Binding var selectedCellIndex: Int?
-    
     // MARK: Initial form state variables
     @State private var id: UUID
     @State private var routineTitle: String
@@ -21,56 +18,50 @@ struct ManageRoutineView: View {
     @State private var showingCreateHabit: Bool = false
     @State private var showingTimePicker: Bool = false
     
-    @Environment(\.writeRoutineToDisk) var writeRoutineToDisk
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(\.modelContext) var context
     
-    // MARK: Submit form declared here to capture all needed state vars
-    func handleFormSubmit() -> Void {
-        do {
-            if let validIndex = selectedCellIndex {
-                try writeRoutineToDisk(
-                    id,
-                    validIndex,
-                    start,
-                    selectedDays,
-                    routineColor,
-                    habits
-                )
-            }
-        } catch {
-            print(error)
-        }
+    var dataManagerService: DataManagerService {
+        DataManagerService(context: context)
     }
-
-    init(
-        routine: Binding<Routine?>,
-        selectedCellIndex: Binding<Int?>
-    ) {
-        self._selectedCellIndex = selectedCellIndex
-
-        // MARK: If routine == nil, the form will render with default values
-        if let unwrappedRoutine = routine.wrappedValue {
+    
+    init(routine: Routine?, selectedCellIndex: Int?) {
+        if let unwrappedRoutine = routine {
             // MARK: Initial values for EDITING a routine
             self.id = unwrappedRoutine.id
-            self.routineColor = Color.from(description: unwrappedRoutine.borderColor)
+            self.routineColor = Color.from(description: unwrappedRoutine.color)
             self.start = unwrappedRoutine.start
             self.selectedDays = Routine.decodeDays(unwrappedRoutine.daysJSON)
             self.habits = unwrappedRoutine.habits
         } else {
             // MARK: Initial values for CREATING a routine
             self.id = UUID()
-            self.routineColor = getRoutineColor(index: selectedCellIndex.wrappedValue)
-            self.start = getRoutineStartTime(index: selectedCellIndex.wrappedValue)
+            self.routineColor = getRoutineColor(index: selectedCellIndex)
+            self.start = getRoutineStartTime(index: selectedCellIndex)
             self.selectedDays = [:]
             self.habits = []
         }
         
-        self.routineTitle = getRoutineTitle(index: selectedCellIndex.wrappedValue)
+        self.routineTitle = getRoutineTitle(index: selectedCellIndex)
+    }
+    
+    // MARK: Submit form declared here to capture all needed state vars
+    func handleFormSubmit() -> Void {
+        if let validIndex = environmentContext.selectedCellIndex {
+            dataManagerService.saveRoutine(
+                id: id,
+                index: validIndex,
+                start: start,
+                days: selectedDays,
+                color: routineColor,
+                habits: habits
+            )
+        }
     }
     
     var body: some View {
         EditRoutineView(
             routineColor: $routineColor,
-            selectedCellIndex: $selectedCellIndex,
             start: $start,
             selectedDays: $selectedDays,
             habits: $habits,
@@ -82,8 +73,5 @@ struct ManageRoutineView: View {
 }
 
 #Preview {
-    ManageRoutineView(
-        routine: .constant(testRoutines[0]),
-        selectedCellIndex: .constant(0)
-    )
+    ManageRoutineView(routine: testRoutines[0], selectedCellIndex: 0)
 }

@@ -20,28 +20,9 @@ struct RoutineHabitFooterView: View {
         }
     }
     
-    func getRoutineScoreColor() -> Color {
-        guard habits.count != 0 else { return Color.white }
-        
-        var color = Color.white
-        let score = Double(habitsCompleted)/Double(habits.count)
-                
-        if score >= 0.0 && score < 0.33333 {
-            color = Color.red
-        } else if score >= 0.33333 && score < 0.66666 {
-            color = Color.orange
-        } else if score >= 0.66666 && score < 0.8 {
-            color = Color.yellow
-        } else if score >= 0.8 {
-            color = Color.green
-        }
-        
-        return color
-    }
-    
     var body: some View {
         VStack {
-            HStack{
+            HStack {
                 Spacer()
                 if !habits.isEmpty {
                     Button {
@@ -53,7 +34,6 @@ struct RoutineHabitFooterView: View {
                                 1 : 0
                             )
                             .opacity(animatedOpacity)
-                            .padding(.top, 8)
                             .animation(
                                 .easeInOut(duration: 0.55)
                                 .repeatForever(
@@ -61,17 +41,16 @@ struct RoutineHabitFooterView: View {
                                 ),
                                 value: animatedOpacity // Animate the scale
                             )
-                            
                             .onAppear {
                                 animatedOpacity = 0.35 // Trigger the animation
                             }
+                            .padding(.top, 8)
                     }
                     .foregroundStyle(Color.white)
                 }
                 Spacer()
             }
             .padding(.top, 15)
-            .padding(.bottom, 8)
             
             HStack {
                 Text("Completed:")
@@ -91,7 +70,7 @@ struct RoutineHabitFooterView: View {
                         )
                     )
                     .opacity(0.7)
-                    .foregroundStyle(getRoutineScoreColor())
+                    .foregroundStyle(getRoutineScoreColor(habits: habits, habitsCompleted: habitsCompleted))
             }
             .padding(.leading, 30)
             .padding(.trailing, 30)

@@ -11,19 +11,16 @@ struct CardRouterView: View {
     var index: Int
     var routine: Routine?
     var routineCreated: Bool
-    @Binding var selectedCellIndex: Int?
     
-    @Environment(\.currentPage) var currentPage
-        
+    @Environment(RoutineEnvironment.self) var environmentContext
+            
     init(
         index: Int,
-        routine: Routine?,
-        selectedCellIndex: Binding<Int?>
+        routine: Routine?
     ) {
         self.index = index
         self.routine = routine
         self.routineCreated = routine != nil
-        self._selectedCellIndex = selectedCellIndex
     }
     
     var body: some View {
@@ -32,18 +29,16 @@ struct CardRouterView: View {
             if routineCreated {
                 RoutineCardView(
                     index: index,
-                    routine: routine,
-                    selectedCellIndex: $selectedCellIndex
+                    routine: routine
                 )
             } else {
                 EmptyCardView(
                     index: index,
-                    borderColor: Color.white,
-                    selectedCellIndex: $selectedCellIndex
+                    borderColor: Color.white
                 )
             }
         }
-        .animation(.easeInOut, value: currentPage.wrappedValue)
+        .animation(.easeInOut, value: environmentContext.currentPage)
         .preferredColorScheme(.dark)
     }
 }
@@ -51,7 +46,6 @@ struct CardRouterView: View {
 #Preview {
     CardRouterView(
         index: 1,
-        routine: testRoutines[0],
-        selectedCellIndex: .constant(1)
+        routine: testRoutines[0]
     )
 }

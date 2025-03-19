@@ -8,19 +8,9 @@
 import SwiftUI
 
 struct RoutineHeaderView: View {
-    var title: String
-    @Binding var selectedCellIndex: Int?
-    
-    @Environment(\.currentPage) var currentPage
-    @Environment(\.screenHeight) var screenHeight
-    
-    init(
-        title: String,
-        selectedCellIndex: Binding<Int?>
-    ) {
-        self.title = title
-        self._selectedCellIndex = selectedCellIndex
-    }
+    @Binding var title: String
+
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -37,23 +27,22 @@ struct RoutineHeaderView: View {
                 Spacer()
                 Image(systemName: "chevron.up")
             }
+            .padding(.bottom, 20)
         }
-        .frame(height: screenHeight.wrappedValue*0.10)
+        .frame(height: environmentContext.screenHeight*0.20)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
             // MARK: NAVIGATE TO .home
-            currentPage.wrappedValue = .home
+            environmentContext.updatePage(to: .home)
         }
         .padding(.horizontal, 20)
-        .padding(.bottom, 10)
         .preferredColorScheme(.dark)
     }
 }
 
 #Preview {
     RoutineHeaderView(
-        title: "Morning Routine",
-        selectedCellIndex: .constant(1)
+        title: .constant("Morning Routine")
     )
 }

@@ -10,7 +10,6 @@ import SwiftUI
 struct EditRoutineView: View {
     // MARK: Instance Variables
     @Binding var routineColor: Color
-    @Binding var selectedCellIndex: Int?
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
     @Binding var habits: [Habit]
@@ -30,7 +29,7 @@ struct EditRoutineView: View {
     
     @State var hasChanges: Bool = false
     
-    @Environment(\.currentPage) var currentPage
+    @Environment(RoutineEnvironment.self) var environmentContext
 
     var body: some View {
         ZStack {
@@ -57,7 +56,6 @@ struct EditRoutineView: View {
             } else {
                 FormView(
                     routineColor: $routineColor,
-                    selectedCellIndex: $selectedCellIndex,
                     start: $start,
                     selectedDays: $selectedDays,
                     habits: $habits,
@@ -72,7 +70,7 @@ struct EditRoutineView: View {
                 .transition(.scale)
             }
         }
-        .animation(.easeInOut, value: currentPage.wrappedValue)
+        .animation(.easeInOut, value: environmentContext.currentPage)
         .animation(.easeInOut, value: showingCreateHabit)
         .animation(.easeInOut, value: showingTimePicker)
         .onAppear {
@@ -127,7 +125,6 @@ struct EditRoutineView: View {
 #Preview {
     EditRoutineView(
         routineColor: .constant(Color.white),
-        selectedCellIndex: .constant(0),
         start: .constant(testRoutines[0]!.start),
         selectedDays: .constant(Routine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),

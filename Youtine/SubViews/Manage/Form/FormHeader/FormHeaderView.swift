@@ -9,18 +9,11 @@ import SwiftUI
 
 struct FormHeaderView: View {
     @Binding var hasChanges: Bool
-    @Binding var selectedCellIndex: Int?
     var routineTitle: String?
-    
-    @Environment(\.currentPage) var currentPage
-    @Environment(\.handleFormSubmit) var handleFormSubmit
     
     var body: some View {
         VStack {
-            FormToolbarView(
-                hasChanges: $hasChanges,
-                selectedCellIndex: $selectedCellIndex
-            )
+            FormToolbarView(hasChanges: $hasChanges)
             
             Spacer()
             
@@ -34,8 +27,9 @@ struct FormHeaderView: View {
     }
 }
 
-//#Preview {
-//    FormHeaderView(
-//        submit: () -> Void, selectedCellIndex: .constant(0)
-//    )
-//}
+#Preview {
+    FormHeaderView(
+        hasChanges: .constant(false),
+        routineTitle: getRoutineTitle(index: 0)
+    )
+}

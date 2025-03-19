@@ -9,27 +9,28 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @State var authService = FirebaseAuthService()
-    
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(FirebaseAuthService.self) var authService
     
     var body: some View {
         GeometryReader { proxy in
             let width = proxy.size.width
             let height = proxy.size.height
             
-            Group {
+            ZStack {
                 if authService.userSession == nil {
                     LoginView(authService: authService)
+                        .transition(.move(edge: .bottom))
                 } else {
-                    MainView(authService: authService)
+                    MainView()
+                        .transition(.blurReplace())
                 }
             }
+            .animation(.bouncy(duration: 1.5), value: authService.userSession)
             .onAppear {
                 // MARK: Set screenWidth and screenHeight
-                screenWidth.wrappedValue = width
-                screenHeight.wrappedValue = height
+                environmentContext.updateWidth(to: width)
+                environmentContext.updateHeight(to: height)
             }
             .preferredColorScheme(.dark)
         }

@@ -10,26 +10,24 @@ import SwiftUI
 struct EmptyCardView: View {
     var index: Int
     var borderColor: Color
-    @Binding var selectedCellIndex: Int?
     
-    @Environment(\.currentPage) var currentPage
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     init(
         index: Int,
-        borderColor: Color,
-        selectedCellIndex: Binding<Int?>
+        borderColor: Color
     ) {
         self.index = index
         self.borderColor = borderColor
-        self._selectedCellIndex = selectedCellIndex
     }
     
     var body: some View {
         ZStack {
             Rectangle()
-                .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
+                .frame(
+                    width: environmentContext.screenWidth*0.90,
+                    height: environmentContext.screenHeight / 4
+                )
                 .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
                 .foregroundStyle(Color.black)
             
@@ -37,22 +35,19 @@ struct EmptyCardView: View {
                 Image(systemName: "plus")
                     .font(.system(size: 40))
             }
-            .frame(width: screenWidth.wrappedValue*0.90, height: screenHeight.wrappedValue / 4)
+            .frame(
+                width: environmentContext.screenWidth*0.90,
+                height: environmentContext.screenHeight / 4
+            )
             .background(Color.clear) // Give the Spacer a tappable area
             .contentShape(Rectangle()) // Ensure the entire area is tappable
             .onTapGesture {
-                /// MARK: NAVIGATE TO .createRoutine
-                currentPage.wrappedValue = .createRoutine
+                // MARK: NAVIGATE TO .createRoutine
+                environmentContext.updatePage(to: .createRoutine)
                 
-                /// MARK: SET selectedCellIndex index
-                selectedCellIndex = index
+                // MARK: SET selectedCellIndex
+                environmentContext.updateSelectedCellIndex(to: index)
             }
-            .transition(
-                .asymmetric(
-                    insertion: .scale,
-                    removal: .scale
-                )
-            )
             .contentShape(Rectangle())
         }
         .preferredColorScheme(.dark)
@@ -62,7 +57,6 @@ struct EmptyCardView: View {
 #Preview {
     EmptyCardView(
         index: 0,
-        borderColor: .white,
-        selectedCellIndex: .constant(0)
+        borderColor: .white
     )
 }

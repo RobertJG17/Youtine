@@ -49,53 +49,6 @@ extension Color {
 // !!!: -----------------------------------------
 
 // MARK: VIEWS (START)
-extension MainView {
-    // MARK: Define Data Manager Service (DMS) operations in Content View and pass them via context
-    func writeRoutineToDisk(
-        id: UUID,
-        index: Int,
-        start: String,
-        days: [Int: String],
-        borderColor: Color,
-        habits: [Habit]
-    ) throws -> Void {
-        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
-                message: """
-                    Entity: ContentView \n
-                    File: Extensions \n
-                    Function Invocation: writeRoutineToDisk() \n
-                    Error: Data Manager not defined
-                """
-            )
-        }
-        
-        dms.saveRoutine(
-            id: id,
-            index: index,
-            start: start,
-            days: days,
-            borderColor: borderColor,
-            habits: habits
-        )
-    }
-    
-    func deleteRoutineFromDisk(
-        routine: Routine
-    ) throws -> Void {
-        guard let dms = dataManagerService else { throw DataManagerErrors.UninitializedError(
-                message: """
-                    Entity: ContentView \n
-                    File: Extensions \n
-                    Function Invocation: deleteRoutineFromDisk() \n
-                    Error: Data Manager not defined
-                """
-            )
-        }
-        
-        dms.deleteRoutine(byID: routine.id)
-    }
-}
-
 extension DayPickerView {
     func isIndDictionary(currKey: Int) -> Dictionary<Int,String>.Element? {
         return selectedDays.first(

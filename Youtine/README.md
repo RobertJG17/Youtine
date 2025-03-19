@@ -4,10 +4,6 @@ Habit tracker/routine builder app. The name comes from a play on
 words of 'You' and 'Routine', reminding the user that these Routines
 are to reinforce positive habits that benefit you.
 
-Takes idea of simple todo app but incoporates habit
-building tips/suggestions from Atomic Habits by James Clear.
-
-
 ## Screenshots
 
 ### Login

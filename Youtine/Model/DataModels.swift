@@ -14,21 +14,21 @@ class Routine: Identifiable {
     var index: Int
     var start: String
     var daysJSON: String // Store days as JSON string
-    var borderColor: String
+    var color: String
     @Relationship(deleteRule: .cascade) var habits: [Habit] = [] // Proper relationship
 
     init(
         index: Int,
         start: String,
         days: [Int: String],
-        borderColor: Color,
+        color: Color,
         habits: [Habit]
     ) {
         self.id = UUID() // Generate a unique identifier
         self.index = index
         self.start = start
         self.daysJSON = Routine.encodeDays(days)
-        self.borderColor = borderColor.description
+        self.color = color.description
         self.habits = habits
     }
 

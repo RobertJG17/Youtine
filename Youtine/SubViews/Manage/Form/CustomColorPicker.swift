@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct CustomColorPicker: View {
-    var width: CGFloat
-    var height: CGFloat
     @Binding var routineColor: Color
     
     let MAX_COUNT = Color.validColors.count
+    
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     var body: some View {
         let rows = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
@@ -24,16 +24,16 @@ struct CustomColorPicker: View {
                         Rectangle()
                             .border(.white)
                             .frame(
-                                width: width / CGFloat(MAX_COUNT),
-                                height: width / CGFloat(MAX_COUNT)
+                                width: environmentContext.screenWidth / CGFloat(MAX_COUNT),
+                                height: environmentContext.screenWidth / CGFloat(MAX_COUNT)
                             )
                             .transition(.scale)
                     }
 
                     Rectangle()
                         .frame(
-                            width: width / CGFloat(MAX_COUNT) - 10,
-                            height: width / CGFloat(MAX_COUNT) - 10
+                            width: environmentContext.screenWidth / CGFloat(MAX_COUNT) - 10,
+                            height: environmentContext.screenWidth / CGFloat(MAX_COUNT) - 10
                         )
                         .onTapGesture {
                             routineColor = color
@@ -45,7 +45,10 @@ struct CustomColorPicker: View {
             }
         }
         
-        .frame(width: width*0.9, height: height*0.2)
+        .frame(
+            width: environmentContext.screenWidth*0.9,
+            height: environmentContext.screenHeight*0.2
+        )
         .contentShape(RoundedRectangle(cornerRadius: 40))
         .preferredColorScheme(.dark)
     }
@@ -53,8 +56,6 @@ struct CustomColorPicker: View {
 
 #Preview {
     CustomColorPicker(
-        width: 402.0,
-        height: 687.66666667,
         routineColor: .constant(.red)
     )
 }

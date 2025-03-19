@@ -25,10 +25,18 @@ struct YoutineApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    // MARK: Contains userSession property used to authorize user access
+    @State var authService = FirebaseAuthService()
+    
+    // MARK: Contains global UI state and relevant mutators
+    @State var environmentContext = RoutineEnvironment()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
         .modelContainer(for: [Routine.self, Habit.self])
+        .environment(environmentContext)
+        .environment(authService)
     }
 }

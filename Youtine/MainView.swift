@@ -18,18 +18,6 @@ struct MainView: View {
     
     @State var routines: [Routine?] = []
     
-    // MARK: Used in Extensions, encapsulates logic for Swift Data operations
-    @State var dataManagerService: DataManagerService?
-        
-    // MARK: Context for Swift Data operations
-    @Environment(\.modelContext) var context
-    
-    var authService: FirebaseAuthService
-    
-    init(authService: FirebaseAuthService) {
-        self.authService = authService
-    }
-    
     func refreshRoutines(with otherRoutines: [Routine]) -> [Routine?] {
         var temp = Array<Routine?>.init(repeating: nil, count: MAX_ROUTINES)
         
@@ -44,7 +32,6 @@ struct MainView: View {
     var body: some View {
         NavigationView {
             Router(
-                authService: authService,
                 routines: $routines
             )
         }
@@ -52,21 +39,15 @@ struct MainView: View {
             // MARK: Set local state to array with youtines and nil entries otherwise
             routines = refreshRoutines(with: savedRoutines)
             
-            // MARK: Initialize Data Manager with Swift Data context
-            dataManagerService = DataManagerService(context: context)
-            
             // MARK: Prompt user for permission to schedule local notifications
             NotificationsService.promptNotificationsGrant()
         }
         .onChange(of: savedRoutines) { _, newRoutines in
-            print("NEW ROUTINES: ", newRoutines)
             routines = refreshRoutines(with: newRoutines)
         }
-        .environment(\.writeRoutineToDisk, writeRoutineToDisk)
-        .environment(\.deleteRoutineFromDisk, deleteRoutineFromDisk)
     }
 }
 
 #Preview {
-    MainView(authService: FirebaseAuthService())
+    MainView()
 }

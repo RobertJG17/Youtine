@@ -8,66 +8,60 @@
 import SwiftUI
 
 struct RoutineView: View {
-    @Binding var routine: Routine?
-    @Binding var selectedCellIndex: Int?
-    
-    var days: [Int:String]
-    var start: String
-    var habits: [Habit]
-    var borderColor: Color
-    
+    @State var days: [Int:String] = [:]
+    @State var start: String = "8:00 AM"
+    @State var habits: [Habit] = []
+    @State var borderColor: Color = .white
     @State var routineTitle: String = ""
-    @State var backgroundImage: String = "morning" // ???: To prevent asset error
+    @State var backgroundImage: String = "morning"
 
-    @Environment(\.deleteRoutineFromDisk) var deleteRoutineFromDisk
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(\.modelContext) var context
     
-    init(
-        routine: Binding<Routine?>,
-        selectedCellIndex: Binding<Int?>
-    ) {
-        self._routine = routine
-        self._selectedCellIndex = selectedCellIndex
-        
-        self.days = Routine.decodeDays(
-            routine.wrappedValue?.daysJSON ?? ""
-        )
-        self.start = routine.wrappedValue?.start ?? ""
-        self.habits = routine.wrappedValue?.habits ?? []
-        self.borderColor = Color.from(
-            description: routine.wrappedValue?.borderColor ?? "white"
-        )
+    var dataManagerService: DataManagerService {
+        DataManagerService(context: context)
     }
     
     // MARK: DELETE FUNCTIONALITY
     func handleDeleteRoutine() -> Void {
-        do {
-            if let validRoutine = self.routine {
-                try deleteRoutineFromDisk(validRoutine)
-            }
-        } catch {
-            print(error)
+        if let routine = environmentContext.selectedRoutine {
+            dataManagerService.deleteRoutine(byID: routine.id)
         }
+    }
+    
+    func updateRoutineData() {
+        let routine = environmentContext.selectedRoutine
+        let selectedCellIndex = environmentContext.selectedCellIndex
+        
+        self.days = Routine.decodeDays(
+            routine?.daysJSON ?? ""
+        )
+        self.start = routine?.start ?? "8:00 AM"
+        self.habits = routine?.habits ?? []
+        self.borderColor = Color.from(
+            description: routine?.color ?? "white"
+        )
+        
+        routineTitle = getRoutineTitle(index: selectedCellIndex)
+        backgroundImage = getRoutineBackgroundImage(index: selectedCellIndex)
     }
     
     var body: some View {
         VStack {
             RoutineHeaderView(
-                title: routineTitle,
-                selectedCellIndex: $selectedCellIndex
+                title: $routineTitle
             )
             
             VStack(spacing: 0) {
                 RoutineDetailView(
-                    start: start,
-                    routine: $routine,
-                    selectedCellIndex: $selectedCellIndex
+                    start: $start,
+                    days: $days
                 )
+                
                 Spacer()
                 
                 RoutineHabitView(
-                    habits: habits
+                    habits: $habits
                 )
             }
             .overlay(
@@ -76,7 +70,7 @@ struct RoutineView: View {
                     .opacity(0.2)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea(edges: .horizontal)
-                    .frame(height: screenHeight.wrappedValue)
+                    .frame(height: environmentContext.screenHeight*0.92)
             )
             .overlay(
                 VStack {
@@ -84,32 +78,27 @@ struct RoutineView: View {
                         .fill(borderColor)
                         .frame(height: 1)
                     Spacer()
-                    Rectangle()
-                        .fill(borderColor)
-                        .frame(height: 1)
                 }
-                    .frame(height: screenHeight.wrappedValue)
+                    .frame(height: environmentContext.screenHeight*0.92)
             )
-            .frame(height: screenHeight.wrappedValue)
+            .frame(height: environmentContext.screenHeight*0.92)
             .padding(.bottom, 10)
             .preferredColorScheme(.dark)
         }
         .onAppear {
-            routineTitle = getRoutineTitle(index: selectedCellIndex)
-            backgroundImage = getRoutineBackgroundImage(index: selectedCellIndex)
+            updateRoutineData()
         }
-        .environment(\.handleDeleteRoutine, handleDeleteRoutine)
+        .onChange(of: environmentContext.selectedRoutine) { _, _ in
+            updateRoutineData()
+        }
         .frame(
-            width: screenWidth.wrappedValue,
-            height: screenHeight.wrappedValue
+            width: environmentContext.screenWidth,
+            height: environmentContext.screenHeight
         )
-        .transition(.scale)
+        .environment(\.handleDeleteRoutine, handleDeleteRoutine)
     }
 }
 
 #Preview {
-    RoutineView(
-        routine: .constant(testRoutines[0]),
-        selectedCellIndex: .constant(0)
-    )
+    RoutineView()
 }

@@ -9,20 +9,18 @@ import SwiftUI
 import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
-    var authService: FirebaseAuthService
-    var vm: LoginViewModel
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(FirebaseAuthService.self) var authService
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @State private var vm: LoginViewModel
     
     init(authService: FirebaseAuthService) {
-        self.authService = authService
         self.vm = LoginViewModel(authService: authService)
     }
     
     var body: some View {
         VStack(alignment: .center) {
-            HeaderView(authService: authService)
+            HeaderView()
             
             Spacer()
     
@@ -32,15 +30,15 @@ struct LoginView: View {
             } onCompletion: { result in
                 vm.handleAppleSignInCompletion(withResult: result)
             }
-            .frame(width: screenWidth.wrappedValue / 2.2, height: 44)
+            .frame(width: environmentContext.screenWidth / 2.2, height: 44)
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 40)
                     .stroke(.white, lineWidth: 2)
             )
         
             Divider()
                 .foregroundStyle(Color.white)
-                .frame(width: screenWidth.wrappedValue / 2.2)
+                .frame(width: environmentContext.screenWidth / 2.2)
                 .padding(.vertical, 5)
             
             Button {
@@ -48,10 +46,11 @@ struct LoginView: View {
                 vm.handleSignInWithGoogle()
             } label: {
                 Image("Google_SI")
+                    .resizable() // ???: Look into why this works
             }
-            .frame(width: screenWidth.wrappedValue / 2.2, height: 44)
+            .frame(width: environmentContext.screenWidth / 2.2, height: 44)
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 40)
                     .stroke(.white, lineWidth: 2)
             )
             

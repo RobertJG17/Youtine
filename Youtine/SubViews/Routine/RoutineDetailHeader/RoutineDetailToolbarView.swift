@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct RoutineDetailToolbarView: View {
-    @Binding var routine: Routine?
-    @Binding var selectedCellIndex: Int?
-    
     @State var showDeleteConfirmation: Bool = false
     
-    @Environment(\.currentPage) var currentPage
+    @Environment(RoutineEnvironment.self) var environmentContext
     @Environment(\.handleDeleteRoutine) var handleDeleteRoutine
     
     var body: some View {
@@ -33,7 +30,7 @@ struct RoutineDetailToolbarView: View {
                     handleDeleteRoutine()
                     
                     // MARK: NAVIGATE TO .home
-                    currentPage.wrappedValue = .home
+                    environmentContext.updatePage(to: .home)
                     
                     // MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
@@ -48,7 +45,7 @@ struct RoutineDetailToolbarView: View {
             
             Button {
                 // MARK: NAVIGATE TO .editRoutine
-                currentPage.wrappedValue = .editRoutine
+                environmentContext.updatePage(to: .editRoutine)
             } label: {
                 Image(systemName: "pencil")
             }
@@ -57,8 +54,5 @@ struct RoutineDetailToolbarView: View {
 }
 
 #Preview {
-    RoutineDetailToolbarView(
-        routine: .constant(testRoutines[0]),
-        selectedCellIndex: .constant(0)
-    )
+    RoutineDetailToolbarView()
 }

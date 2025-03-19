@@ -9,9 +9,8 @@ import SwiftUI
 
 struct FormToolbarView: View {
     @Binding var hasChanges: Bool
-    @Binding var selectedCellIndex: Int?
     
-    @Environment(\.currentPage) var currentPage
+    @Environment(RoutineEnvironment.self) var environmentContext
     @Environment(\.handleFormSubmit) var handleFormSubmit
     
     // ???: State var to control confirmation dialog for delete/confirm operation
@@ -22,12 +21,12 @@ struct FormToolbarView: View {
     @State private var saveButtonTitle: String = "Create Routine"
     
     func handleNav() {
-        if currentPage.wrappedValue == .editRoutine {
+        if environmentContext.currentPage == .editRoutine {
             // MARK: NAVIGATE TO .routine
-            currentPage.wrappedValue = .routine
+            environmentContext.updatePage(to: .routine)
         } else {
             // MARK: NAVIGATE TO .home
-            currentPage.wrappedValue = .home
+            environmentContext.updatePage(to: .home)
         }
     }
     
@@ -89,18 +88,15 @@ struct FormToolbarView: View {
         }
         .padding(.bottom, 20)
         .onAppear {
-            deleteButtonTitle = currentPage.wrappedValue == .editRoutine
+            deleteButtonTitle = environmentContext.currentPage == .editRoutine
             ? "Discard Changes" : "Delete"
             
-            saveButtonTitle = currentPage.wrappedValue == .editRoutine
+            saveButtonTitle = environmentContext.currentPage == .editRoutine
             ? "Save Changes" : "Create Routine"
         }
     }
 }
 
 #Preview {
-    FormToolbarView(
-        hasChanges: .constant(false),
-        selectedCellIndex: .constant(0)
-    )
+    FormToolbarView(hasChanges: .constant(false))
 }

@@ -9,14 +9,12 @@ import SwiftUI
 
 struct CardsView: View {
     @Binding var routines: [Routine?]
-    @Binding var selectedCellIndex: Int?
 
     var body: some View {
         ForEach(Array(routines.enumerated()), id: \.offset) { index, routine in
             CardRouterView(
                 index: index,
-                routine: routine,
-                selectedCellIndex: $selectedCellIndex
+                routine: routine
             )
             
             Spacer()
@@ -26,7 +24,6 @@ struct CardsView: View {
 
 #Preview {
     CardsView(
-        routines: .constant(testRoutines),
-        selectedCellIndex: .constant(1)
+        routines: .constant(testRoutines)
     )
 }

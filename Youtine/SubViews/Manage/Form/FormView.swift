@@ -9,7 +9,6 @@ import SwiftUI
 
 struct FormView: View {
     @Binding var routineColor: Color
-    @Binding var selectedCellIndex: Int?
     @Binding var start: String
     @Binding var selectedDays: [Int: String]
     @Binding var habits: [Habit]
@@ -23,12 +22,10 @@ struct FormView: View {
     // MARK: Set in onAppear
     @State var routineTitle: String = ""
     
-    @Environment(\.screenWidth) var screenWidth
-    @Environment(\.screenHeight) var screenHeight
+    @Environment(RoutineEnvironment.self) var environmentContext
     
     init(
         routineColor: Binding<Color>,
-        selectedCellIndex: Binding<Int?>,
         start: Binding<String>,
         selectedDays: Binding<Dictionary<Int, String>>,
         habits: Binding<Array<Habit>>,
@@ -40,7 +37,6 @@ struct FormView: View {
         hasChanges: Binding<Bool>
     ) {
         self._routineColor = routineColor
-        self._selectedCellIndex = selectedCellIndex
         self._start = start
         self._selectedDays = selectedDays
         self._habits = habits
@@ -57,7 +53,6 @@ struct FormView: View {
             Section(
                 header: FormHeaderView(
                     hasChanges: $hasChanges,
-                    selectedCellIndex: $selectedCellIndex,
                     routineTitle: routineTitle
                 )
             ) {}
@@ -86,7 +81,6 @@ struct FormView: View {
 
             Section(header: Text("Days")) {
                 DayPickerView(
-                    width: screenWidth.wrappedValue,
                     routineColor: routineColor,
                     selectedDays: $selectedDays
                 )
@@ -94,8 +88,6 @@ struct FormView: View {
             
             Section(header: Text("Select Color")) {
                 CustomColorPicker(
-                    width: screenWidth.wrappedValue,
-                    height: screenHeight.wrappedValue,
                     routineColor: $routineColor
                 )
             }
@@ -115,7 +107,7 @@ struct FormView: View {
             }
         }
         .onAppear {
-            routineTitle = getRoutineTitle(index: selectedCellIndex)
+            routineTitle = getRoutineTitle(index: environmentContext.selectedCellIndex)
         }
         .scrollContentBackground(.hidden)
         .background(Color.black.ignoresSafeArea())
@@ -126,7 +118,6 @@ struct FormView: View {
 #Preview {
     FormView(
         routineColor: .constant(.white),
-        selectedCellIndex: .constant(0),
         start: .constant("8:00 a.m."),
         selectedDays: .constant(Routine.decodeDays(testRoutines[0]!.daysJSON)),
         habits: .constant(testRoutines[0]!.habits),

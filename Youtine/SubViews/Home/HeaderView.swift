@@ -8,16 +8,11 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @State private var amount = -4.0
-    
-    @Environment(\.screenHeight) var screenHeight
-    
-    var authService: FirebaseAuthService
-    var vm: HeaderViewModel
-    
-    init(authService: FirebaseAuthService) {
-        self.authService = authService
-        self.vm = HeaderViewModel(authService: authService)
+    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(FirebaseAuthService.self) var authService
+        
+    func handleLogOut() {
+        self.authService.signOut()
     }
     
     var body: some View {
@@ -29,12 +24,12 @@ struct HeaderView: View {
                     design: .rounded
                 )
             )
-            .frame(maxWidth: .infinity, maxHeight: screenHeight.wrappedValue / 7)
+            .frame(maxWidth: .infinity, maxHeight: environmentContext.screenHeight / 7)
             .underline(true, pattern: .solid)
             .background(alignment: .trailing) {
                 if authService.userSession != nil {
                     Button {
-                        vm.handleLogOut()
+                        handleLogOut()
                     } label: {
                         Image(systemName: "door.right.hand.open")
                             .resizable()
@@ -50,5 +45,5 @@ struct HeaderView: View {
 }
 
 #Preview {
-    HeaderView(authService: FirebaseAuthService())
+    HeaderView()
 }
