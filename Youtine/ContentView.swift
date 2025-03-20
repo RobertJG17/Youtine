@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(FirebaseAuthService.self) var authService
     
     var body: some View {
@@ -29,8 +29,8 @@ struct ContentView: View {
             .animation(.bouncy(duration: 1.5), value: authService.userSession)
             .onAppear {
                 // MARK: Set screenWidth and screenHeight
-                environmentContext.updateWidth(to: width)
-                environmentContext.updateHeight(to: height)
+                uiStore.updateWidth(to: width)
+                uiStore.updateHeight(to: height)
             }
             .preferredColorScheme(.dark)
         }

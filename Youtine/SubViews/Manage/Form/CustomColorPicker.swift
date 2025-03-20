@@ -12,7 +12,7 @@ struct CustomColorPicker: View {
     
     let MAX_COUNT = Color.validColors.count
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         let rows = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
@@ -24,16 +24,16 @@ struct CustomColorPicker: View {
                         Rectangle()
                             .border(.white)
                             .frame(
-                                width: environmentContext.screenWidth / CGFloat(MAX_COUNT),
-                                height: environmentContext.screenWidth / CGFloat(MAX_COUNT)
+                                width: uiStore.screenWidth / CGFloat(MAX_COUNT),
+                                height: uiStore.screenWidth / CGFloat(MAX_COUNT)
                             )
                             .transition(.scale)
                     }
 
                     Rectangle()
                         .frame(
-                            width: environmentContext.screenWidth / CGFloat(MAX_COUNT) - 10,
-                            height: environmentContext.screenWidth / CGFloat(MAX_COUNT) - 10
+                            width: uiStore.screenWidth / CGFloat(MAX_COUNT) - 10,
+                            height: uiStore.screenWidth / CGFloat(MAX_COUNT) - 10
                         )
                         .onTapGesture {
                             routineColor = color
@@ -46,8 +46,8 @@ struct CustomColorPicker: View {
         }
         
         .frame(
-            width: environmentContext.screenWidth*0.9,
-            height: environmentContext.screenHeight*0.2
+            width: uiStore.screenWidth*0.9,
+            height: uiStore.screenHeight*0.2
         )
         .contentShape(RoundedRectangle(cornerRadius: 40))
         .preferredColorScheme(.dark)

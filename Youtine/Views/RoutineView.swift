@@ -15,7 +15,7 @@ struct RoutineView: View {
     @State var routineTitle: String = ""
     @State var backgroundImage: String = "morning"
 
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(\.modelContext) var context
     
     var dataManagerService: DataManagerService {
@@ -24,14 +24,14 @@ struct RoutineView: View {
     
     // MARK: DELETE FUNCTIONALITY
     func handleDeleteRoutine() -> Void {
-        if let routine = environmentContext.selectedRoutine {
+        if let routine = uiStore.selectedRoutine {
             dataManagerService.deleteRoutine(byID: routine.id)
         }
     }
     
     func updateRoutineData() {
-        let routine = environmentContext.selectedRoutine
-        let selectedCellIndex = environmentContext.selectedCellIndex
+        let routine = uiStore.selectedRoutine
+        let selectedCellIndex = uiStore.selectedCellIndex
         
         self.days = Routine.decodeDays(
             routine?.daysJSON ?? ""
@@ -70,7 +70,7 @@ struct RoutineView: View {
                     .opacity(0.2)
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea(edges: .horizontal)
-                    .frame(height: environmentContext.screenHeight*0.92)
+                    .frame(height: uiStore.screenHeight*0.92)
             )
             .overlay(
                 VStack {
@@ -79,21 +79,21 @@ struct RoutineView: View {
                         .frame(height: 1)
                     Spacer()
                 }
-                    .frame(height: environmentContext.screenHeight*0.92)
+                    .frame(height: uiStore.screenHeight*0.92)
             )
-            .frame(height: environmentContext.screenHeight*0.92)
+            .frame(height: uiStore.screenHeight*0.92)
             .padding(.bottom, 10)
             .preferredColorScheme(.dark)
         }
         .onAppear {
             updateRoutineData()
         }
-        .onChange(of: environmentContext.selectedRoutine) { _, _ in
+        .onChange(of: uiStore.selectedRoutine) { _, _ in
             updateRoutineData()
         }
         .frame(
-            width: environmentContext.screenWidth,
-            height: environmentContext.screenHeight
+            width: uiStore.screenWidth,
+            height: uiStore.screenHeight
         )
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
     }

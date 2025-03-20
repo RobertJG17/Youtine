@@ -10,7 +10,7 @@ import SwiftUI
 struct RoutineHeaderView: View {
     @Binding var title: String
 
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
@@ -29,12 +29,12 @@ struct RoutineHeaderView: View {
             }
             .padding(.bottom, 20)
         }
-        .frame(height: environmentContext.screenHeight*0.20)
+        .frame(height: uiStore.screenHeight*0.20)
         .background(Color.clear)
         .contentShape(Rectangle())
         .onTapGesture {
             // MARK: NAVIGATE TO .home
-            environmentContext.updatePage(to: .home)
+            uiStore.updatePage(to: .home)
         }
         .padding(.horizontal, 20)
         .preferredColorScheme(.dark)

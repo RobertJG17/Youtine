@@ -13,7 +13,7 @@ struct TimePickerView: View {
     
     @State private var selectedTime = Date()
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
 
     var body: some View {
         VStack {
@@ -36,8 +36,8 @@ struct TimePickerView: View {
             }
         }
         .frame(
-            width: environmentContext.screenWidth,
-            height: environmentContext.screenHeight
+            width: uiStore.screenWidth,
+            height: uiStore.screenHeight
         )
         .onAppear {
             selectedTime = getDateFromString(timeString: start)

@@ -15,14 +15,14 @@ struct RoutineHabitView: View {
     @State var showScrollIndicator: Bool = true
     @State var canScroll: Bool? = nil
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         VStack(spacing: 0) {
             RoutineHabitHeaderView()
             
             Rectangle()
-                .frame(width: environmentContext.screenWidth*0.9, height: 0.3)
+                .frame(width: uiStore.screenWidth*0.9, height: 0.3)
                 .padding(.horizontal, 20)
                 .padding(.top, 15)
         

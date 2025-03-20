@@ -11,7 +11,7 @@ struct DayPickerView: View {
     var routineColor: Color
     @Binding var selectedDays: [Int: String]
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         HStack(spacing: 0) {
@@ -101,11 +101,11 @@ struct DayPickerView: View {
                 }
                 .clipShape(Rectangle())
         }
-        .frame(width: environmentContext.screenWidth / 1.5)
+        .frame(width: uiStore.screenWidth / 1.5)
         .foregroundStyle(routineColor)
         .transition(.asymmetric(insertion: .opacity, removal: .opacity))
         .animation(.easeIn, value: selectedDays)
-        .frame(width: environmentContext.screenWidth*0.78)
+        .frame(width: uiStore.screenWidth*0.78)
         .padding(.leading, 6)
     }
 }

@@ -10,36 +10,36 @@ import SwiftUI
 struct Router: View {
     @Binding var routines: [Routine?]
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(\.modelContext) var context
     
     var body: some View {
         VStack {
-            if environmentContext.currentPage == .home {
+            if uiStore.currentPage == .home {
                 HomeView(routines: $routines)
                 .onAppear {
                     // MARK: Anytime we nav to home, set selectedCellIndex to nil
-                    environmentContext.updateSelectedCellIndex(to: nil)
+                    uiStore.updateSelectedCellIndex(to: nil)
                     
                     // MARK: And set selectedRoutine to nil
-                    environmentContext.updateSelectedRoutine(to: nil)
+                    uiStore.updateSelectedRoutine(to: nil)
                 }
-            } else if environmentContext.currentPage == .routine {
+            } else if uiStore.currentPage == .routine {
                 RoutineView()
                 .transition(.scale)
-            } else if environmentContext.currentPage == .createRoutine ||
-                      environmentContext.currentPage == .editRoutine {
+            } else if uiStore.currentPage == .createRoutine ||
+                      uiStore.currentPage == .editRoutine {
                 ManageRoutineView(
-                    routine: environmentContext.selectedRoutine,
-                    selectedCellIndex: environmentContext.selectedCellIndex
+                    routine: uiStore.selectedRoutine,
+                    selectedCellIndex: uiStore.selectedCellIndex
                 )
                 .transition(.scale)
             }
         }
-        .animation(.easeInOut, value: environmentContext.currentPage)
-        .onChange(of: environmentContext.selectedCellIndex) { index, newIndex in
+        .animation(.easeInOut, value: uiStore.currentPage)
+        .onChange(of: uiStore.selectedCellIndex) { index, newIndex in
             guard let validIndex = newIndex else { return }
-            environmentContext.updateSelectedRoutine(to: routines[validIndex])
+            uiStore.updateSelectedRoutine(to: routines[validIndex])
         }
         .background()
     }

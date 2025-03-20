@@ -29,7 +29,7 @@ struct EditRoutineView: View {
     
     @State var hasChanges: Bool = false
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
 
     var body: some View {
         ZStack {
@@ -70,7 +70,7 @@ struct EditRoutineView: View {
                 .transition(.scale)
             }
         }
-        .animation(.easeInOut, value: environmentContext.currentPage)
+        .animation(.easeInOut, value: uiStore.currentPage)
         .animation(.easeInOut, value: showingCreateHabit)
         .animation(.easeInOut, value: showingTimePicker)
         .onAppear {

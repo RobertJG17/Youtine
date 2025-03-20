@@ -16,7 +16,7 @@ struct RoutineHabitListView: View {
     @State var animatedOpacity: CGFloat = 1
     @State var disclosureExpansionLocked: Bool = false
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -86,7 +86,7 @@ struct RoutineHabitListView: View {
         }
         .padding(.leading, 5)
         .padding(.trailing, 20)
-        .frame(height: environmentContext.screenHeight / 2.3)
+        .frame(height: uiStore.screenHeight / 2.3)
     }
 }
 

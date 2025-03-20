@@ -16,7 +16,7 @@ struct HabitListView: View {
     
     @State var disclosureExpansionLocked: Bool = false
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     var body: some View {
         List($habits, id: \.id, editActions: .all) { todo in
@@ -48,8 +48,8 @@ struct HabitListView: View {
                 } label: {
                     Image(systemName: "pencil")
                         .frame(
-                            width: environmentContext.screenWidth*0.10,
-                            height: environmentContext.screenHeight*0.08,
+                            width: uiStore.screenWidth*0.10,
+                            height: uiStore.screenHeight*0.08,
                             alignment: .center
                         )
                         .padding(.leading, 15)
@@ -63,7 +63,7 @@ struct HabitListView: View {
             .listRowBackground(Color.clear)
         }
         .frame(
-            width: environmentContext.screenWidth*0.8
+            width: uiStore.screenWidth*0.8
         )
     }
 }

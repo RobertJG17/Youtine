@@ -16,7 +16,7 @@ struct RoutineCardView: View {
     var habits: [Habit]
     var borderColor: Color
 
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
 
     var habitsCompleted: Int {
         return habits.reduce(0) { partialResult, todo in
@@ -46,8 +46,8 @@ struct RoutineCardView: View {
         ZStack {
             Rectangle()
                 .frame(
-                    width: environmentContext.screenWidth*0.90,
-                    height: environmentContext.screenHeight / 4
+                    width: uiStore.screenWidth*0.90,
+                    height: uiStore.screenHeight / 4
                 )
                 .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
                 .foregroundStyle(Color.black)
@@ -71,25 +71,25 @@ struct RoutineCardView: View {
             }
             .padding(50)
             .frame(
-                width: environmentContext.screenWidth*0.90,
-                height: environmentContext.screenHeight / 4
+                width: uiStore.screenWidth*0.90,
+                height: uiStore.screenHeight / 4
             )
             .preferredColorScheme(.dark)
         }
         // MARK: TAPPABLE FRAME [START]
         .frame(
-            width: environmentContext.screenWidth*0.90,
-            height: environmentContext.screenHeight / 4
+            width: uiStore.screenWidth*0.90,
+            height: uiStore.screenHeight / 4
         )
         .background(Color.clear) // Give the Spacer a tappable area
         .contentShape(Rectangle()) // Ensure the entire area is tappable
         // MARK: [END]
         .onTapGesture {
             // MARK: NAVIGATE TO .routine
-            environmentContext.updatePage(to: .routine)
+            uiStore.updatePage(to: .routine)
                         
             // MARK: SET selectedCellIndex
-            environmentContext.updateSelectedCellIndex(to: index)
+            uiStore.updateSelectedCellIndex(to: index)
         }
         .background(Color.black)
     }

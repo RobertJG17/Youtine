@@ -9,7 +9,7 @@ import SwiftUI
 import _AuthenticationServices_SwiftUI
 
 struct LoginView: View {
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(FirebaseAuthService.self) var authService
     
     @State private var vm: LoginViewModel
@@ -30,7 +30,7 @@ struct LoginView: View {
             } onCompletion: { result in
                 vm.handleAppleSignInCompletion(withResult: result)
             }
-            .frame(width: environmentContext.screenWidth / 2.2, height: 44)
+            .frame(width: uiStore.screenWidth / 2.2, height: 44)
             .overlay(
                 RoundedRectangle(cornerRadius: 40)
                     .stroke(.white, lineWidth: 2)
@@ -38,7 +38,7 @@ struct LoginView: View {
         
             Divider()
                 .foregroundStyle(Color.white)
-                .frame(width: environmentContext.screenWidth / 2.2)
+                .frame(width: uiStore.screenWidth / 2.2)
                 .padding(.vertical, 5)
             
             Button {
@@ -48,7 +48,7 @@ struct LoginView: View {
                 Image("Google_SI")
                     .resizable() // ???: Look into why this works
             }
-            .frame(width: environmentContext.screenWidth / 2.2, height: 44)
+            .frame(width: uiStore.screenWidth / 2.2, height: 44)
             .overlay(
                 RoundedRectangle(cornerRadius: 40)
                     .stroke(.white, lineWidth: 2)

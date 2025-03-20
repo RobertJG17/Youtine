@@ -12,7 +12,7 @@ struct CardRouterView: View {
     var routine: Routine?
     var routineCreated: Bool
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
             
     init(
         index: Int,
@@ -38,7 +38,7 @@ struct CardRouterView: View {
                 )
             }
         }
-        .animation(.easeInOut, value: environmentContext.currentPage)
+        .animation(.easeInOut, value: uiStore.currentPage)
         .preferredColorScheme(.dark)
     }
 }

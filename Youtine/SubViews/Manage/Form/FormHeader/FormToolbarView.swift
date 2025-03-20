@@ -10,7 +10,7 @@ import SwiftUI
 struct FormToolbarView: View {
     @Binding var hasChanges: Bool
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(\.handleFormSubmit) var handleFormSubmit
     
     // ???: State var to control confirmation dialog for delete/confirm operation
@@ -21,12 +21,12 @@ struct FormToolbarView: View {
     @State private var saveButtonTitle: String = "Create Routine"
     
     func handleNav() {
-        if environmentContext.currentPage == .editRoutine {
+        if uiStore.currentPage == .editRoutine {
             // MARK: NAVIGATE TO .routine
-            environmentContext.updatePage(to: .routine)
+            uiStore.updatePage(to: .routine)
         } else {
             // MARK: NAVIGATE TO .home
-            environmentContext.updatePage(to: .home)
+            uiStore.updatePage(to: .home)
         }
     }
     
@@ -88,10 +88,10 @@ struct FormToolbarView: View {
         }
         .padding(.bottom, 20)
         .onAppear {
-            deleteButtonTitle = environmentContext.currentPage == .editRoutine
+            deleteButtonTitle = uiStore.currentPage == .editRoutine
             ? "Discard Changes" : "Delete"
             
-            saveButtonTitle = environmentContext.currentPage == .editRoutine
+            saveButtonTitle = uiStore.currentPage == .editRoutine
             ? "Save Changes" : "Create Routine"
         }
     }

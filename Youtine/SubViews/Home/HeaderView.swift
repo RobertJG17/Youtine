@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(FirebaseAuthService.self) var authService
         
     func handleLogOut() {
@@ -24,7 +24,7 @@ struct HeaderView: View {
                     design: .rounded
                 )
             )
-            .frame(maxWidth: .infinity, maxHeight: environmentContext.screenHeight / 7)
+            .frame(maxWidth: .infinity, maxHeight: uiStore.screenHeight / 7)
             .underline(true, pattern: .solid)
             .background(alignment: .trailing) {
                 if authService.userSession != nil {

@@ -11,7 +11,7 @@ struct RoutineDetailView: View {
     @Binding var start: String
     @Binding var days: [Int: String]
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     func getFontWeight(day: String) -> Font.Weight {
         let containsDay = days.contains(where: { (key: Int, value: String) in
@@ -42,7 +42,7 @@ struct RoutineDetailView: View {
             
             Rectangle()
                 .frame(
-                    width: environmentContext.screenWidth*0.9,
+                    width: uiStore.screenWidth*0.9,
                     height: 0.3
                 )
                 .padding(.horizontal, 20)
@@ -109,7 +109,7 @@ struct RoutineDetailView: View {
                 .font(.system(size: 15))
             }
             .onAppear {
-                if let routine = environmentContext.selectedRoutine {
+                if let routine = uiStore.selectedRoutine {
                     let decodedDays = Routine.decodeDays(routine.daysJSON)
                     days = decodedDays
                 }

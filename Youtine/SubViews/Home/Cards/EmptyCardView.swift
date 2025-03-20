@@ -11,7 +11,7 @@ struct EmptyCardView: View {
     var index: Int
     var borderColor: Color
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     init(
         index: Int,
@@ -25,8 +25,8 @@ struct EmptyCardView: View {
         ZStack {
             Rectangle()
                 .frame(
-                    width: environmentContext.screenWidth*0.90,
-                    height: environmentContext.screenHeight / 4
+                    width: uiStore.screenWidth*0.90,
+                    height: uiStore.screenHeight / 4
                 )
                 .shadow(color: borderColor, radius: 0.5, x: 5, y: 5)
                 .foregroundStyle(Color.black)
@@ -36,17 +36,17 @@ struct EmptyCardView: View {
                     .font(.system(size: 40))
             }
             .frame(
-                width: environmentContext.screenWidth*0.90,
-                height: environmentContext.screenHeight / 4
+                width: uiStore.screenWidth*0.90,
+                height: uiStore.screenHeight / 4
             )
             .background(Color.clear) // Give the Spacer a tappable area
             .contentShape(Rectangle()) // Ensure the entire area is tappable
             .onTapGesture {
                 // MARK: NAVIGATE TO .createRoutine
-                environmentContext.updatePage(to: .createRoutine)
+                uiStore.updatePage(to: .createRoutine)
                 
                 // MARK: SET selectedCellIndex
-                environmentContext.updateSelectedCellIndex(to: index)
+                uiStore.updateSelectedCellIndex(to: index)
             }
             .contentShape(Rectangle())
         }

@@ -18,7 +18,7 @@ struct ManageRoutineView: View {
     @State private var showingCreateHabit: Bool = false
     @State private var showingTimePicker: Bool = false
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(\.modelContext) var context
     
     var dataManagerService: DataManagerService {
@@ -47,7 +47,7 @@ struct ManageRoutineView: View {
     
     // MARK: Submit form declared here to capture all needed state vars
     func handleFormSubmit() -> Void {
-        if let validIndex = environmentContext.selectedCellIndex {
+        if let validIndex = uiStore.selectedCellIndex {
             dataManagerService.saveRoutine(
                 id: id,
                 index: validIndex,

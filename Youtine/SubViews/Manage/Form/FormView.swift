@@ -22,7 +22,7 @@ struct FormView: View {
     // MARK: Set in onAppear
     @State var routineTitle: String = ""
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     
     init(
         routineColor: Binding<Color>,
@@ -107,7 +107,7 @@ struct FormView: View {
             }
         }
         .onAppear {
-            routineTitle = getRoutineTitle(index: environmentContext.selectedCellIndex)
+            routineTitle = getRoutineTitle(index: uiStore.selectedCellIndex)
         }
         .scrollContentBackground(.hidden)
         .background(Color.black.ignoresSafeArea())

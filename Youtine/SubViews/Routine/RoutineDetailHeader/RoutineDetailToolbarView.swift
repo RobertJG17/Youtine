@@ -10,7 +10,7 @@ import SwiftUI
 struct RoutineDetailToolbarView: View {
     @State var showDeleteConfirmation: Bool = false
     
-    @Environment(RoutineEnvironment.self) var environmentContext
+    @Environment(UIStore.self) var uiStore
     @Environment(\.handleDeleteRoutine) var handleDeleteRoutine
     
     var body: some View {
@@ -30,7 +30,7 @@ struct RoutineDetailToolbarView: View {
                     handleDeleteRoutine()
                     
                     // MARK: NAVIGATE TO .home
-                    environmentContext.updatePage(to: .home)
+                    uiStore.updatePage(to: .home)
                     
                     // MARK: STOP SHOWING DELETE DIALOG
                     showDeleteConfirmation = false
@@ -45,7 +45,7 @@ struct RoutineDetailToolbarView: View {
             
             Button {
                 // MARK: NAVIGATE TO .editRoutine
-                environmentContext.updatePage(to: .editRoutine)
+                uiStore.updatePage(to: .editRoutine)
             } label: {
                 Image(systemName: "pencil")
             }

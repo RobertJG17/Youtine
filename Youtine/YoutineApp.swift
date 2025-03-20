@@ -29,14 +29,14 @@ struct YoutineApp: App {
     @State var authService = FirebaseAuthService()
     
     // MARK: Contains global UI state and relevant mutators
-    @State var environmentContext = RoutineEnvironment()
+    @State var uiStore = UIStore()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
         .modelContainer(for: [Routine.self, Habit.self])
-        .environment(environmentContext)
+        .environment(uiStore)
         .environment(authService)
     }
 }

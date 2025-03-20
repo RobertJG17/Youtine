@@ -10,7 +10,7 @@ import Observation
 import SwiftData
 
 @Observable
-class RoutineEnvironment {
+class UIStore {
     var currentPage: Page = .home
     var selectedCellIndex: Int? = nil
     var selectedRoutine: Routine? = nil
