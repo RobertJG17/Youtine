@@ -11,7 +11,6 @@ import SwiftData
 
 @Observable
 class RoutineEnvironment {
-    // MARK:
     var currentPage: Page = .home
     var selectedCellIndex: Int? = nil
     var selectedRoutine: Routine? = nil

@@ -27,6 +27,7 @@ struct CardDetailView: View {
                 Spacer()
                 Text("\(habitsCompleted)/\(habits.count)")
                     .fontWeight(.thin)
+                    .foregroundStyle(getRoutineScoreColor(habits: habits, habitsCompleted: habitsCompleted))
             }
             Spacer()
         }
