@@ -13,9 +13,7 @@ struct HabitListView: View {
     @Binding var currentLabel: String
     @Binding var currentDesc: String
     @Binding var currentHabitID: UUID?
-    
-    @State var disclosureExpansionLocked: Bool = false
-    
+        
     @Environment(UIStore.self) var uiStore
     
     var body: some View {
@@ -26,8 +24,7 @@ struct HabitListView: View {
             HStack(alignment: .center, spacing: 0) {
                 HabitListDisclosureGroupView(
                     label: label.wrappedValue,
-                    desc: desc.wrappedValue,
-                    disclosureExpansionLocked: $disclosureExpansionLocked
+                    desc: desc.wrappedValue
                 )
                 
                 Spacer()
@@ -42,9 +39,6 @@ struct HabitListView: View {
                     currentHabitID = todo.id
                     
                     showingCreateHabit = true
-                    
-                    // ???: Prevents the disclosure group from expanding when entering edit state
-                    disclosureExpansionLocked = true
                 } label: {
                     Image(systemName: "pencil")
                         .frame(

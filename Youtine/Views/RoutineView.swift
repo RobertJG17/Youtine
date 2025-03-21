@@ -18,14 +18,12 @@ struct RoutineView: View {
     @Environment(UIStore.self) var uiStore
     @Environment(\.modelContext) var context
     
-    var dataManagerService: DataManagerService {
-        DataManagerService(context: context)
-    }
+    @State var dataManagerService: DataManagerService?
     
     // MARK: DELETE FUNCTIONALITY
     func handleDeleteRoutine() -> Void {
         if let routine = uiStore.selectedRoutine {
-            dataManagerService.deleteRoutine(byID: routine.id)
+            dataManagerService?.deleteRoutine(byID: routine.id)
         }
     }
     
@@ -47,6 +45,9 @@ struct RoutineView: View {
     }
     
     var body: some View {
+        let screenWidth = uiStore.screenWidth
+        let screenHeight = uiStore.screenHeight
+        
         VStack {
             RoutineHeaderView(
                 title: $routineTitle
@@ -79,21 +80,22 @@ struct RoutineView: View {
                         .frame(height: 1)
                     Spacer()
                 }
-                    .frame(height: uiStore.screenHeight*0.92)
+                    .frame(height: screenHeight*0.92)
             )
-            .frame(height: uiStore.screenHeight*0.92)
+            .frame(height: screenHeight*0.92)
             .padding(.bottom, 10)
             .preferredColorScheme(.dark)
         }
         .onAppear {
+            dataManagerService = DataManagerService(context: context)
             updateRoutineData()
         }
         .onChange(of: uiStore.selectedRoutine) { _, _ in
             updateRoutineData()
         }
         .frame(
-            width: uiStore.screenWidth,
-            height: uiStore.screenHeight
+            width: screenWidth,
+            height: screenHeight
         )
         .environment(\.handleDeleteRoutine, handleDeleteRoutine)
     }

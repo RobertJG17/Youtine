@@ -50,31 +50,16 @@ extension Color {
 
 // MARK: VIEWS (START)
 extension DayPickerView {
-    func isIndDictionary(currKey: Int) -> Dictionary<Int,String>.Element? {
-        return selectedDays.first(
-            where: {
-                (key: Int, value: String) in
-                currKey == key
-            })
+    func isFilled(currKey: Int) -> Bool {
+        return selectedDays[currKey] != nil
     }
-    
+
+    /// Toggles the selection of a day in `selectedDays`
     func handleDayClicked(currKey: Int, day: String) {
-        let inDictionary = isIndDictionary(currKey: currKey)
-        
-        if inDictionary != nil {
+        if selectedDays[currKey] != nil {
             selectedDays.removeValue(forKey: currKey)
         } else {
             selectedDays[currKey] = day
-        }
-    }
-    
-    func isFilled(currKey: Int) -> Bool {
-        let inDictionary = isIndDictionary(currKey: currKey)
-        
-        if inDictionary != nil {
-            return true
-        } else {
-            return false
         }
     }
 }

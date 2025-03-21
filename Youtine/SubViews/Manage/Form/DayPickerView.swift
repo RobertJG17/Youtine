@@ -7,108 +7,65 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct DayPickerView: View {
     var routineColor: Color
     @Binding var selectedDays: [Int: String]
     
     @Environment(UIStore.self) var uiStore
     
+    private let days = [
+        (2, "M"), (3, "T"), (4, "W"), (5, "Th"),
+        (6, "F"), (7, "Sa"), (1, "S")
+    ]
+
     var body: some View {
         HStack(spacing: 0) {
-            Image(systemName: isFilled(currKey: 2) ? "m.square.fill" : "m.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 2
-                    let day = "M"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            Image(systemName: isFilled(currKey: 3) ? "t.square.fill" : "t.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 3
-                    let day = "T"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            Image(systemName: isFilled(currKey: 4) ? "w.square.fill" : "w.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 4
-                    let day = "W"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            HStack(alignment: .center, spacing: 0) {
-                Image(systemName: isFilled(currKey: 5) ? "t.square.fill" : "t.square")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.trailing, -3)
-                Image(systemName: isFilled(currKey: 5) ? "h.square.fill" : "h.square")
-                    .resizable()
-                    .scaledToFit()
-                    
+            ForEach(days, id: \.0) { (currKey, day) in
+                getDayButton(currKey: currKey, day: day)
             }
-            .frame(width: 48, height: 24.5, alignment: .top)
-            .padding(.leading, 10)
-            .padding(.trailing, 10)
-            .background(Color.clear)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                let currKey = 5
-                let day = "Th"
-                handleDayClicked(currKey: currKey, day: day)
-            }
-            Image(systemName: isFilled(currKey: 6) ? "f.square.fill" : "f.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 6
-                    let day = "F"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-            HStack(spacing: 0) {
-                Image(systemName: isFilled(currKey: 7) ? "s.square.fill" : "s.square")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.trailing, -3)
-                Image(systemName: isFilled(currKey: 7) ? "a.square.fill" : "a.square")
-                    .resizable()
-                    .scaledToFit()
-            }
-            .frame(width: 48, height: 24.5, alignment: .top)
-            .padding(.leading, 10)
-            .padding(.trailing, 10)
-            .background(Color.clear)
-            .contentShape(Rectangle())
-            .onTapGesture {
-                let currKey = 7
-                let day = "Sa"
-                handleDayClicked(currKey: currKey, day: day)
-            }
-            Image(systemName: isFilled(currKey: 1) ? "s.square.fill" : "s.square")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 42, height: 24, alignment: .top)
-                .onTapGesture {
-                    let currKey = 1
-                    let day = "S"
-                    handleDayClicked(currKey: currKey, day: day)
-                }
-                .clipShape(Rectangle())
         }
-        .frame(width: uiStore.screenWidth / 1.5)
+        .frame(width: uiStore.screenWidth * 0.78)
         .foregroundStyle(routineColor)
-        .transition(.asymmetric(insertion: .opacity, removal: .opacity))
         .animation(.easeIn, value: selectedDays)
-        .frame(width: uiStore.screenWidth*0.78)
         .padding(.leading, 6)
     }
+    
+    @ViewBuilder
+    private func getDayButton(currKey: Int, day: String) -> some View {
+        if day == "Th" || day == "Sa" {
+            HStack(spacing: 0) {
+                let firstChar = day == "Th" ? "t" : "s"
+                let secondChar = day == "Th" ? "h" : "a"
+                
+                Image(systemName: isFilled(currKey: currKey) ? "\(firstChar).square.fill" : "\(firstChar).square")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.trailing, -3)
+                Image(systemName: isFilled(currKey: currKey) ? "\(secondChar).square.fill" : "\(secondChar).square")
+                    .resizable()
+                    .scaledToFit()
+            }
+            .frame(width: 48, height: 24.5)
+            .padding(.horizontal, 10)
+            .background(Color.clear)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                handleDayClicked(currKey: currKey, day: day)
+            }
+        } else {
+            Image(systemName: isFilled(currKey: currKey) ? "\(day.lowercased()).square.fill" : "\(day.lowercased()).square")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 42, height: 24)
+                .onTapGesture {
+                    handleDayClicked(currKey: currKey, day: day)
+                }
+        }
+    }
 }
+
 
 #Preview {
     DayPickerView(

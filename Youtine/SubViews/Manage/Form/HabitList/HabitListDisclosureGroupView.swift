@@ -13,7 +13,6 @@ import SwiftUI
 struct HabitListDisclosureGroupView: View {
     var label: String
     var desc: String
-    @Binding var disclosureExpansionLocked: Bool
     
     @State private var isExpanded: Bool = false
     
@@ -24,18 +23,16 @@ struct HabitListDisclosureGroupView: View {
             Text(label)
             
             DisclosureGroup(isExpanded: $isExpanded) {
-                if !disclosureExpansionLocked {
-                    Text(desc)
-                        .font(.caption)
-                        .fontWeight(.light)
-                        // ???: Allow multiline text
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(
-                            width: uiStore.screenWidth / 1.75,
-                            alignment: .leading
-                        )
-                        .transition(.opacity)
-                }
+                Text(desc)
+                    .font(.caption)
+                    .fontWeight(.light)
+                    // ???: Allow multiline text
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(
+                        width: uiStore.screenWidth / 1.75,
+                        alignment: .leading
+                    )
+                    .transition(.opacity)
             } label: {
                 // MARK: Truncated description with ellipsis when collapsed
                 if !isExpanded {
@@ -65,7 +62,6 @@ struct HabitListDisclosureGroupView: View {
 #Preview {
     HabitListDisclosureGroupView(
         label: "",
-        desc: "",
-        disclosureExpansionLocked: .constant(false)
+        desc: ""
     )
 }

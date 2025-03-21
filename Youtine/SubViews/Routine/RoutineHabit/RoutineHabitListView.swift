@@ -14,7 +14,6 @@ struct RoutineHabitListView: View {
     @Binding var showScrollIndicator: Bool
     
     @State var animatedOpacity: CGFloat = 1
-    @State var disclosureExpansionLocked: Bool = false
     
     @Environment(UIStore.self) var uiStore
     
@@ -49,8 +48,7 @@ struct RoutineHabitListView: View {
                     
                     HabitListDisclosureGroupView(
                         label: habit.label,
-                        desc: habit.desc,
-                        disclosureExpansionLocked: $disclosureExpansionLocked
+                        desc: habit.desc
                     )
 //                    .border(Color.green) MARK: DEBUG
                 }
